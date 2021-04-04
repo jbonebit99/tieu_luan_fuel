@@ -1,0 +1,73 @@
+<?php
+/**
+ * Fuel is a fast, lightweight, community driven PHP 5.4+ framework.
+ *
+ * @package    Fuel
+ * @version    1.8.2
+ * @author     Fuel Development Team
+ * @license    MIT License
+ * @copyright  2010 - 2019 Fuel Development Team
+ * @link       https://fuelphp.com
+ */
+
+return array(
+	/**
+	 * -------------------------------------------------------------------------
+	 *  Default route
+	 * -------------------------------------------------------------------------
+	 *
+	 */
+
+	'_root_' => 'frontend/welcome/index',
+
+	/**
+	 * -------------------------------------------------------------------------
+	 *  Page not found
+	 * -------------------------------------------------------------------------
+	 *
+	 */
+
+	'_404_' => 'frontend/welcome/404',
+
+	/**
+	 * -------------------------------------------------------------------------
+	 *  Example for Presenter
+	 * -------------------------------------------------------------------------
+	 *
+	 *  A route for showing page using Presenter
+	 *
+	 */
+
+	'hello(/:name)?' => array('welcome/hello', 'name' => 'hello'),
+	'submit-property'=>'frontend/submit/property/index',
+    'submit-property/delete'=>'frontend/submit/property/delete',
+	'contact'=>'frontend/contact/index',
+	'contact/post'=>'frontend/contact/create',
+	'authen/login'=>'frontend/authen/login',
+	'authen/register'=>'frontend/authen/register',
+    'authen/logout'=>'frontend/authen/logout',
+	'blog'=>'frontend/blog/index',
+	'account'=>'frontend/account/index',
+	'account/my-profile'=>'frontend/account/index',
+	'account/my-properties'=>'frontend/account/my_properties',
+	'account/change-password'=>'frontend/account/change_password',
+	'account/my-bookmarks'=>'frontend/account/my_bookmarks',
+	'pricing-tables'=>'frontend/pricing/tables/index',
+	'compare-properties'=>'frontend/compare/properties/index',
+	'sale/lands'=>'frontend/sale/lands_for_sale',
+	'sale'=>'frontend/sale/index',
+    '(:shape)/details/(:id)'=>'frontend/$1/detail',
+	'sale/houses'=>'frontend/sale/houses_for_sale',
+	'rent'=>'frontend/rent/index',
+	'rent/ware-housing'=>'frontend/rent/ware_housing_for_rent',
+	'rent/office'=>'frontend/rent/office_for_rent',
+	'tag/(:keyword)'=>'frontend/welcome/tag',
+	'submit-property/post'=>'frontend/submit/property/create',
+	'admin'=>'backend/admin/index',
+    'admin/login'=>'backend/admin/login',
+    'admin/logout'=>'backend/admin/logout',
+    'admin/profile'=>'backend/admin/profile',
+    'admin/manage-property/detail'=>'backend/admin/detail',
+    'admin/approve-properties'=>'backend/admin/approve_properties',
+    'admin/users'=>'backend/admin/users',
+);
