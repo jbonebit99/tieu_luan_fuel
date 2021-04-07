@@ -2999,7 +2999,7 @@ span.like-icon {
     width: 21px;
     height: 21px;
     display: inline-block;
-    background-image: url(../images/compare-icon-black.svg);
+    background-image: url(../img/compare-icon-black.svg);
     background-repeat: no-repeat;
     background-size: 21px;
     position: relative;
@@ -7204,7 +7204,6 @@ body .carousel {
 .owl-carousel .owl-item {
     -webkit-backface-visibility: hidden;
     -moz-backface-visibility: hidden;
-    -ms-backface-visibility: hidden;
     -webkit-transform: translate3d(0, 0, 0);
     -moz-transform: translate3d(0, 0, 0);
     -ms-transform: translate3d(0, 0, 0);
@@ -7216,11 +7215,11 @@ body .carousel {
  */
 .owl-origin {
     -webkit-perspective: 1200px;
-    -webkit-perspective-origin-x: 50%;
-    -webkit-perspective-origin-y: 50%;
+    /*-webkit-perspective-origin-x: 50%;*/
+    /*-webkit-perspective-origin-y: 50%;*/
     -moz-perspective: 1200px;
-    -moz-perspective-origin-x: 50%;
-    -moz-perspective-origin-y: 50%;
+    /*-moz-perspective-origin-x: 50%;*/
+    /*-moz-perspective-origin-y: 50%;*/
     perspective: 1200px;
 }
 

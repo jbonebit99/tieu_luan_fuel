@@ -1,7 +1,8 @@
 <?php
-if (!empty(Arr::get($errors, 'error')) && !empty(\Fuel\Core\Arr::get($errors, 'l_data'))) {
-    $l_error_all = \Fuel\Core\Arr::get($errors, 'error');
-    $l_data_all = \Fuel\Core\Arr::get($errors, 'l_data');
+if (!empty(\Arr::get($errors, 'error')) && !empty(\Arr::get($errors, 'l_data'))) {
+    $l_error_all = \Arr::get($errors, 'error');
+    $l_data_all = \Arr::get($errors, 'l_data');
+
 }
 ?>
 

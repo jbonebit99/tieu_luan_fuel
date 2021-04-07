@@ -1,3 +1,5 @@
+
+
 <style>
     #map_cuc_manh {
         height: 400px;
@@ -38,7 +40,8 @@
                     ?>
                     <!-- Section -->
                     <section id="submit-properties">
-                        <form action="/submit-property" method="post" enctype="multipart/form-data">
+                        <form action="/submit-property" method="post" enctype="multipart/form-data"
+                              name="form_submit_property">
                             <h3>Thông Tin Cơ Bản</h3>
                             <div class="submit-section">
 
