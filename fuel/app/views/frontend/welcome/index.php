@@ -1,3 +1,7 @@
+<?php
+    \Lang::load('lang');
+?>
+
 <!-- Banner
 ================================================== -->
 <div class="parallax" data-background=" <?php echo \Asset::get_file('home-parallax.jpg','img');?>" data-color="#36383e" data-color-opacity="0.45"
@@ -203,7 +207,7 @@
     <div class="row">
 
         <div class="col-md-12">
-            <h3 class="headline margin-bottom-25 margin-top-65">Tin Mới Thêm Gần Đây</h3>
+            <h3 class="headline margin-bottom-25 margin-top-65"><?php echo \Lang::get('newly_added');?></h3>
         </div>
 
         <!-- Carousel -->
@@ -216,21 +220,23 @@
                     <div class="carousel-item">
                         <div class="listing-item">
 
-                            <a href="/<?php echo $value['shape'] . '/details/' . $value['id']; ?>"
+                            <a href="/<?php echo $value['shape'];?>/details/<?php echo $value['id'];?>"
                                class="listing-img-container">
                                 <div class="listing-badges">
-                                    <span class="featured">Featured</span>
-                                    <span>
-                                    <?php
-                                    echo $shape = $value['shape'] === 'sale' ? 'Mua Bán' : 'Cho Thuê';
-                                    ?>
-                                    </span>
+                                <?php
+								if($value['featured']):
+								?>
+								<span class="featured">Featured</span>
+								<?php
+									endif;
+								?>
+                                <span><?php echo $value['shape'] == 'sale' ? \Lang::get('sale') : \Lang::get('rent'); ?></span>
                                 </div>
 
                                 <div class="listing-img-content">
                                     <span class="listing-price"><?php echo $value['price'] . " triệu"; ?> <i>$520 / sq ft</i></span>
-                                    <span class="like-icon with-tip" data-tip-content="Thêm Vào Yêu Thích"></span>
-                                    <span class="compare-button with-tip" data-tip-content="Thêm Vào So Sánh"></span>
+                                    <span class="like-icon with-tip" data-tip-content="<?php echo \Lang::get('add_to_bookmarks');?>"></span>
+                                    <span class="compare-button with-tip" data-tip-content="<?php echo \Lang::get('add_to_compare');?>"></span>
                                 </div>
 
                                 <div class="listing-carousel">
@@ -258,14 +264,14 @@
                                     </a>
                                 </div>
 
-                                <ul class="listing-features">
-                                    <li><?php echo $value['bedrooms']; ?> Phòng ngủ</li>
-                                    <li><?php echo $value['rooms']; ?> Phòng</li>
-                                    <li><?php echo $value['toilets']; ?> Toilet</li>
-                                </ul>
+                                <ul class="listing-details">
+								<li><?php echo $value['bedrooms']; ?> <?php echo \Lang::get('bedrooms'); ?></li>
+								<li><?php echo $value['rooms']; ?> <?php echo \Lang::get('rooms'); ?></li>
+								<li><?php echo $value['toilets']; ?> <?php echo \Lang::get('toilets'); ?></li>
+							</ul>
 
                                 <div class="listing-footer">
-                                    <a href="#"><i class="fa fa-user"></i> <?php echo $value['name']; ?></a>
+                                    <a href="#"><i class="fa fa-user"></i> <?php echo ucwords($value['name']); ?></a>
                                     <span><i class="fa fa-calendar-o"></i> <?php echo \Date::time_ago($value['created_at'], '', "day"); ?></span>
                                 </div>
 

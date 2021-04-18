@@ -1,6 +1,7 @@
 <?php
+\Lang::load('lang');
 $properties = \Arr::get($content, "properties");
-\Asset::add_path('uploads/img','img');
+\Asset::add_path('uploads/img', 'img');
 ?>
 <!-- Titlebar
 ================================================== -->
@@ -9,15 +10,15 @@ $properties = \Arr::get($content, "properties");
         <div class="row">
             <div class="col-md-12">
 
-                <a href="listings-list-with-sidebar.html" class="back-to-listings"></a>
+                <a href="" class="back-to-listings"></a>
                 <div class="property-title">
-                    <h2><?php echo $properties['title']; ?> <span class="property-badge">For Sale</span></h2>
+                    <h2><?php echo $properties['title']; ?> <span class="property-badge"><?php echo $properties['shape'] == 'sale' ? \Lang::get('sale') : \Lang::get('rent'); ?></span></h2>
                     <span>
-						<a href="#location" class="listing-address">
-							<i class="fa fa-map-marker"></i>
-7843 Durham Avenue, MD
-</a>
-					</span>
+                        <a href="#location" class="listing-address">
+                            <i class="fa fa-map-marker"></i>
+                            <?php echo $properties['district']." ".$properties['province'];?>
+                        </a>
+                    </span>
                 </div>
 
                 <div class="property-pricing">
@@ -37,9 +38,8 @@ $properties = \Arr::get($content, "properties");
 
 <!-- Slider -->
 <div class="fullwidth-property-slider margin-bottom-50">
-    <?php foreach (explode('/',$properties['src']) as $file): ?>
-        <a href="<?php echo \Asset::get_file($file,'img'); ?>" data-background-image="<?php echo \Asset::get_file($file,'img'); ?>"
-           class="item mfp-gallery"></a>
+    <?php foreach (explode('/', $properties['src']) as $file) : ?>
+        <a href="<?php echo \Asset::get_file($file, 'img'); ?>" data-background-image="<?php echo \Asset::get_file($file, 'img'); ?>" class="item mfp-gallery"></a>
     <?php endforeach; ?>
 </div>
 <div class="container">
@@ -51,22 +51,22 @@ $properties = \Arr::get($content, "properties");
 
                 <!-- Main Features -->
                 <ul class="property-main-features">
-                    <li>Diện Tích <span><?php echo $properties['area'];?></span></li>
-                    <li>Số Phòng <span><?php echo $properties['rooms'];?></span></li>
-                    <li>Phòng Ngủ <span><?php echo $properties['bedrooms'];?></span></li>
-                    <li>Toilets <span><?php echo $properties['toilets'];?></span></li>
+                    <li><?php echo \Lang::get('area'); ?><span><?php echo $properties['area']; ?></span></li>
+                    <li><?php echo \Lang::get('rooms'); ?><span><?php echo $properties['rooms']; ?></span></li>
+                    <li><?php echo \Lang::get('bedrooms'); ?><span><?php echo $properties['bedrooms']; ?></span></li>
+                    <li><?php echo \Lang::get('toilets'); ?><span><?php echo $properties['toilets']; ?></span></li>
                 </ul>
 
 
                 <!-- Description -->
-                <h3 class="desc-headline">Mô Tả</h3>
+                <h3 class="desc-headline"><?php echo ucwords(\Lang::get('description'));?></h3>
                 <div class="show-more">
-                    <?php echo $properties['description'];?>
+                    <?php echo html_entity_decode($properties['description']);?>
                     <a href="#" class="show-more-button">Show More <i class="fa fa-angle-down"></i></a>
                 </div>
 
                 <!-- Details -->
-                <h3 class="desc-headline">Chi Tiết</h3>
+                <!-- <h3 class="desc-headline"><?php echo ucwords(\Lang::get('details'));?></h3>
                 <ul class="property-features margin-top-0">
                     <li>Building Age: <span>2 Years</span></li>
                     <li>Parking: <span>Attached Garage</span></li>
@@ -76,27 +76,47 @@ $properties = \Arr::get($content, "properties");
                     <li>Water: <span>City</span></li>
                     <li>Exercise Room: <span>Yes</span></li>
                     <li>Storage Room: <span>Yes</span></li>
-                </ul>
+                </ul> -->
 
 
                 <!-- Features -->
-                <h3 class="desc-headline">Features</h3>
+                <h3 class="desc-headline"><?php echo \Lang::get('features') ?></h3>
                 <ul class="property-features checkboxes margin-top-0">
-                    <li>Air Conditioning</li>
-                    <li>Swimming Pool</li>
-                    <li>Central Heating</li>
-                    <li>Laundry Room</li>
-                    <li>Gym</li>
-                    <li>Alarm</li>
-                    <li>Window Covering</li>
-                    <li>Internet</li>
+                    <?php 
+                    if($properties['gym']):
+                    ?>
+                    <li><?php echo \Lang::get('near_gym');?></li>
+                    <?php
+                    endif;
+                    ?>
+                    <?php 
+                    if($properties['market']):
+                    ?>
+                    <li><?php echo \Lang::get('near_market');?></li>
+                    <?php
+                    endif;
+                    ?>
+                    <?php 
+                    if($properties['parking']):
+                    ?>
+                    <li><?php echo \Lang::get('parking');?></li>
+                    <?php
+                    endif;
+                    ?>
+                    <?php 
+                    if($properties['hospital']):
+                    ?>
+                    <li><?php echo \Lang::get('near_hospital');?></li>
+                    <?php
+                    endif;
+                    ?>
                 </ul>
 
 
                 <!-- Floorplans -->
-                <h3 class="desc-headline no-border">Floorplans</h3>
+                <!-- <h3 class="desc-headline no-border">Floorplans</h3> -->
                 <!-- Accordion -->
-                <div class="style-1 fp-accordion">
+                <!-- <div class="style-1 fp-accordion">
                     <div class="accordion">
 
                         <h3>First Floor <span>460 sq ft</span> <i class="fa fa-angle-down"></i> </h3>
@@ -123,7 +143,7 @@ $properties = \Arr::get($content, "properties");
                         </div>
 
                     </div>
-                </div>
+                </div> -->
 
 
                 <!-- Video -->
@@ -133,7 +153,7 @@ $properties = \Arr::get($content, "properties");
                 </div>
 
                 <!-- Location -->
-                <h3 class="desc-headline no-border" id="location">Location</h3>
+                <h3 class="desc-headline no-border" id="location"><?php echo \Lang::get('location');?></h3>
                 <div id="propertyMap-container">
                     <div id="propertyMap" data-latitude="40.7427837" data-longitude="-73.11445617675781"></div>
                     <a href="#" id="streetView">Street View</a>
@@ -141,157 +161,70 @@ $properties = \Arr::get($content, "properties");
 
 
                 <!-- Similar Listings Container -->
-                <h3 class="desc-headline no-border margin-bottom-35 margin-top-60">Similar Properties</h3>
+                <h3 class="desc-headline no-border margin-bottom-35 margin-top-60"><?php echo \Lang::get('similar_properties'); ?></h3>
 
                 <!-- Layout Switcher -->
 
                 <div class="layout-switcher hidden"><a href="#" class="list"><i class="fa fa-th-list"></i></a></div>
                 <div class="listings-container list-layout">
-
+                    <?php foreach( \Arr::get($content, "same_properties") as $same_properties): ?>
                     <!-- Listing Item -->
                     <div class="listing-item">
 
-                        <a href="#" class="listing-img-container">
+                        <a href="/<?php echo $same_properties['shape']; ?>/details/<?php echo $same_properties['id']; ?>" class="listing-img-container">
 
                             <div class="listing-badges">
-                                <span>For Rent</span>
+                                <span><?php echo $same_properties['shape'] == 'sale' ? "Bán" : "Cho Thuê" ?></span>
                             </div>
 
                             <div class="listing-img-content">
-                                <span class="listing-price">$1700 <i>monthly</i></span>
+                                <span class="listing-price"><?php echo $same_properties['price'];?> <i><?php echo ucwords(\Lang::get('price'));?></i></span>
                                 <span class="like-icon"></span>
                             </div>
 
-                            <img src="images/listing-03.jpg" alt="">
+                            <?php
+                                            foreach (explode('/', $same_properties['src']) as $file) :
+                                                ?>
+                                            <img src="<?php echo \Asset::get_file($file, 'img'); ?>" alt="">
+                                        <?php
+                                                break;
+                                            endforeach;
+                                            ?>
 
                         </a>
 
                         <div class="listing-content">
 
                             <div class="listing-title">
-                                <h4><a href="#">Meridian Villas</a></h4>
-                                <a href="https://maps.google.com/maps?q=221B+Baker+Street,+London,+United+Kingdom&hl=en&t=v&hnear=221B+Baker+St,+London+NW1+6XE,+United+Kingdom" class="listing-address popup-gmaps">
+                                <h4><a href="/<?php echo $same_properties['shape']; ?>/details/<?php echo $same_properties['id']; ?>"><?php echo Str::truncate($same_properties['title'], 45, '...'); ?></a></h4>
+                                <a href="">
                                     <i class="fa fa-map-marker"></i>
-                                    778 Country St. Panama City, FL
+                                    <?php echo $same_properties['district'].", ".$same_properties['province'];?>
                                 </a>
 
-                                <a href="#" class="details button border">Details</a>
+                                <a href="/<?php echo $same_properties['shape']; ?>/details/<?php echo $same_properties['id']; ?>" class="details button border"><?php echo Lang::get('details');?></a>
                             </div>
 
                             <ul class="listing-details">
-                                <li>1450 sq ft</li>
-                                <li>1 Bedroom</li>
-                                <li>2 Rooms</li>
-                                <li>2 Rooms</li>
+                                <li><?php echo $same_properties['area'];?> m2</li>
+                                <li><?php echo $same_properties['bedrooms'].' '.Lang::get('bedrooms');?></li>
+                                <li><?php echo $same_properties['rooms'].' '.Lang::get('rooms');?></li>
+                                <li><?php echo $same_properties['toilets'].' '. Lang::get('rooms');?></li>
                             </ul>
 
                             <div class="listing-footer">
-                                <a href="#"><i class="fa fa-user"></i> Chester Miller</a>
-                                <span><i class="fa fa-calendar-o"></i> 4 days ago</span>
+                                <a href="#"><i class="fa fa-user"></i> <?php echo ucwords($same_properties['name']); ?></a>
+                                <span><i class="fa fa-calendar-o"></i> <?php echo \Date::time_ago($same_properties['created_at'], '', "day"); ?></span>
                             </div>
 
                         </div>
                         <!-- Listing Item / End -->
 
                     </div>
+                    <?php
+                    endforeach;
+                    ?>
                     <!-- Listing Item / End -->
-
-
-                    <!-- Listing Item -->
-                    <div class="listing-item">
-
-                        <a href="#" class="listing-img-container">
-
-                            <div class="listing-badges">
-                                <span>For Sale</span>
-                            </div>
-
-                            <div class="listing-img-content">
-                                <span class="listing-price">$420,000 <i>$770 / sq ft</i></span>
-                                <span class="like-icon"></span>
-                            </div>
-
-                            <div><img src="images/listing-04.jpg" alt=""></div>
-
-                        </a>
-
-                        <div class="listing-content">
-
-                            <div class="listing-title">
-                                <h4><a href="#">Selway Apartments</a></h4>
-                                <a href="https://maps.google.com/maps?q=221B+Baker+Street,+London,+United+Kingdom&hl=en&t=v&hnear=221B+Baker+St,+London+NW1+6XE,+United+Kingdom" class="listing-address popup-gmaps">
-                                    <i class="fa fa-map-marker"></i>
-                                    33 William St. Northbrook, IL
-                                </a>
-
-                                <a href="#" class="details button border">Details</a>
-                            </div>
-
-                            <ul class="listing-details">
-                                <li>540 sq ft</li>
-                                <li>1 Bedroom</li>
-                                <li>3 Rooms</li>
-                                <li>2 Bathroom</li>
-                            </ul>
-
-                            <div class="listing-footer">
-                                <a href="#"><i class="fa fa-user"></i> Kristen Berry</a>
-                                <span><i class="fa fa-calendar-o"></i> 3 days ago</span>
-                            </div>
-
-                        </div>
-                        <!-- Listing Item / End -->
-
-                    </div>
-                    <!-- Listing Item / End -->
-
-
-                    <!-- Listing Item -->
-                    <div class="listing-item">
-
-                        <a href="#" class="listing-img-container">
-                            <div class="listing-badges">
-                                <span>For Sale</span>
-                            </div>
-
-                            <div class="listing-img-content">
-                                <span class="listing-price">$535,000 <i>$640 / sq ft</i></span>
-                                <span class="like-icon"></span>
-                            </div>
-
-                            <img src="images/listing-05.jpg" alt="">
-                        </a>
-
-                        <div class="listing-content">
-
-                            <div class="listing-title">
-                                <h4><a href="#">Oak Tree Villas</a></h4>
-                                <a href="https://maps.google.com/maps?q=221B+Baker+Street,+London,+United+Kingdom&hl=en&t=v&hnear=221B+Baker+St,+London+NW1+6XE,+United+Kingdom" class="listing-address popup-gmaps">
-                                    <i class="fa fa-map-marker"></i>
-                                    71 Lower River Dr. Bronx, NY
-                                </a>
-
-                                <a href="#" class="details button border">Details</a>
-                            </div>
-
-                            <ul class="listing-details">
-                                <li>350 sq ft</li>
-                                <li>1 Bedroom</li>
-                                <li>2 Rooms</li>
-                                <li>1 Bathroom</li>
-                            </ul>
-
-                            <div class="listing-footer">
-                                <a href="#"><i class="fa fa-user"></i> Mabel Gagnon</a>
-                                <span><i class="fa fa-calendar-o"></i> 4 days ago</span>
-                            </div>
-
-                        </div>
-                        <!-- Listing Item / End -->
-
-                    </div>
-                    <!-- Listing Item / End -->
-
                 </div>
                 <!-- Similar Listings Container / End -->
 
@@ -306,9 +239,9 @@ $properties = \Arr::get($content, "properties");
 
                 <!-- Widget -->
                 <div class="widget margin-bottom-30">
-                    <button class="widget-button with-tip" data-tip-content="Print"><i class="sl sl-icon-printer"></i></button>
-                    <button class="widget-button with-tip" data-tip-content="Add to Bookmarks"><i class="fa fa-star-o"></i></button>
-                    <button class="widget-button with-tip compare-widget-button" data-tip-content="Add to Compare"><i class="icon-compare"></i></button>
+                    <button class="widget-button with-tip" data-tip-content="<?php echo \Lang::get('print');?>"><i class="sl sl-icon-printer"></i></button>
+                    <button class="widget-button with-tip" data-tip-content="<?php echo \Lang::get('add_to_bookmarks');?>"><i class="fa fa-star-o"></i></button>
+                    <button class="widget-button with-tip compare-widget-button" data-tip-content="<?php echo \Lang::get('add_to_compare');?>"><i class="icon-compare"></i></button>
                     <div class="clearfix"></div>
                 </div>
                 <!-- Widget / End -->
@@ -413,7 +346,9 @@ $properties = \Arr::get($content, "properties");
                         </div>
 
                         <button class="button calc-button" formvalidate>Calculate</button>
-                        <div class="calc-output-container"><div class="notification success">Monthly Payment: <strong class="calc-output"></strong></div></div>
+                        <div class="calc-output-container">
+                            <div class="notification success">Monthly Payment: <strong class="calc-output"></strong></div>
+                        </div>
                     </form>
                     <!-- Mortgage Calculator / End -->
 
@@ -423,94 +358,48 @@ $properties = \Arr::get($content, "properties");
 
                 <!-- Widget -->
                 <div class="widget">
-                    <h3 class="margin-bottom-35">Featured Properties</h3>
+                    <h3 class="margin-bottom-35"><?php echo \Lang::get('featured');?></h3>
 
                     <div class="listing-carousel outer">
                         <!-- Item -->
-                        <div class="item">
-                            <div class="listing-item compact">
+                        <?php
+                        foreach (\Arr::get($content, "featured") as $featured) :
+                            ?>
+                            <div class="item">
+                                <div class="listing-item compact">
 
-                                <a href="#" class="listing-img-container">
+                                    <a href="/<?php echo $featured['shape']; ?>/details/<?php echo $featured['id']; ?>" class="listing-img-container">
 
-                                    <div class="listing-badges">
-                                        <span class="featured">Featured</span>
-                                        <span>For Sale</span>
-                                    </div>
+                                        <div class="listing-badges">
+                                            <span class="featured">Featured</span>
+                                            <span><?php echo $featured['shape'] == 'sale' ? "Bán" : "Cho Thuê" ?></span>
+                                        </div>
 
-                                    <div class="listing-img-content">
-                                        <span class="listing-compact-title">Eagle Apartments <i>$275,000</i></span>
+                                        <div class="listing-img-content">
+                                            <span class="listing-compact-title"> <?php echo Str::truncate($featured['title'], 15, '...'); ?> <i><?php echo $featured['price']; ?> triệu</i></span>
 
-                                        <ul class="listing-hidden-content">
-                                            <li>Area <span>530 sq ft</span></li>
-                                            <li>Rooms <span>3</span></li>
-                                            <li>Beds <span>1</span></li>
-                                            <li>Baths <span>1</span></li>
-                                        </ul>
-                                    </div>
+                                            <ul class="listing-hidden-content">
+                                                <li><?php echo Lang::get('area');?> <span><?php echo $featured['area']; ?> m2</span></li>
+                                                <li><?php echo Lang::get('rooms');?> <span><?php echo $featured['rooms']; ?></span></li>
+                                                <li><?php echo Lang::get('bedrooms');?> <span><?php echo $featured['bedrooms']; ?></span></li>
+                                                <li><?php echo Lang::get('toilets');?> <span><?php echo $featured['toilets']; ?></span></li>
+                                            </ul>
+                                        </div>
+                                        <?php
+                                            foreach (explode('/', $featured['src']) as $file) :
+                                                ?>
+                                            <img src="<?php echo \Asset::get_file($file, 'img'); ?>" alt="">
+                                        <?php
+                                                break;
+                                            endforeach;
+                                            ?>
+                                    </a>
 
-                                    <img src="images/listing-01.jpg" alt="">
-                                </a>
-
+                                </div>
                             </div>
-                        </div>
-                        <!-- Item / End -->
-
-                        <!-- Item -->
-                        <div class="item">
-                            <div class="listing-item compact">
-
-                                <a href="#" class="listing-img-container">
-
-                                    <div class="listing-badges">
-                                        <span class="featured">Featured</span>
-                                        <span>For Sale</span>
-                                    </div>
-
-                                    <div class="listing-img-content">
-                                        <span class="listing-compact-title">Selway Apartments <i>$245,000</i></span>
-
-                                        <ul class="listing-hidden-content">
-                                            <li>Area <span>530 sq ft</span></li>
-                                            <li>Rooms <span>3</span></li>
-                                            <li>Beds <span>1</span></li>
-                                            <li>Baths <span>1</span></li>
-                                        </ul>
-                                    </div>
-
-                                    <img src="images/listing-02.jpg" alt="">
-                                </a>
-
-                            </div>
-                        </div>
-                        <!-- Item / End -->
-
-                        <!-- Item -->
-                        <div class="item">
-                            <div class="listing-item compact">
-
-                                <a href="#" class="listing-img-container">
-
-                                    <div class="listing-badges">
-                                        <span class="featured">Featured</span>
-                                        <span>For Sale</span>
-                                    </div>
-
-                                    <div class="listing-img-content">
-                                        <span class="listing-compact-title">Oak Tree Villas <i>$325,000</i></span>
-
-                                        <ul class="listing-hidden-content">
-                                            <li>Area <span>530 sq ft</span></li>
-                                            <li>Rooms <span>3</span></li>
-                                            <li>Beds <span>1</span></li>
-                                            <li>Baths <span>1</span></li>
-                                        </ul>
-                                    </div>
-
-                                    <img src="images/listing-03.jpg" alt="">
-                                </a>
-
-                            </div>
-                        </div>
+                        <?php
+                        endforeach;
+                        ?>
                         <!-- Item / End -->
                     </div>
 
@@ -523,5 +412,3 @@ $properties = \Arr::get($content, "properties");
 
     </div>
 </div>
-
-

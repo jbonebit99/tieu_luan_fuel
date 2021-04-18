@@ -49,10 +49,11 @@ class Controller_Frontend_Submit_Property extends Controller_Template
                     'price' => $val->validated('price'),
                     'area' => $val->validated('area'),
                     'rooms' => (Input::post('rooms') < 6) ? Input::post('rooms') : 6,
-                    'expiration_date' => null,
+                    'expiration_date' => $this->create_expiration($id_user, \Date::forge()->get_timestamp()),
                     'created_at' => Date::forge()->get_timestamp(),
                     'updated_at' => null,
                     'user_id' => (isset($id_user)) ? $id_user : 0,
+                    'featured' => $this->check_featured_account($id_user),
                     'status' => 0,
                 );
                 Model_Property::insert_properties('property', $p_data);
@@ -109,23 +110,21 @@ class Controller_Frontend_Submit_Property extends Controller_Template
                     }
                     Model_Property::insert_image_properties('img_properties', $p_data_image);
                 }
-//                foreach (Upload::get_errors() as $file) {
-//                    $error = $file['errors']['0']['message'];
-//                    $view = View::forge('frontend\submit\property/index');
-//                    $view->set('error', $error);
-//                    return Response::forge($view);
-//                }
+                //                foreach (Upload::get_errors() as $file) {
+                //                    $error = $file['errors']['0']['message'];
+                //                    $view = View::forge('frontend\submit\property/index');
+                //                    $view->set('error', $error);
+                //                    return Response::forge($view);
+                //                }
                 $data["errors"] = array(
                     'error' => '',
                     'data' => ''
                 );
-                Controller_Utility::message('Hello');
-                die;
+                Controller_Utility::message('Tin của bạn sẽ được xử lý trong 1 - 2 giờ làm việc!');
                 $this->template->title = 'Đăng tin Bất Động Sản';
                 $this->template->subnav = '';
                 $this->template->content = View::forge('frontend\submit\property/index', $data);
             }
-
         } else {
             $data["errors"] = array(
                 'error' => '',
@@ -135,17 +134,13 @@ class Controller_Frontend_Submit_Property extends Controller_Template
             $this->template->subnav = '';
             $this->template->content = View::forge('frontend\submit\property/index', $data);
         }
-
     }
 
     public function action_create()
-    {
-    }
+    { }
 
     public function action_edit()
-    {
-
-    }
+    { }
 
     public function action_delete()
     {
@@ -166,8 +161,29 @@ class Controller_Frontend_Submit_Property extends Controller_Template
     }
 
     public function action_hide()
+    { }
+
+    public function create_expiration($id_user, $crated_at)
     {
-
+        $result = Model_Users::find($id_user, array('select' => 'account_type'));
+        !is_numeric($crated_at) and $crated_at = Date::create_from_string($crated_at)->get_timestamp();
+        if ($result['account_type'] == 'basic') {
+            $expiration = strtotime('+30 days', $crated_at);
+            return $expiration;
+        } elseif ($result['account_type'] == 'extended') {
+            $expiration = strtotime('+90 days', $crated_at);
+            return $expiration;
+        } else {
+            $expiration = strtotime('+90 days', $crated_at);
+            return $expiration;
+        }
     }
-
+    public function check_featured_account($id_user)
+    {
+        $result = Model_Users::find($id_user, array('select' => 'account_type'));
+        if ($result['account_type'] == 'extended' || $result['account_type'] == 'professional') {
+            return true;
+        }
+        return false;
+    }
 }

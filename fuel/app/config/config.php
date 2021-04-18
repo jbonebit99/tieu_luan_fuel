@@ -142,13 +142,13 @@ return array(
 	 *  The default language.
 	 */
 
-	// 'language' => 'en',
+	'language' => 'vi',
 
 	/**
 	 *  Fallback language when file isn't available for default language.
 	 */
 
-	// 'language_fallback' => 'en',
+	'language_fallback' => 'en',
 
 	/**
 	 *  PHP set_locale() setting. Use null to not set.

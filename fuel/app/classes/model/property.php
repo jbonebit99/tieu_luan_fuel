@@ -32,9 +32,7 @@ class Model_Property extends \Orm\Model
         try {
             $_p_newly = DB::query("SELECT * FROM property LIMIT :limit");
             $_p_newly->bind('limit', $limit);
-        } catch (PhpErrorException $e) {
-
-        }
+        } catch (PhpErrorException $e) { }
     }
 
     public static function insert_properties($table = null, $data = [])
@@ -48,9 +46,7 @@ class Model_Property extends \Orm\Model
                 } else {
                     return false;
                 }
-            } catch (PhpErrorException  $e) {
-
-            }
+            } catch (PhpErrorException  $e) { }
         }
         return false;
     }
@@ -71,8 +67,7 @@ class Model_Property extends \Orm\Model
                 } else {
                     return false;
                 }
-            } catch (PhpErrorException  $e) {
-            }
+            } catch (PhpErrorException  $e) { }
         }
         return false;
     }
@@ -89,16 +84,14 @@ class Model_Property extends \Orm\Model
                 } else {
                     return false;
                 }
-            } catch (PhpErrorException $e) {
-
-            }
+            } catch (PhpErrorException $e) { }
         }
         return false;
     }
 
     public static function delete_properties($array_table = array(), $columns = array(), $condition = null)
     {
-        foreach ($array_table as $table):
+        foreach ($array_table as $table) :
             $query = DB::update($table);
             $query->set($columns);
             if ($table !== 'property') {
@@ -155,7 +148,7 @@ class Model_Property extends \Orm\Model
         return static::find('last')->id;
     }
 
-    public static function get_properties($shape, $type = null, $limit = null)
+    public static function get_properties($shape, $type = null, $limit = null, $offset = null)
     {
         $query = DB::select_array(array(
             'property.id',
@@ -166,12 +159,18 @@ class Model_Property extends \Orm\Model
             'property.area',
             'property.rooms',
             'property.created_at',
+            'property.featured',
             'location_properties.address',
             'location_properties.province',
             'location_properties.district',
             'location_properties.ward',
+            'detail_properties.description',
             'detail_properties.bedrooms',
             'detail_properties.toilets',
+            'detail_properties.gym',
+            'detail_properties.market',
+            'detail_properties.hospital',
+            'detail_properties.parking',
             'contact_properties.name',
             array(DB::expr('group_concat( img_properties.file_name SEPARATOR "/" )'), 'src'),
         ));
@@ -196,6 +195,9 @@ class Model_Property extends \Orm\Model
         if ($limit !== null) {
             $query->limit($limit);
         }
+        if ($offset !== null) {
+            $query->offset($offset);
+        }
         return $query->execute();
     }
 
@@ -205,7 +207,9 @@ class Model_Property extends \Orm\Model
             'property.id',
             'property.title',
             'property.price',
+            'property.shape',
             'property.expiration_date',
+            'property.status',
             'location_properties.address',
             'location_properties.province',
             'location_properties.district',
@@ -218,7 +222,7 @@ class Model_Property extends \Orm\Model
         $query->join('img_properties', 'LEFT');
         $query->on('property.id', '=', 'img_properties.id_properties');
         $query->where('property.user_id', $id_user);
-        $query->and_where('property.status', 1);
+        $query->and_where('property.status', '!=', -1);
         $query->group_by('img_properties.id_properties');
         return $query->execute();
     }
@@ -236,6 +240,7 @@ class Model_Property extends \Orm\Model
         $query->join('users', 'LEFT');
         $query->on('property.user_id', '=', 'users.id');
         $query->where('property.status', $status);
+        $query->order_by('created_at', 'desc');
         return $query->execute();
     }
 
@@ -297,12 +302,117 @@ class Model_Property extends \Orm\Model
         return $query->execute();
     }
 
-//    public function get_image_properties()
-//    {
-//        $query = DB::select();
-//        $query->from();
-//        $query->where();
-//    }
+    public static function get_properties_preview_by_id($id = null, $shape = '')
+    {
+        $query = DB::select_array(array(
+            'property.id',
+            'property.title',
+            'property.shape',
+            'property.type',
+            'property.price',
+            'property.area',
+            'property.rooms',
+            'property.created_at',
+            'location_properties.address',
+            'location_properties.province',
+            'location_properties.district',
+            'location_properties.ward',
+            'detail_properties.description',
+            'detail_properties.gym',
+            'detail_properties.market',
+            'detail_properties.hospital',
+            'detail_properties.parking',
+            'detail_properties.bedrooms',
+            'detail_properties.toilets',
+            'contact_properties.name',
+            'contact_properties.email',
+            'contact_properties.phone',
+            'map_properties.longitude',
+            'map_properties.latitude',
+            array(DB::expr('group_concat( img_properties.file_name SEPARATOR "/" )'), 'src'),
+        ));
+        $query->from('property');
+        $query->join('location_properties', 'LEFT');
+        $query->on('property.id', '=', 'location_properties.id_properties');
+        $query->join('img_properties', 'LEFT');
+        $query->on('property.id', '=', 'img_properties.id_properties');
+        $query->join('map_properties', 'LEFT');
+        $query->on('property.id', '=', 'map_properties.id_properties');
+        $query->join('detail_properties', 'LEFT');
+        $query->on('property.id', '=', 'detail_properties.id_properties');
+        $query->join('contact_properties', 'LEFT');
+        $query->on('property.id', '=', 'contact_properties.id_properties');
+        $query->where('property.id', $id);
+        $query->and_where('property.status', 'in', array(0, 1));
+        $query->and_where('property.shape', $shape);
+        $query->group_by('img_properties.id_properties');
+        $query->as_assoc();
+        return $query->execute();
+    }
+
+    public static function get_featured_properties($limit = null)
+    {
+        $query = DB::select_array(array(
+            'property.id',
+            'property.title',
+            'property.shape',
+            'property.type',
+            'property.price',
+            'property.area',
+            'property.rooms',
+            'property.featured',
+            'property.created_at',
+            'detail_properties.bedrooms',
+            'detail_properties.toilets',
+            array(DB::expr('group_concat( img_properties.file_name SEPARATOR "/" )'), 'src'),
+        ));
+        $query->from('property');
+        $query->join('img_properties', 'LEFT');
+        $query->on('property.id', '=', 'img_properties.id_properties');
+        $query->join('detail_properties', 'LEFT');
+        $query->on('property.id', '=', 'detail_properties.id_properties');
+        $query->where('property.featured', 1);
+        $query->and_where('property.status', 1);
+        $query->group_by('img_properties.id_properties');
+        $query->order_by('created_at','DESC');
+        $query->limit($limit);
+        return $query->execute();
+    } 
+
+    public static function get_same_properties()
+    {
+        $query = DB::select_array(array(
+            'property.id',
+            'property.title',
+            'property.shape',
+            'property.type',
+            'property.price',
+            'property.area',
+            'property.rooms',
+            'property.featured',
+            'property.created_at',
+            'location_properties.province',
+            'location_properties.district',
+            'detail_properties.bedrooms',
+            'detail_properties.toilets',
+            'contact_properties.name',
+            array(DB::expr('group_concat( img_properties.file_name SEPARATOR "/" )'), 'src'),
+        ));
+        $query->from('property');
+        $query->join('img_properties', 'LEFT');
+        $query->on('property.id', '=', 'img_properties.id_properties');
+        $query->join('detail_properties', 'LEFT');
+        $query->on('property.id', '=', 'detail_properties.id_properties');
+        $query->join('contact_properties', 'LEFT');
+        $query->on('property.id', '=', 'contact_properties.id_properties');
+        $query->join('location_properties', 'LEFT');
+        $query->on('property.id', '=', 'location_properties.id_properties');
+        $query->where('property.featured', 1);
+        $query->and_where('property.status', 1);
+        $query->group_by('img_properties.id_properties');
+        $query->order_by(DB::expr('RAND()'));
+        $query->limit(3);
+        return $query->execute();
+    }
+
 }
-
-

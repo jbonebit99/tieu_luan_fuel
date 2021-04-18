@@ -70,7 +70,7 @@
                 foreach (\Arr::get($content, "properties") as $value):
                     ?>
                     <!-- Item #1 -->
-                    <tr>
+                    <tr id="<?php echo $value['id'] ?>">
                         <td class="title-container">
                             <?php
                             foreach (explode('/', $value['src']) as $file):
@@ -81,15 +81,27 @@
                             endforeach;
                             ?>
                             <div class="title">
-                                <h4><a href="#"><?php echo $value['title']; ?></a></h4>
+                                <h4><a href="/<?php  echo $value['shape']; ?>/preview/<?php echo $value['id'];?>"><?php echo $value['title']; ?></a></h4>
                                 <span><?php echo $value['address'] . ", " . $value['ward'] . ", " . $value['district'] . ", " . $value['province']; ?> </span>
                                 <span class="table-property-price"><?php echo $value['price'] . " triệu"; ?></span>
                             </div>
                         </td>
-                        <td class="expire-date"><?php echo $value['expiration_date']; ?></td>
+                        <td class="expire-date"><?php echo date('d / m / Y' ,$value['expiration_date']); ?></td>
                         <td class="action">
                             <a href="#"><i class="fa fa-pencil"></i> Sửa</a>
-                            <a href="#"><i class="fa  fa-eye-slash"></i> Ẩn</a>
+                            <?php
+                            if ($value['status'] == 1) {
+                                ?>
+                                <a href="javascript:void(0)" onclick="return hide(this)" id="<?php echo "button_" . $value['id']; ?>"><i
+                                            class="fa  fa-eye-slash"></i> Ẩn</a>
+                                <?php
+                            } else {
+                                ?>
+                                <a href="#"><i class="fa  fa-eye"></i> Hiện</a>
+                                <?php
+                            }
+                            ?>
+
                             <a href="#" class="delete"><i class="fa fa-remove"></i> Xoá</a>
                         </td>
                     </tr>
@@ -101,6 +113,8 @@
             </table>
             <!--            <a href="submit-property.html" class="margin-top-40 button">Submit New Property</a>-->
         </div>
+
+
 
     </div>
 </div>

@@ -1,29 +1,27 @@
+<?php
+
+use Fuel\Core\Lang;
+\Lang::load('lang');
+?>
 
 <!-- Titlebar
 ================================================== -->
-<div class="parallax titlebar"
-	data-background="<?php echo Asset::get_file('listings-parallax.jpg','img'); ?>"
-	data-color="#333333"
-	data-color-opacity="0.7"
-	data-img-width="800"
-	data-img-height="505">
-
+<div class="parallax titlebar" data-background="<?php echo Asset::get_file('listings-parallax.jpg', 'img'); ?>" data-color="#333333" data-color-opacity="0.7" data-img-width="800" data-img-height="505">
 	<div id="titlebar">
 		<div class="container">
 			<div class="row">
 				<div class="col-md-12">
 
-					<h2><?php echo Arr::get($content, "title" ); ?></h2>
-					<span><?php echo Arr::get($content, "subtitle" ); ?></span>
-					
+					<h2><?php echo Arr::get($content, "title"); ?></h2>
+					<span><?php echo Arr::get($content, "subtitle"); ?></span>
+
 					<!-- Breadcrumbs -->
 					<nav id="breadcrumbs">
 						<ul>
 							<li><a href="/">Home</a></li>
-							<li><?php echo Arr::get($content, "title" ); ?></li>
+							<li><?php echo \Arr::get($content, "title"); ?></li>
 						</ul>
 					</nav>
-
 				</div>
 			</div>
 		</div>
@@ -37,11 +35,11 @@
 	<div class="row sticky-wrapper">
 
 		<div class="col-md-8">
-
+ 
 			<!-- Main Search Input -->
 			<div class="main-search-input margin-bottom-35">
-				<input type="text" class="ico-01" placeholder="Enter address e.g. street, city and state or zip" value=""/>
-				<button class="button">Tìm</button>
+				<input type="text" class="ico-01" placeholder="Enter address e.g. street, city and state or zip" value="" />
+				<button class="button" disabled><?php echo \Lang::get('search');?></button>
 			</div>
 
 			<!-- Sorting / Layout Switcher -->
@@ -50,15 +48,15 @@
 				<div class="col-md-6">
 					<!-- Sort by -->
 					<div class="sort-by">
-						<label>Sắp xếp:</label>
+						<label><?php echo \Lang::get('sort_by');?>:</label>
 
 						<div class="sort-by-select">
-							<select data-placeholder="Default order" class="chosen-select-no-single" >
-								<option>Default Order</option>	
-								<option>Price Low to High</option>
-								<option>Price High to Low</option>
-								<option>Newest Properties</option>
-								<option>Oldest Properties</option>
+							<select data-placeholder="Default order" class="chosen-select-no-single" onchange="return sort(this);">
+								<option value="default"><?php echo \Lang::get('default');?></option>
+								<option value="price_high_to_low"><?php echo \Lang::get('price_high_to_low');?></option>
+								<option value="price_low_to_high"><?php echo \Lang::get('price_low_to_high');?></option>
+								<option value="newest"><?php echo \Lang::get('newest');?></option>
+								<option value="oldest"><?php echo \Lang::get('oldest');?></option>
 							</select>
 						</div>
 					</div>
@@ -73,79 +71,86 @@
 				</div>
 			</div>
 
-			
+
 			<!-- Listings -->
-			<div class="listings-container list-layout">
-                <?php
-                foreach (Arr::get($content,"properties") as $value):
-                ?>
-				<!-- Listing Item -->
-				<div class="listing-item">
+			<div class="listings-container list-layout" id="list_content">
+				<?php
+				foreach (Arr::get($content, "properties") as $value) :
+					?>
+					<!-- Listing Item -->
+					<div class="listing-item">
 
-					<a href="" class="listing-img-container">
+						<a href="" class="listing-img-container">
 
-						<div class="listing-badges">
-							<span class="featured">Featured</span>
-							<span>For Sale</span>
-						</div>
+							<div class="listing-badges">
+								<?php
+								if($value['featured']):
+								?>
+								<span class="featured">Featured</span>
+								<?php
+									endif;
+								?>
+								<span><?php echo $value['shape'] == 'sale' ? \Lang::get('sale') : \Lang::get('rent'); ?></span>
+							</div>
 
-						<div class="listing-img-content">
-							<span class="listing-price"><?php echo $value['price']." triệu";?> <i>$520 / sq ft</i></span>
-							<span class="like-icon with-tip" data-tip-content="Add to Bookmarks"></span>
-							<span class="compare-button with-tip" data-tip-content="Add to Compare"></span>
-						</div>
+							<div class="listing-img-content">
+								<span class="listing-price"><?php echo $value['price'] . " triệu"; ?> <i></i></span>
+								<span class="like-icon with-tip" data-tip-content="<?php echo \Lang::get('add_to_bookmarks');?>"></span>
+								<span class="compare-button with-tip" data-tip-content="<?php echo \Lang::get('add_to_compare');?>"></span>
+							</div>
 
-						<div class="listing-carousel">
-                            <?php
-                            \Asset::add_path('uploads/img', 'img');
+							<div class="listing-carousel">
+								<?php
+									\Asset::add_path('uploads/img', 'img');
 
-                            foreach (explode('/',$value['src']) as $file):
-                            ?>
-							<div><img src="<?php echo  \Asset::get_file($file,'img'); ?> " alt=""></div>
-                            <?php
-                                    endforeach;
-                            ?>
-						</div>
-					</a>
-					
-					<div class="listing-content">
+									foreach (explode('/', $value['src']) as $file) :
+										?>
+									<div><img src="<?php echo  \Asset::get_file($file, 'img'); ?> " alt=""></div>
+								<?php
+									endforeach;
+									?>
+							</div>
+						</a>
 
-						<div class="listing-title">
-							<h4><a href="/<?php echo $value['shape'];?>/details/<?php echo$value['id'] ?>"><?php echo $value['title'];?></a></h4>
-							<a href="https://maps.google.com/maps?q=221B+Baker+Street,+London,+United+Kingdom&hl=en&t=v&hnear=221B+Baker+St,+London+NW1+6XE,+United+Kingdom" class="listing-address popup-gmaps">
-								<i class="fa fa-map-marker"></i>
-                                <?php echo ($value['address'].", ".$value['ward'].", ".$value['district']).", ".$value['province']; ?>
-							</a>
+						<div class="listing-content">
 
-							<a href="single-property-page-1.html" class="details button border">Chi Tiết</a>
-						</div>
+							<div class="listing-title">
+								<h4><a href="/<?php echo $value['shape']; ?>/details/<?php echo $value['id']; ?>"><?php echo $value['title']; ?></a></h4>
+								<a href="">
+									<i class="fa fa-map-marker"></i>
+									<?php echo ($value['address'] . ", " . $value['ward'] . ", " . $value['district']) . ", " . $value['province']; ?>
+								</a>
 
-						<ul class="listing-details">
-<!--							<li>530 sq ft</li>-->
-							<li><?php echo $value['bedrooms'];?> Phòng ngủ</li>
-							<li><?php echo $value['rooms'];?> Phòng</li>
-							<li><?php echo $value['toilets'];?> Toilet</li>
-						</ul>
+								<a href="/<?php echo $value['shape']; ?>/details/<?php echo $value['id']; ?>" class="details button border"><?php echo ucwords(\Lang::get('details')); ?></a>
+							</div>
 
-						<div class="listing-footer">
-							<a href="#"><i class="fa fa-user"></i> <?php echo $value['name'];?></a>
-							<span><i class="fa fa-calendar-o"></i> <?php echo \Fuel\Core\Date::time_ago($value['created_at'],'',"day") ?></span>
+							<ul class="listing-details">
+								<!--							<li>530 sq ft</li>-->
+								<li><?php echo $value['bedrooms']; ?> <?php echo \Lang::get('bedrooms'); ?></li>
+								<li><?php echo $value['rooms']; ?> <?php echo \Lang::get('rooms'); ?></li>
+								<li><?php echo $value['toilets']; ?> <?php echo \Lang::get('toilets'); ?></li>
+							</ul>
+
+							<div class="listing-footer">
+								<a href="#"><i class="fa fa-user"></i> <?php echo ucwords($value['name']); ?></a>
+								<span><i class="fa fa-calendar-o"></i> <?php echo \Date::time_ago($value['created_at'], '', "day") ?></span>
+							</div>
+
 						</div>
 
 					</div>
-
-				</div>
-				<!-- Listing Item / End -->
-                <?php
-                endforeach;
-                ?>
+					<!-- Listing Item / End -->
+				<?php
+				endforeach;
+				?>
 
 			</div>
 			<!-- Listings Container / End -->
-
-			
+			<?php
+			echo Paginationapp::instance('my_pagination')->render();
+			?>
 			<!-- Pagination -->
-			<div class="pagination-container margin-top-20">
+			<!-- <div class="pagination-container margin-top-20">
 				<nav class="pagination">
 					<ul>
 						<li><a href="#" class="current-page">1</a></li>
@@ -155,14 +160,13 @@
 						<li><a href="#">22</a></li>
 					</ul>
 				</nav>
-
 				<nav class="pagination-next-prev">
 					<ul>
 						<li><a href="#" class="prev">Previous</a></li>
 						<li><a href="#" class="next">Next</a></li>
 					</ul>
 				</nav>
-			</div>
+			</div> -->
 			<!-- Pagination / End -->
 
 		</div>
@@ -175,14 +179,14 @@
 
 				<!-- Widget -->
 				<div class="widget margin-bottom-40">
-					<h3 class="margin-top-0 margin-bottom-35">Find New Home</h3>
+					<h3 class="margin-top-0 margin-bottom-35"><?php echo \Lang::get('find_new_properties'); ?></h3>
 
 					<!-- Row -->
 					<div class="row with-forms">
 						<!-- Status -->
 						<div class="col-md-12">
-							<select data-placeholder="Any Status" class="chosen-select-no-single" >
-								<option>Any Status</option>	
+							<select data-placeholder="Any Status" class="chosen-select-no-single">
+								<option>Any Status</option>
 								<option>For Sale</option>
 								<option>For Rent</option>
 							</select>
@@ -195,8 +199,8 @@
 					<div class="row with-forms">
 						<!-- Type -->
 						<div class="col-md-12">
-							<select data-placeholder="Any Type" class="chosen-select-no-single" >
-								<option>Any Type</option>	
+							<select data-placeholder="Any Type" class="chosen-select-no-single">
+								<option>Any Type</option>
 								<option>Apartments</option>
 								<option>Houses</option>
 								<option>Commercial</option>
@@ -212,7 +216,7 @@
 					<div class="row with-forms">
 						<!-- States -->
 						<div class="col-md-12">
-							<select data-placeholder="All States" class="chosen-select" >
+							<select data-placeholder="All States" class="chosen-select">
 								<option>All States</option>
 							</select>
 						</div>
@@ -224,7 +228,7 @@
 					<div class="row with-forms">
 						<!-- Cities -->
 						<div class="col-md-12">
-							<select data-placeholder="All Cities" class="chosen-select" >
+							<select data-placeholder="All Cities" class="chosen-select">
 								<option>All Cities</option>
 
 							</select>
@@ -238,9 +242,9 @@
 
 						<!-- Min Area -->
 						<div class="col-md-6">
-							<select data-placeholder="Beds" class="chosen-select-no-single" >
-								<option label="blank"></option>	
-								<option>Beds (Any)</option>	
+							<select data-placeholder="Beds" class="chosen-select-no-single">
+								<option label="blank"></option>
+								<option>Beds (Any)</option>
 								<option>1</option>
 								<option>2</option>
 								<option>3</option>
@@ -251,9 +255,9 @@
 
 						<!-- Max Area -->
 						<div class="col-md-6">
-							<select data-placeholder="Baths" class="chosen-select-no-single" >
-								<option label="blank"></option>	
-								<option>Baths (Any)</option>	
+							<select data-placeholder="Baths" class="chosen-select-no-single">
+								<option label="blank"></option>
+								<option>Baths (Any)</option>
 								<option>1</option>
 								<option>2</option>
 								<option>3</option>
@@ -275,7 +279,7 @@
 					</div>
 
 					<br>
-					
+
 					<!-- Price Range -->
 					<div class="range-slider">
 						<label>Price Range</label>
@@ -292,18 +296,18 @@
 
 						<!-- Checkboxes -->
 						<div class="checkboxes one-in-row margin-bottom-10">
-					
+
 							<input id="check-2" type="checkbox" name="check">
 							<label for="check-2">Air Conditioning</label>
 
 							<input id="check-3" type="checkbox" name="check">
 							<label for="check-3">Swimming Pool</label>
 
-							<input id="check-4" type="checkbox" name="check" >
+							<input id="check-4" type="checkbox" name="check">
 							<label for="check-4">Central Heating</label>
 
 							<input id="check-5" type="checkbox" name="check">
-							<label for="check-5">Laundry Room</label>	
+							<label for="check-5">Laundry Room</label>
 
 
 							<input id="check-6" type="checkbox" name="check">
@@ -314,14 +318,14 @@
 
 							<input id="check-8" type="checkbox" name="check">
 							<label for="check-8">Window Covering</label>
-					
+
 						</div>
 						<!-- Checkboxes / End -->
 
 					</div>
 					<!-- More Search Options / End -->
 
-					<button class="button fullwidth margin-top-30">Search</button>
+					<button class="button fullwidth margin-top-30"><?php echo \Lang::get('search');?></button>
 
 
 				</div>
