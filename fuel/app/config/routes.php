@@ -57,6 +57,7 @@ return array(
 	'sale/lands'=>'frontend/sale/lands_for_sale',
 	'sale'=>'frontend/sale/index',
     '(:shape)/details/(:id)'=>'frontend/$1/detail',
+	'(:shape)/preview/(:id)'=>'frontend/$1/detail_preview',
 	'sale/houses'=>'frontend/sale/houses_for_sale',
 	'rent'=>'frontend/rent/index',
 	'rent/ware-housing'=>'frontend/rent/ware_housing_for_rent',

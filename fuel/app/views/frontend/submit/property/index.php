@@ -1,6 +1,4 @@
-<?php
-var_dump($errors);
-?>
+
 <style>
     #map_cuc_manh {
         height: 400px;

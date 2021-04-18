@@ -708,7 +708,7 @@
             $('#12').remove();
         });
 
-        $(".button,.reset").on('click',function () {
+        $(".button,.reset").on('click', function () {
             $(".listing-item,.compact").remove();
         })
 
@@ -1607,13 +1607,12 @@
 
     };
 
-
 })(this.jQuery);
 
 
 function getDistrict() {
     var province_id = $('#province').find(':selected').val();
-    if(province_id !== undefined) {
+    if (province_id !== undefined) {
         $.ajax(
             {
                 url: "/api/address/district",
@@ -1628,7 +1627,7 @@ function getDistrict() {
                         });
                         $('#ward').empty();
                         getWard();
-                    }else {
+                    } else {
                         $('#district').empty().append().trigger("chosen:updated");
                         $('#ward').empty().append().trigger("chosen:updated");
                     }
@@ -1637,14 +1636,14 @@ function getDistrict() {
                 }
             }
         );
-    }else {
+    } else {
         $('#district').empty();
     }
 }
 
 function getWard() {
     var district_id = $('#district').find(':selected').val();
-    if(district_id !== undefined) {
+    if (district_id !== undefined) {
         $.ajax(
             {
                 url: "/api/address/ward",
@@ -1657,7 +1656,7 @@ function getWard() {
                         $.each(result.data, function (index, value) {
                             $('#ward').append('<option value="' + value.id + '">' + value._name + ' </option>').trigger("chosen:updated");
                         });
-                    }else {
+                    } else {
                         $('#ward').empty().append().trigger("chosen:updated");
                     }
                 },
@@ -1665,7 +1664,7 @@ function getWard() {
                 }
             }
         );
-    }else {
+    } else {
         $('#ward').empty();
     }
 }
@@ -1680,4 +1679,42 @@ function getTypeByShape() {
         const newOption = $('<option value="ware-housing">Kho Bãi</option> <option value="office">Văn Phòng</option>');
         $('#type').empty().append(newOption).trigger("chosen:updated");
     }
+}
+
+function hide(element) {
+    var parent = $(element).closest('tr');
+    $.ajax({
+        url: "/api/property/hidden",
+        method: "POST",
+        data: {id_properties: parent.attr('id')},
+        success: function (result) {
+            if (result.success) {
+                $().html('<a href="#"><i class="fa  fa-eye"></i> Hiện</a>');
+            }
+        },
+        error: function () {
+
+        }
+    });
+
+
+    // $(element).closest('tr').remove();
+}
+
+function sort() {
+    var sort = $("option:selected").val();
+    var pathArray = window.location.pathname;
+    $.ajax(
+        {
+            url:"/api/property/sort",
+            method:"POST",
+            data:{
+                sort: sort,
+                param: pathArray,
+            },
+            success: function name(params) {
+                
+            }
+        }
+    );
 }

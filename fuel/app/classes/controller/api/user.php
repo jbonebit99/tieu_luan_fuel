@@ -11,7 +11,7 @@ class Controller_Api_User extends Controller_Rest
         if (Input::method() == 'POST') {
             $username = (Input::param('username')) ? Input::param('username') : '';
             $email = (Input::param('email')) ? Input::param('email') : '';
-            $data = Model_Api_Users::get_Same_User($username, $email, 'users');
+            $data = Model_Api_Users::get_same_user($username, $email, 'users');
             $a_data = $data->current();
 
             if ($data->count() > 0) {
@@ -26,8 +26,12 @@ class Controller_Api_User extends Controller_Rest
                 }
 
             }
-
         }
-
+        return $this->response(
+            array(
+                'status' => 200,
+                'success' => false,
+                'data' => ''
+            ));
     }
 }
