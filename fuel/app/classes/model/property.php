@@ -231,6 +231,7 @@ class Model_Property extends \Orm\Model
     {
         $query = DB::select_array(array(
             'property.id',
+            'property.shape',
             'property.title',
             'property.user_id',
             'property.created_at',

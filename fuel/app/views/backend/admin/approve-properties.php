@@ -42,9 +42,9 @@
                             <td><span class="label label-warning">Chờ Duyệt</span></td>
                             <td>
                                 <div class="text-center">
-                                    <a class="btn btn-xs btn-bitbucket" title="Xem" ><i class="fa fa-eye"></i></a>
-                                    <a class="btn btn-xs btn-success" title="Duyệt"><i class="fa fa-check"></i></a>
-                                    <a class="btn btn-xs btn-danger" title="Xoá"><i class="fa fa-trash"></i></a>
+                                    <a href="/<?php  echo $result['shape']; ?>/preview/<?php echo $result['id'];?>" class="btn btn-xs btn-bitbucket" title="Xem" ><i class="fa fa-eye"></i></a>
+                                    <a href="<?php echo '/admin/approve-properties/accept/'.$result['id'] ?>" class="btn btn-xs btn-success" title="Duyệt"><i class="fa fa-check"></i></a>
+                                    <a href="<?php echo '/admin/approve-properties/delete/'.$result['id'] ?>" class="btn btn-xs btn-danger" title="Xoá"><i class="fa fa-trash"></i></a>
                                 </div>
                             </td>
                         </tr>
@@ -54,16 +54,7 @@
 
                     </table>
                 </div>
-                <!-- /.box-body -->
-                <!--                <div class="box-footer clearfix">-->
-                <!--                    <ul class="pagination pagination-sm no-margin pull-right">-->
-                <!--                        <li><a href="#">&laquo;</a></li>-->
-                <!--                        <li><a href="#">1</a></li>-->
-                <!--                        <li><a href="#">2</a></li>-->
-                <!--                        <li><a href="#">3</a></li>-->
-                <!--                        <li><a href="#">&raquo;</a></li>-->
-                <!--                    </ul>-->
-                <!--                </div>-->
+
             </div>
         </div>
         <!-- /.col -->

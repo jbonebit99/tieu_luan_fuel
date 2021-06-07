@@ -1,5 +1,1 @@
-<ul class="nav nav-pills">
-	<li class='<?php echo Arr::get($subnav, "index" ); ?>'><?php echo Html::anchor('backend\admin/index','Index');?></li>
-
-</ul>
-<p>Index</p>
+<h1>Chức năng này chưa khả dụng</h1>

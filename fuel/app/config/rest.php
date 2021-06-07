@@ -9,7 +9,7 @@ return array(
 	array(
 		'admin' => '1234',
 	),
-	'ignore_http_accept' => false,
+	'ignore_http_accept' => true,
 );
 
 /* End of file rest.php */

@@ -28,4 +28,11 @@ class Model_Users extends \Orm\Model
         return static::find('last')->id;
     }
 
+    public static function get_all_users()
+    {
+        $query = DB::select();
+        $query->from('users');
+        return $query->execute();
+    }
+
 }

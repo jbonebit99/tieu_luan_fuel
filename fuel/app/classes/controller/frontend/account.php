@@ -65,6 +65,7 @@ class Controller_Frontend_Account extends Controller_Template
                     Response::redirect('account/my-profile');
                 }
             } else {
+                $data["info_user"]=array();
                 $result = Model_Account::get_all_info_user($id_user);
                 foreach ($result->as_array() as $info) {
                     $data["info_user"] = array(

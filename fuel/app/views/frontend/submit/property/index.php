@@ -1,7 +1,12 @@
-
+<?php
+if (!empty(\Arr::get($errors, 'data')) ) {
+    Controller_Utility::message( \Arr::get($errors, 'data'));
+}
+?>
 <style>
     #map_cuc_manh {
         height: 400px;
+    }
 </style>
 
 <!-- Titlebar
@@ -28,28 +33,26 @@
             <div class="submit-page">
                 <?php
                 if (!\Session::get('username')) {
-                    ?>
+                ?>
                     <div class="notification notice large margin-bottom-55">
                         <h4>Vui Lòng Đăng Nhập Để Đăng Tin?</h4>
                         <p>Nếu bạn không có tài khoản, bạn có thể đăng ký <a href="/authen/register">tại đây</a>.
                         </p>
                     </div>
-                    <?php
+                <?php
                 } else {
-                    ?>
+                ?>
                     <!-- Section -->
                     <section id="submit-properties">
-                        <form action="/submit-property" method="post" enctype="multipart/form-data"
-                              name="form_submit_property">
+                        <form action="/submit-property" method="post" enctype="multipart/form-data" name="form_submit_property">
                             <h3>Thông Tin Cơ Bản</h3>
                             <div class="submit-section">
 
                                 <!-- Title -->
                                 <div class="form">
-                                    <h5>Tiêu Đề <i class="tip"
-                                                   data-tip-content="Giới thiệu sơ lược về tin của bạn"></i>
+                                    <h5>Tiêu Đề <i class="tip" data-tip-content="Giới thiệu sơ lược về tin của bạn"></i>
                                     </h5>
-                                    <input class="search-field" type="text" value="" name="title" id="title"/>
+                                    <input class="search-field" type="text" value="" name="title" id="title" required    />
                                 </div>
 
                                 <!-- Row -->
@@ -58,8 +61,7 @@
                                     <!-- Status -->
                                     <div class="col-md-6">
                                         <h5>Trạng Thái</h5>
-                                        <select class="chosen-select-no-single" name="shape" id="shape"
-                                                onchange="getTypeByShape()">
+                                        <select class="chosen-select-no-single" name="shape" id="shape" onchange="getTypeByShape()">
                                             <option value="sale">Mua Bán</option>
                                             <option value="rent">Cho Thuê</option>
                                         </select>
@@ -82,12 +84,10 @@
 
                                     <!-- Price -->
                                     <div class="col-md-4">
-                                        <h5>Giá <i class="tip"
-                                                   data-tip-content="Giá bạn muốn bán đơn vị VNĐ"></i>
+                                        <h5>Giá <i class="tip" data-tip-content="Giá bạn muốn bán đơn vị VNĐ"></i>
                                         </h5>
                                         <div class="select-input disabled-first-option">
-                                            <input type="text" data-unit="Triệu VND" name="price" id="price"
-                                                   placeholder="Ví dụ: 100.5">
+                                            <input type="text" data-unit="Triệu VND" name="price" id="price" placeholder="Ví dụ: 100.5" required>
                                         </div>
                                     </div>
 
@@ -95,8 +95,7 @@
                                     <div class="col-md-4">
                                         <h5>Diện Tích</h5>
                                         <div class="select-input disabled-first-option">
-                                            <input type="text" data-unit="m2" name="area" id="area"
-                                                   placeholder="Ví dụ: 10.5">
+                                            <input type="text" data-unit="m2" name="area" id="area" placeholder="Ví dụ: 10.5" required>
                                         </div>
                                     </div>
 
@@ -150,16 +149,13 @@
                                     <!-- Province -->
                                     <div class="col-md-4">
                                         <h5>Tỉnh/ Thành Phố</h5>
-                                        <select class="chosen-select-no-single" id="province" name="province"
-                                                onchange="getDistrict();">
+                                        <select class="chosen-select-no-single" id="province" name="province" onchange="getDistrict();">
                                             <option value="" label="blank"></option>
                                         </select>
-                                    </div
-                                            <!-- District -->
+                                    </div <!-- District -->
                                     <div class="col-md-4">
                                         <h5>Quận/ Huyện</h5>
-                                        <select class="chosen-select-no-single" id="district" name="district"
-                                                onchange="getWard();">
+                                        <select class="chosen-select-no-single" id="district" name="district" onchange="getWard();">
                                             <option value="" label="blank"></option>
                                         </select>
                                     </div>
@@ -182,22 +178,19 @@
 
                                 <!-- Price -->
                                 <div class="col-md-6">
-                                    <h5>Kinh Độ <i class="tip"
-                                                   data-tip-content="Nhập kinh độ hoặc bỏ qua để chọn trên bản đồ"></i>
+                                    <h5>Kinh Độ <i class="tip" data-tip-content="Nhập kinh độ hoặc bỏ qua để chọn trên bản đồ"></i>
                                     </h5>
                                     <div class="form">
-                                        <input class="search-field" type="text" value="" name="longitude"
-                                               id="longitude"/>
+                                        <input class="search-field" type="text" value="" name="longitude" id="longitude" />
                                     </div>
                                 </div>
 
                                 <!-- Area -->
                                 <div class="col-md-6">
-                                    <h5>Vĩ Độ <i class="tip"
-                                                 data-tip-content="Nhập vĩ độ hoặc bỏ qua để chọn trên bản đồ"></i>
+                                    <h5>Vĩ Độ <i class="tip" data-tip-content="Nhập vĩ độ hoặc bỏ qua để chọn trên bản đồ"></i>
                                     </h5>
                                     <div class="form">
-                                        <input class="search-field" type="text" value="" name="latitude" id="latitude"/>
+                                        <input class="search-field" type="text" value="" name="latitude" id="latitude" />
                                     </div>
                                 </div>
 
@@ -217,8 +210,7 @@
                                 <!-- Description -->
                                 <div class="form">
                                     <h5>Mô Tả</h5>
-                                    <textarea class="WYSIWYG" name="description" cols="40" rows="3" id="description"
-                                              spellcheck="true"></textarea>
+                                    <textarea class="WYSIWYG" name="description" cols="40" rows="3" id="description" spellcheck="true" required></textarea>
                                     <script>
                                         CKEDITOR.replace('description');
                                     </script>
@@ -302,29 +294,28 @@
                                     <!-- Name -->
                                     <div class="col-md-4">
                                         <h5>Tên</h5>
-                                        <input type="text" name="name" id="name">
+                                        <input type="text" name="name" id="name" required>
                                     </div>
                                     <!-- Email -->
                                     <div class="col-md-4">
                                         <h5>E-Mail</h5>
-                                        <input type="text" name="email" id="email">
+                                        <input type="text" name="email" id="email" required>
                                     </div>
                                     <!-- Name -->
                                     <div class="col-md-4">
                                         <h5>Số Điện Thoại <span>(*)</span></h5>
-                                        <input type="text" name="phone" id="phone">
+                                        <input type="text" name="phone" id="phone" required>
                                     </div>
                                 </div>
                                 <!-- Row / End -->
                             </div>
                             <!-- Section / End -->
                             <div class="divider"></div>
-                            <input type="submit" class="submit button" id="submit-properties" name="submit-properties"
-                                   value="Đăng Tin"/>
+                            <input type="submit" class="submit button" id="submit-properties" name="submit-properties" value="Đăng Tin" />
                             <!-- <a href="#" class="button preview">Đăng <i class="fa fa-arrow-circle-right"></i></a> -->
                         </form>
                     </section>
-                    <?php
+                <?php
                 }
                 ?>
             </div>
@@ -339,18 +330,20 @@
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(map);
-    var marker = L.marker([10.047031686637611, 105.76783154231147], {draggable: true}).addTo(map)
+    var marker = L.marker([10.047031686637611, 105.76783154231147], {
+            draggable: true
+        }).addTo(map)
         .bindPopup('Đây là toạ độ mặc định.<br> Kéo biểu tượng để chọn toạ độ.')
         .openPopup();
     // L.circle([50.5, 30.5], {radius: 200}).addTo(map);
-    $('#longitude, #latitude').blur(function () {
+    $('#longitude, #latitude').blur(function() {
         if ($('#longitude').val() && $('#latitude').val()) {
             marker.setLatLng([$('#latitude').val(), $('#longitude').val()]);
             map.setView([$('#latitude').val(), $('#longitude').val()]);
         }
     });
 
-    marker.on('dragend', function (e) {
+    marker.on('dragend', function(e) {
         $('#longitude').val(marker.getLatLng().lng);
         $('#latitude').val(marker.getLatLng().lat);
     })
@@ -358,4 +351,3 @@
     console.log(marker.getLatLng().lat);
     // L.control.zoom('zoomInText').addTo(map);
 </script>
-

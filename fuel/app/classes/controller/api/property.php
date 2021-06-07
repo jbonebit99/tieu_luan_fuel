@@ -36,15 +36,21 @@ class Controller_Api_Property extends Controller_Rest
     }
     public function post_sort()
     {
-        
+        $config = array(
+            'pagination_url' => \Config::get('base_url') . 'sale',
+            'total_items'    => 10,
+            'per_page'       => 6,
+            'uri_segment'    => 'page',
+        );
+
         $param = rtrim(\Input::param('param'),'/');
         $param = explode('/', trim($param));
         unset($param[0]);
-        if (isset($param[2]))
+        if (!isset($param[2]))
         {
-            $param[2];
+            $param[2] = null;
         }
-       
+      
         return $this->response(
             array(
                 'status' => 200,

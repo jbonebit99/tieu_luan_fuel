@@ -29,5 +29,18 @@ class Model_Contacts extends \Orm\Model
             return false;
         }
     }
+    
+    public static function get_all_contact()
+    {
+        $query = DB::select();
+        $query->from('contacts');
+        return $query->execute();
+    }
+    public static function delete_contact($id)
+    {
+        $query = DB::delete('contacts');
+        $query->where('id','=',$id);
+        return $query->execute();
+    }
 
 }

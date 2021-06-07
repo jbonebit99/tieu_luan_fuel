@@ -47,6 +47,7 @@ return array(
 	'authen/register'=>'frontend/authen/register',
     'authen/logout'=>'frontend/authen/logout',
 	'blog'=>'frontend/blog/index',
+	'blog/view/(:id)'=>'frontend/blog/view',
 	'account'=>'frontend/account/index',
 	'account/my-profile'=>'frontend/account/index',
 	'account/my-properties'=>'frontend/account/my_properties',
@@ -71,4 +72,11 @@ return array(
     'admin/manage-property/detail'=>'backend/admin/detail',
     'admin/approve-properties'=>'backend/admin/approve_properties',
     'admin/users'=>'backend/admin/users',
+	'admin/blogs'=>'backend/admin/blogs',
+	'admin/create-blog'=>'backend/admin/create_blog',
+	'admin/approve-properties/accept/(:id)'=>'frontend/submit/property/accept_property',
+	'admin/approve-properties/delete/(:id)'=>'frontend/submit/property/delete_property',
+	'admin/contacts'=>'backend/admin/contact',
+	'admin/contacts/delete/(:id)'=>'frontend/contact/delete',
+
 );
