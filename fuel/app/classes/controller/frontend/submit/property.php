@@ -1,6 +1,7 @@
 <?php
 
 use Auth\Auth;
+use Fuel\Core\Controller;
 use Fuel\Core\Controller_Template;
 use Fuel\Core\Date;
 use Fuel\Core\Input;
@@ -36,7 +37,7 @@ class Controller_Frontend_Submit_Property extends Controller_Template
             if (!$val->run()) {
                 $data["errors"] = array(
                     'error' => $val->error(), // Chi muc thong bao loi. Se dung o View submit property
-                    'data' => $val->validated() // data Dung o View
+                    'data' => "Da xay ra loi. Vui long thu lai" // data Dung o View
                 );
                 $this->template->title = 'Đăng tin Bất Động Sản';
                 $this->template->subnav = '';
@@ -137,10 +138,12 @@ class Controller_Frontend_Submit_Property extends Controller_Template
     }
 
     public function action_create()
-    { }
+    {
+    }
 
     public function action_edit()
-    { }
+    {
+    }
 
     public function action_delete()
     {
@@ -161,7 +164,8 @@ class Controller_Frontend_Submit_Property extends Controller_Template
     }
 
     public function action_hide()
-    { }
+    {
+    }
 
     public function create_expiration($id_user, $crated_at)
     {
@@ -185,5 +189,51 @@ class Controller_Frontend_Submit_Property extends Controller_Template
             return true;
         }
         return false;
+    }
+
+    public function action_accept_property()
+    {
+        if (Auth::check()) {
+            if (Auth::member(100)) {
+                $p_data = array(
+                    "status" => 1
+                );
+                $result = Model_Property::update_properties('property', $p_data, 'id', $this->param('id'));
+                if ($result) {
+                    Controller_Utility::message("Thành công");
+
+                    Response::redirect('admin/approve-properties');
+                } else {
+                    Controller_Utility::message("Đã xảy ra lỗi, vui lòng thử lại!");
+                    Response::redirect('admin/approve-properties');
+                }
+            } else {
+                Controller_Utility::message('Xin lỗi bạn không có quyền làm việc này!');
+                Response::redirect('/');
+            }
+        }
+    }
+
+    public function action_delete_property()
+    {
+        if (Auth::check()) {
+            if (Auth::member(100)) {
+                $p_data = array(
+                    "status" => -1
+                );
+                $result = Model_Property::update_properties('property', $p_data, 'id', $this->param('id'));
+                if ($result) {
+                    Controller_Utility::message("Thành công");
+
+                    Response::redirect('admin/approve-properties');
+                } else {
+                    Controller_Utility::message("Đã xảy ra lỗi, vui lòng thử lại!");
+                    Response::redirect('admin/approve-properties');
+                }
+            } else {
+                Controller_Utility::message('Xin lỗi bạn không có quyền làm việc này!');
+                Response::redirect('/');
+            }
+        }
     }
 }

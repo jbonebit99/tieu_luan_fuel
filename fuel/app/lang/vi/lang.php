@@ -21,10 +21,14 @@ return array(
 	'toilets' => 'Toilet',
 	'toilet' => 'Toilet',
 	'details'=>'Chi tiết',
-	'rent'=>"Mua bán",
-	'rents'=>"Mua bán",
-	'sale'=>"Cho thuê",
-	'sales'=>"Cho thuê",
+	'rent'=>"Cho thuê",
+	'rents'=>"Cho thuê",
+	'houses'=>'Nhà',
+	'lands'=>'Đất',
+	'sale'=>"Mua bán",
+	'sales'=>"Mua bán",
+	'ware_housing'=>'Kho bãi',
+	'office'=>'Văn phòng',
 	'print'=>"In",
 	'add_to_bookmarks'=>'Thêm vào BookMarks',
 	'add_to_compare'=>'Thêm vào So sánh',
@@ -45,6 +49,9 @@ return array(
 	'price_low_to_high'=>'Giá thấp đến cao',
 	'price_high_to_low'=>'Giá cao xuống thấp',
 	'newest'=>'Mới nhất',
-	'oldest'=>'Cũ Nhất'
+	'oldest'=>'Cũ Nhất',
+	'listings'=>'Danh Sách',
+	'preview'=>'Xem trước',
+	'blog'=>'Bài viết'
 
 );

@@ -1,3 +1,7 @@
+<?php
+// var_dump(\Arr::get($content,"blog"));die;
+?>
+
 <!-- Titlebar
 ================================================== -->
 <div id="titlebar">
@@ -36,7 +40,7 @@
 
                     <!-- Img -->
                     <a href="blog-post.html" class="post-img">
-<!--                        <img src="images/blog-post-01a.jpg" alt="">-->
+                        <!--                        <img src="images/blog-post-01a.jpg" alt="">-->
                         <?php echo \Asset::img('blog-post-01a.jpg', array("alt" => "")); ?>
                     </a>
 
@@ -65,7 +69,7 @@
 
                     <!-- Img -->
                     <a href="blog-post.html" class="post-img">
-<!--                        <img src="images/blog-post-02a.jpg" alt="">-->
+                        <!--                        <img src="images/blog-post-02a.jpg" alt="">-->
                         <?php echo \Asset::img('blog-post-02a.jpg', array("alt" => "")); ?>
                     </a>
 
@@ -123,8 +127,7 @@
                     <div class="widget">
                         <h3 class="margin-top-0 margin-bottom-25">Search Blog</h3>
                         <div class="search-blog-input">
-                            <div class="input"><input class="search-field" type="text" placeholder="Type and hit enter"
-                                                      value=""/></div>
+                            <div class="input"><input class="search-field" type="text" placeholder="Type and hit enter" value="" /></div>
                         </div>
                         <div class="clearfix"></div>
                     </div>
@@ -136,8 +139,7 @@
                         <h3>Got any questions?</h3>
                         <div class="info-box margin-bottom-10">
                             <p>If you are having any questions, please feel free to ask.</p>
-                            <a href="contact.html" class="button fullwidth margin-top-20"><i
-                                        class="fa fa-envelope-o"></i> Drop Us a Line</a>
+                            <a href="contact.html" class="button fullwidth margin-top-20"><i class="fa fa-envelope-o"></i> Drop Us a Line</a>
                         </div>
                     </div>
                     <!-- Widget / End -->
@@ -153,8 +155,7 @@
                             <li>
                                 <div class="widget-content">
                                     <div class="widget-thumb">
-                                        <a href="blog-full-width-single-post.html"><img src="images/blog-widget-03.jpg"
-                                                                                        alt=""></a>
+                                    <?php echo \Asset::img('blog-post-02a.jpg', array("alt" => "")); ?>
                                     </div>
 
                                     <div class="widget-text">
@@ -170,8 +171,7 @@
                             <li>
                                 <div class="widget-content">
                                     <div class="widget-thumb">
-                                        <a href="blog-full-width-single-post.html"><img src="images/blog-widget-02.jpg"
-                                                                                        alt=""></a>
+                                    <?php echo \Asset::img('blog-post-02a.jpg', array("alt" => "")); ?>
                                     </div>
 
                                     <div class="widget-text">
@@ -187,8 +187,7 @@
                             <li>
                                 <div class="widget-content">
                                     <div class="widget-thumb">
-                                        <a href="blog-full-width-single-post.html"><img src="images/blog-widget-01.jpg"
-                                                                                        alt=""></a>
+                                    <?php echo \Asset::img('blog-post-02a.jpg', array("alt" => "")); ?>
                                     </div>
 
                                     <div class="widget-text">

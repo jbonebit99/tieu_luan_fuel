@@ -390,6 +390,14 @@
             </span>
                     </a>
                 </li>
+                <li>
+                    <a href="/admin/contacts">
+                        <i class="fa fa-list-alt-book"></i>
+                        <span>Liên Hệ</span>
+                        <span class="pull-right-container">
+            </span>
+                    </a>
+                </li>
                 <li class="header">SETTING NAVIGATION</li>
                 <li>
                     <a href="/admin/profile">

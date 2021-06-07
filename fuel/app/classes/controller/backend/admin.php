@@ -154,6 +154,8 @@ class Controller_Backend_Admin extends Controller_Template
         if (Auth::check()) {
             if (Auth::member(100)) {
                 $data["subnav"] = array('index' => 'active');
+                $result = Model_Users::get_all_users();
+                $data = array("results" => $result->as_array());
                 $this->template->title = 'Trang Quản Trị';
                 $this->template->content = View::forge('backend\admin/users', $data);
             } else {
@@ -165,13 +167,56 @@ class Controller_Backend_Admin extends Controller_Template
         }
     }
 
+    public function action_contact()
+    {
+        if (Auth::check()) {
+            if (Auth::member(100)) {
+                $data["subnav"] = array('index' => 'active');
+                $result = Model_Contacts::get_all_contact();
+                $data = array("results" => $result->as_array());
+                $this->template->title = 'Trang Quản Trị - Liên Hệ';
+                $this->template->content = View::forge('backend\admin/contact', $data);
+            } else {
+                Response::redirect('/');
+            }
+        } else {
+            $data['title'] = "Đăng Nhập";
+            return new Response(View::forge('backend/admin/login', $data));
+        }
+    }
+
+
+
     public function action_blogs()
     {
-
+        if (Auth::check()) {
+            if (Auth::member(100)) {
+                $data["subnav"] = array('index' => 'active');
+                $this->template->title = 'Trang Quản Trị';
+                $this->template->content = View::forge('backend\admin/index', $data);
+            } else {
+                Response::redirect('/');
+            }
+        } else {
+            $data['title'] = "Đăng Nhập";
+            return new Response(View::forge('backend/admin/login', $data));
+        }
     }
 
     public function action_create_blog()
     {
-
+        if (Auth::check()) {
+            if (Auth::member(100)) {
+                $data["subnav"] = array('index' => 'active');
+                $this->template->title = 'Trang Quản Trị';
+                $this->template->content = View::forge('backend\admin/index', $data);
+            } else {
+                Response::redirect('/');
+            }
+        } else {
+            $data['title'] = "Đăng Nhập";
+            return new Response(View::forge('backend/admin/login', $data));
+        }
     }
+
 }

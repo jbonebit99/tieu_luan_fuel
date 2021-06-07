@@ -7,8 +7,6 @@ class Controller_Frontend_Welcome extends Controller_Template
 
     public function action_index()
     {
-
-        // $user = Model_Frontend_User::test();
         $result = Model_Property::get_properties(null, null, 5);
         $data["subnav"] = array('index' => 'active');
         $data['content'] = array(
@@ -27,7 +25,7 @@ class Controller_Frontend_Welcome extends Controller_Template
 
     public function action_tag()
     {
-        echo $this->param('keyword');die;
+       
     }
 
 

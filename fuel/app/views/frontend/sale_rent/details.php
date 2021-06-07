@@ -3,6 +3,12 @@
 $properties = \Arr::get($content, "properties");
 \Asset::add_path('uploads/img', 'img');
 ?>
+
+<style>
+    #map_cuc_manh {
+        height: 400px;
+    }
+</style>
 <!-- Titlebar
 ================================================== -->
 <div id="titlebar" class="property-titlebar margin-bottom-0">
@@ -16,7 +22,7 @@ $properties = \Arr::get($content, "properties");
                     <span>
                         <a href="#location" class="listing-address">
                             <i class="fa fa-map-marker"></i>
-                            <?php echo $properties['district']." ".$properties['province'];?>
+                            <?php echo $properties['district'] . " " . $properties['province']; ?>
                         </a>
                     </span>
                 </div>
@@ -59,14 +65,14 @@ $properties = \Arr::get($content, "properties");
 
 
                 <!-- Description -->
-                <h3 class="desc-headline"><?php echo ucwords(\Lang::get('description'));?></h3>
+                <h3 class="desc-headline"><?php echo ucwords(\Lang::get('description')); ?></h3>
                 <div class="show-more">
-                    <?php echo html_entity_decode($properties['description']);?>
+                    <?php echo html_entity_decode($properties['description']); ?>
                     <a href="#" class="show-more-button">Show More <i class="fa fa-angle-down"></i></a>
                 </div>
 
                 <!-- Details -->
-                <!-- <h3 class="desc-headline"><?php echo ucwords(\Lang::get('details'));?></h3>
+                <!-- <h3 class="desc-headline"><?php echo ucwords(\Lang::get('details')); ?></h3>
                 <ul class="property-features margin-top-0">
                     <li>Building Age: <span>2 Years</span></li>
                     <li>Parking: <span>Attached Garage</span></li>
@@ -82,31 +88,31 @@ $properties = \Arr::get($content, "properties");
                 <!-- Features -->
                 <h3 class="desc-headline"><?php echo \Lang::get('features') ?></h3>
                 <ul class="property-features checkboxes margin-top-0">
-                    <?php 
-                    if($properties['gym']):
+                    <?php
+                    if ($properties['gym']) :
                     ?>
-                    <li><?php echo \Lang::get('near_gym');?></li>
+                        <li><?php echo \Lang::get('near_gym'); ?></li>
                     <?php
                     endif;
                     ?>
-                    <?php 
-                    if($properties['market']):
+                    <?php
+                    if ($properties['market']) :
                     ?>
-                    <li><?php echo \Lang::get('near_market');?></li>
+                        <li><?php echo \Lang::get('near_market'); ?></li>
                     <?php
                     endif;
                     ?>
-                    <?php 
-                    if($properties['parking']):
+                    <?php
+                    if ($properties['parking']) :
                     ?>
-                    <li><?php echo \Lang::get('parking');?></li>
+                        <li><?php echo \Lang::get('parking'); ?></li>
                     <?php
                     endif;
                     ?>
-                    <?php 
-                    if($properties['hospital']):
+                    <?php
+                    if ($properties['hospital']) :
                     ?>
-                    <li><?php echo \Lang::get('near_hospital');?></li>
+                        <li><?php echo \Lang::get('near_hospital'); ?></li>
                     <?php
                     endif;
                     ?>
@@ -149,14 +155,14 @@ $properties = \Arr::get($content, "properties");
                 <!-- Video -->
                 <h3 class="desc-headline no-border">Video</h3>
                 <div class="responsive-iframe">
-                    <iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/UPBJKppEXoQ?rel=0&amp;showinfo=0" frameborder="0" allowfullscreen></iframe>
+                    <iframe width="560" height="315" src="https://youtu.be/9aE-jHfyXTw" frameborder="0" allowfullscreen></iframe>
                 </div>
 
                 <!-- Location -->
-                <h3 class="desc-headline no-border" id="location"><?php echo \Lang::get('location');?></h3>
+                <h3 class="desc-headline no-border" id="location"><?php echo \Lang::get('location'); ?></h3>
                 <div id="propertyMap-container">
-                    <div id="propertyMap" data-latitude="40.7427837" data-longitude="-73.11445617675781"></div>
-                    <a href="#" id="streetView">Street View</a>
+                    <div id="map_cuc_manh"></div>
+
                 </div>
 
 
@@ -167,60 +173,60 @@ $properties = \Arr::get($content, "properties");
 
                 <div class="layout-switcher hidden"><a href="#" class="list"><i class="fa fa-th-list"></i></a></div>
                 <div class="listings-container list-layout">
-                    <?php foreach( \Arr::get($content, "same_properties") as $same_properties): ?>
-                    <!-- Listing Item -->
-                    <div class="listing-item">
+                    <?php foreach (\Arr::get($content, "same_properties") as $same_properties) : ?>
+                        <!-- Listing Item -->
+                        <div class="listing-item">
 
-                        <a href="/<?php echo $same_properties['shape']; ?>/details/<?php echo $same_properties['id']; ?>" class="listing-img-container">
+                            <a href="/<?php echo $same_properties['shape']; ?>/details/<?php echo $same_properties['id']; ?>" class="listing-img-container">
 
-                            <div class="listing-badges">
-                                <span><?php echo $same_properties['shape'] == 'sale' ? "Bán" : "Cho Thuê" ?></span>
+                                <div class="listing-badges">
+                                    <span><?php echo $same_properties['shape'] == 'sale' ? "Bán" : "Cho Thuê" ?></span>
+                                </div>
+
+                                <div class="listing-img-content">
+                                    <span class="listing-price"><?php echo $same_properties['price']; ?> <i><?php echo ucwords(\Lang::get('price')); ?></i></span>
+                                    <span class="like-icon"></span>
+                                </div>
+
+                                <?php
+                                foreach (explode('/', $same_properties['src']) as $file) :
+                                ?>
+                                    <img src="<?php echo \Asset::get_file($file, 'img'); ?>" alt="">
+                                <?php
+                                    break;
+                                endforeach;
+                                ?>
+
+                            </a>
+
+                            <div class="listing-content">
+
+                                <div class="listing-title">
+                                    <h4><a href="/<?php echo $same_properties['shape']; ?>/details/<?php echo $same_properties['id']; ?>"><?php echo Str::truncate($same_properties['title'], 45, '...'); ?></a></h4>
+                                    <a href="">
+                                        <i class="fa fa-map-marker"></i>
+                                        <?php echo $same_properties['district'] . ", " . $same_properties['province']; ?>
+                                    </a>
+
+                                    <a href="/<?php echo $same_properties['shape']; ?>/details/<?php echo $same_properties['id']; ?>" class="details button border"><?php echo Lang::get('details'); ?></a>
+                                </div>
+
+                                <ul class="listing-details">
+                                    <li><?php echo $same_properties['area']; ?> m2</li>
+                                    <li><?php echo $same_properties['bedrooms'] . ' ' . Lang::get('bedrooms'); ?></li>
+                                    <li><?php echo $same_properties['rooms'] . ' ' . Lang::get('rooms'); ?></li>
+                                    <li><?php echo $same_properties['toilets'] . ' ' . Lang::get('rooms'); ?></li>
+                                </ul>
+
+                                <div class="listing-footer">
+                                    <a href="#"><i class="fa fa-user"></i> <?php echo ucwords($same_properties['name']); ?></a>
+                                    <span><i class="fa fa-calendar-o"></i> <?php echo \Date::time_ago($same_properties['created_at'], '', "day"); ?></span>
+                                </div>
+
                             </div>
-
-                            <div class="listing-img-content">
-                                <span class="listing-price"><?php echo $same_properties['price'];?> <i><?php echo ucwords(\Lang::get('price'));?></i></span>
-                                <span class="like-icon"></span>
-                            </div>
-
-                            <?php
-                                            foreach (explode('/', $same_properties['src']) as $file) :
-                                                ?>
-                                            <img src="<?php echo \Asset::get_file($file, 'img'); ?>" alt="">
-                                        <?php
-                                                break;
-                                            endforeach;
-                                            ?>
-
-                        </a>
-
-                        <div class="listing-content">
-
-                            <div class="listing-title">
-                                <h4><a href="/<?php echo $same_properties['shape']; ?>/details/<?php echo $same_properties['id']; ?>"><?php echo Str::truncate($same_properties['title'], 45, '...'); ?></a></h4>
-                                <a href="">
-                                    <i class="fa fa-map-marker"></i>
-                                    <?php echo $same_properties['district'].", ".$same_properties['province'];?>
-                                </a>
-
-                                <a href="/<?php echo $same_properties['shape']; ?>/details/<?php echo $same_properties['id']; ?>" class="details button border"><?php echo Lang::get('details');?></a>
-                            </div>
-
-                            <ul class="listing-details">
-                                <li><?php echo $same_properties['area'];?> m2</li>
-                                <li><?php echo $same_properties['bedrooms'].' '.Lang::get('bedrooms');?></li>
-                                <li><?php echo $same_properties['rooms'].' '.Lang::get('rooms');?></li>
-                                <li><?php echo $same_properties['toilets'].' '. Lang::get('rooms');?></li>
-                            </ul>
-
-                            <div class="listing-footer">
-                                <a href="#"><i class="fa fa-user"></i> <?php echo ucwords($same_properties['name']); ?></a>
-                                <span><i class="fa fa-calendar-o"></i> <?php echo \Date::time_ago($same_properties['created_at'], '', "day"); ?></span>
-                            </div>
+                            <!-- Listing Item / End -->
 
                         </div>
-                        <!-- Listing Item / End -->
-
-                    </div>
                     <?php
                     endforeach;
                     ?>
@@ -239,9 +245,9 @@ $properties = \Arr::get($content, "properties");
 
                 <!-- Widget -->
                 <div class="widget margin-bottom-30">
-                    <button class="widget-button with-tip" data-tip-content="<?php echo \Lang::get('print');?>"><i class="sl sl-icon-printer"></i></button>
-                    <button class="widget-button with-tip" data-tip-content="<?php echo \Lang::get('add_to_bookmarks');?>"><i class="fa fa-star-o"></i></button>
-                    <button class="widget-button with-tip compare-widget-button" data-tip-content="<?php echo \Lang::get('add_to_compare');?>"><i class="icon-compare"></i></button>
+                    <button class="widget-button with-tip" data-tip-content="<?php echo \Lang::get('print'); ?>"><i class="sl sl-icon-printer"></i></button>
+                    <button class="widget-button with-tip" data-tip-content="<?php echo \Lang::get('add_to_bookmarks'); ?>"><i class="fa fa-star-o"></i></button>
+                    <button class="widget-button with-tip compare-widget-button" data-tip-content="<?php echo \Lang::get('add_to_compare'); ?>"><i class="icon-compare"></i></button>
                     <div class="clearfix"></div>
                 </div>
                 <!-- Widget / End -->
@@ -358,13 +364,13 @@ $properties = \Arr::get($content, "properties");
 
                 <!-- Widget -->
                 <div class="widget">
-                    <h3 class="margin-bottom-35"><?php echo \Lang::get('featured');?></h3>
+                    <h3 class="margin-bottom-35"><?php echo \Lang::get('featured'); ?></h3>
 
                     <div class="listing-carousel outer">
                         <!-- Item -->
                         <?php
                         foreach (\Arr::get($content, "featured") as $featured) :
-                            ?>
+                        ?>
                             <div class="item">
                                 <div class="listing-item compact">
 
@@ -379,20 +385,20 @@ $properties = \Arr::get($content, "properties");
                                             <span class="listing-compact-title"> <?php echo Str::truncate($featured['title'], 15, '...'); ?> <i><?php echo $featured['price']; ?> triệu</i></span>
 
                                             <ul class="listing-hidden-content">
-                                                <li><?php echo Lang::get('area');?> <span><?php echo $featured['area']; ?> m2</span></li>
-                                                <li><?php echo Lang::get('rooms');?> <span><?php echo $featured['rooms']; ?></span></li>
-                                                <li><?php echo Lang::get('bedrooms');?> <span><?php echo $featured['bedrooms']; ?></span></li>
-                                                <li><?php echo Lang::get('toilets');?> <span><?php echo $featured['toilets']; ?></span></li>
+                                                <li><?php echo Lang::get('area'); ?> <span><?php echo $featured['area']; ?> m2</span></li>
+                                                <li><?php echo Lang::get('rooms'); ?> <span><?php echo $featured['rooms']; ?></span></li>
+                                                <li><?php echo Lang::get('bedrooms'); ?> <span><?php echo $featured['bedrooms']; ?></span></li>
+                                                <li><?php echo Lang::get('toilets'); ?> <span><?php echo $featured['toilets']; ?></span></li>
                                             </ul>
                                         </div>
                                         <?php
-                                            foreach (explode('/', $featured['src']) as $file) :
-                                                ?>
+                                        foreach (explode('/', $featured['src']) as $file) :
+                                        ?>
                                             <img src="<?php echo \Asset::get_file($file, 'img'); ?>" alt="">
                                         <?php
-                                                break;
-                                            endforeach;
-                                            ?>
+                                            break;
+                                        endforeach;
+                                        ?>
                                     </a>
 
                                 </div>
@@ -412,3 +418,19 @@ $properties = \Arr::get($content, "properties");
 
     </div>
 </div>
+<script>
+    var map = L.map('map_cuc_manh').setView([<?php echo $properties['latitude']; ?>, <?php echo $properties['longitude']; ?>], 15);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+    var marker = L.marker([<?php echo $properties['latitude']; ?>, <?php echo $properties['longitude']; ?>], {
+            draggable: false
+        }).addTo(map)
+        .bindPopup('<?php echo $properties['title']; ?>')
+        .openPopup();
+    var circle = L.circle([<?php echo $properties['latitude']; ?>, <?php echo $properties['longitude']; ?>], {
+        color: 'red',
+        radius: 500
+    }).addTo(map);
+</script>

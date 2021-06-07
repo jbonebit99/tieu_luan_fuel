@@ -24,14 +24,15 @@ class Controller_Api_User extends Controller_Rest
                         'value' => 'Username'
                     ));
                 }
-
             }
+        } else {
+            return $this->response(
+                array(
+                    'status' => 200,
+                    'success' => false,
+                    'data' => ''
+                )
+            );
         }
-        return $this->response(
-            array(
-                'status' => 200,
-                'success' => false,
-                'data' => ''
-            ));
     }
 }

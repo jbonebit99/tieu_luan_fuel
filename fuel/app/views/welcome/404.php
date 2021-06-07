@@ -40,15 +40,15 @@
 			<div class="col-md-12">
 				<h1><?php echo $title; ?> <small>Hi Chào Cậu. Mình Đứng Đây Từ Chiều</small></h1>
 				<hr>
-				<p>Nhớ Nhập Đường Dẫn Cho Đúng Nhá <code>Thằng Cu!</code>.</p>
-				<p>Về Trang Chủ Thì Click Vào <a href="/">Đây</a>.</p>
+				<p>Đường dẫn không tồn tại nha quý dị!.</p>
+				<p>Về trang chủ thì click vào <a href="/">đây nè</a>.</p>
 			</div>
 		</div>
 		<footer>
-			<p class="pull-right">Web Này Dùng Framework FuelPHP</p>
+			<p class="pull-right">Website Này Dùng Framework FuelPHP</p>
 			<p>
-				<a href="https://fuelphp.com">FuelPHP</a> is released under the MIT license.<br>
-				<small>Version: <?php echo Fuel::VERSION; ?></small>
+				<a href="https://fuelphp.com">FuelPHP</a> được phát hành theo MIT license.<br>
+				<small>Phiên bản: <?php echo Fuel::VERSION; ?></small>
 			</p>
 		</footer>
 	</div>

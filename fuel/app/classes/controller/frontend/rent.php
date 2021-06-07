@@ -1,5 +1,5 @@
 <?php
-
+\Lang::load('lang');
 use Auth\Auth;
 use Fuel\Core\Controller_Template;
 
@@ -17,14 +17,11 @@ class Controller_Frontend_Rent extends Controller_Template
         );
         $pagination = Paginationapp::forge('my_pagination', $config);
         $result = Model_Property::get_properties('rent',null, $pagination->per_page, $pagination->offset);
-        $data["subnav"] = array(
-            'index' => 'active',
-            );
         $data['content'] = array(
-            'title' => 'Cho Thuê',
+            'title' => ucwords(\Lang::get('rent')),
             'properties' => $result->as_array(),
             'subtitle' => 'Danh Sách Tin Cho Thuê');
-        $this->template->title = 'Cho Thuê';
+        $this->template->title = \Lang::get('rent');
         $this->template->subnav='rent';
         $this->template->content = View::forge('frontend\sale_rent/index', $data);
     }
@@ -39,15 +36,12 @@ class Controller_Frontend_Rent extends Controller_Template
         );
         $pagination = Paginationapp::forge('my_pagination', $config);
         $result = Model_Property::get_properties('rent','ware-housing', $pagination->per_page, $pagination->offset);
-        $data["subnav"] = array(
-            'index' => 'active',
-            );
         $data['content'] = array(
-            'title' => 'Cho Thuê Kho Bãi',
+            'title' => ucwords(\Lang::get('rent')." ".\Lang::get('ware_housing')),
             'properties' => $result->as_array(),
-            'subtitle' => 'Danh Sách Tin Cho Thuê Kho Bãi',
+            'subtitle' =>\Lang::get('listings'),
         );
-        $this->template->title = 'Kho Bãi Cho Thuê';
+        $this->template->title =\Lang::get('rent')." ".\Lang::get('ware_housing');
         $this->template->subnav='rent';
         $this->template->content = View::forge('frontend\sale_rent/index', $data);
     }
@@ -62,15 +56,12 @@ class Controller_Frontend_Rent extends Controller_Template
         );
         $pagination = Paginationapp::forge('my_pagination', $config);
         $result = Model_Property::get_properties('rent','office', $pagination->per_page, $pagination->offset);
-        $data["subnav"] = array(
-            'index' => 'active'
-        );
         $data['content'] = array(
-            'title' => 'Cho Thuê Văn Phòng',
+            'title' => ucwords(\Lang::get('rent')." ".\Lang::get('office')),
             'properties' => $result->as_array(),
-            'subtitle' => 'Danh Sách Tin Cho Thuê Văn Phòng'
+            'subtitle' => \Lang::get('listings'),
         );
-        $this->template->title = 'Văn Phòng Cho Thuê';
+        $this->template->title =\Lang::get('rent')." ".\Lang::get('office');
         $this->template->subnav='rent';
         $this->template->content = View::forge('frontend\sale_rent/index', $data);
     }
@@ -87,13 +78,11 @@ class Controller_Frontend_Rent extends Controller_Template
         }
         if ($result->count() > 0) {
             $data['content'] = array(
-                'title' => 'Bán Nhà Riêng',
                 'properties' => $result_arr,
-                'subtitle' => 'Danh Sách Tin Bán Nhà Riêng',
                 'featured'=>$featured->as_array(),
                 'same_properties'=>  $same_properties->as_array(),
             );
-            $this->template->title = 'Chi Tiết';
+            $this->template->title = \Lang::get('details');
             $this->template->subnav = 'rent';
             $this->template->content = View::forge('frontend\sale_rent/details', $data);
         } else {
@@ -116,13 +105,11 @@ class Controller_Frontend_Rent extends Controller_Template
         }
         if ($result->count() > 0) {
             $data['content'] = array(
-                'title' => 'Bán Nhà Riêng',
                 'properties' => $result_arr,
-                'subtitle' => 'Danh Sách Tin Bán Nhà Riêng',
                 'featured'=>$featured->as_array(),
                 'same_properties'=>  $same_properties->as_array(),
             );
-            $this->template->title = 'Chi Tiết';
+            $this->template->title = \Lang::get('preview');
             $this->template->subnav = 'rent';
             $this->template->content = View::forge('frontend\sale_rent/details', $data);
         } else {
