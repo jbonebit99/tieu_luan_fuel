@@ -1,18 +1,22 @@
 <!-- Titlebar
 ================================================== -->
+<?php
+\Lang::load('lang');
+$data = \Arr::get($content, "content");
+?>
 <div id="titlebar">
 	<div class="container">
 		<div class="row">
 			<div class="col-md-12">
 
-				<h2>Blog</h2>
-				<span>Keep up to date with the latest news</span>
+				<h2><?php echo Arr::get($content,"title")?></h2>
+				<span><?php echo Arr::get($content,"subtitle")?></span>
 
 				<!-- Breadcrumbs -->
 				<nav id="breadcrumbs">
 					<ul>
-						<li><a href="#">Home</a></li>
-						<li>Blog</li>
+						<li><a href="/">Home</a></li>
+						<li><?php echo Arr::get($content,"title")?></li>
 					</ul>
 				</nav>
 
@@ -40,31 +44,25 @@
 			<div class="blog-post single-post">
 
 				<!-- Img -->
-				<img class="post-img" src="images/blog-post-02a.jpg" alt="">
-
+			
+				<?php echo Asset::img($data['image']);?>
 
 				<!-- Content -->
 				<div class="post-content">
-					<h3>Bedroom Colors You'll Never Regret</h3>
+					<h3><?php echo ucwords($data['title']);?></h3>
 
 					<ul class="post-meta">
-						<li>Novemer 9, 2016</li>
-						<li><a href="#">5 Comments</a></li>
+						<li><?php echo  Date::forge($data['created_at'])->format("%d-%m, %Y"); ?></li>
+						<li><a href="#"><?php echo Arr::get($content,"count_comment")?> Bình luận</a></li>
 					</ul>
-
-					<p>Nam nisl lacus, dignissim ac tristique ut, scelerisque eu massa. Vestibulum ligula nunc, rutrum in malesuada vitae, tempus sed augue. Curabitur quis lectus quis augue dapibus facilisis. Vivamus tincidunt orci est, in vehicula nisi eleifend ut. Vestibulum sagittis varius orci vitae.</p>
 
 					<div class="post-quote">
 						<span class="icon"></span>
 						<blockquote>
-							Mauris aliquet ultricies ante, non faucibus ante gravida sed. Sed ultrices pellentesque purus, vulputate volutpat ipsum hendrerit sed neque sed sapien rutrum.
+						<?php echo $data['sub_description']?>
 						</blockquote>
 					</div>
-
-					<p>In ut odio libero, at vulputate urna. Nulla tristique mi a massa convallis cursus. Nulla eu mi magna. Etiam suscipit commodo gravida. Cras suscipit, quam vitae adipiscing faucibus, risus nibh laoreet odio, a porttitor metus eros ut enim. Morbi augue velit, tempus mattis dignissim nec, porta sed risus. Donec eget magna eu lorem tristique pellentesque eget eu dui. Fusce lacinia tempor malesuada. Ut lacus sapien, placerat a ornare nec, elementum sit amet felis. Maecenas pretium lorem hendrerit eros sagittis fermentum.</p>
-					<p>Phasellus enim magna, varius et commodo ut, ultricies vitae velit. Ut nulla tellus, eleifend euismod pellentesque vel, sagittis vel justo. In libero urna, venenatis sit amet ornare non, suscipit nec risus. Sed consequat justo non mauris pretium at tempor justo sodales. Quisque tincidunt laoreet malesuada. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Integer vitae ante enim. Fusce sed elit est. Suspendisse sit amet mauris in quam pretium faucibus et aliquam odio. </p>
-
-
+					<?php echo html_entity_decode( $data['content']); ?>
 					<!-- Share Buttons -->
 					<ul class="share-buttons margin-top-40 margin-bottom-0">
 						<li><a class="fb-share" href="#"><i class="fa fa-facebook"></i> Share</a></li>
@@ -94,11 +92,11 @@
 
 			<!-- About Author -->
 			<div class="about-author">
-				<img src="images/agent-avatar.jpg" alt="" />
+				<?php echo Asset::img('agent-avatar.jpg');?>
 				<div class="about-description">
-					<h4>Jennie Wilson</h4>
-					<a href="#">jennie@example.com</a>
-					<p>Nullam ultricies, velit ut varius molestie, ante metus condimentum nisi, dignissim facilisis turpis ex in libero. Sed porta ante tortor, a pulvinar mi facilisis nec. Proin finibus dolor ac convallis congue.</p>
+					<h4>Admin Findeo</h4>
+					<a href="#">dxtruong.ktpm0127@student.ctuet.edu.vn</a>
+					<p>Chuyên viên bất động sản tại Cần Thơ. Với nhiều năm kinh nghiệm mua bán bất động sản</p>
 				</div>
 			</div>
 
@@ -114,7 +112,7 @@
 
 						<!-- Img -->
 						<a href="#" class="post-img">
-							<img src="images/blog-post-02.jpg" alt="">
+							<?php echo Asset::img('blog-post-02.jpg');?>
 						</a>
 
 						<!-- Content -->
@@ -137,7 +135,7 @@
 
 						<!-- Img -->
 						<a href="#" class="post-img">
-							<img src="images/blog-post-03.jpg" alt="">
+							<?php echo Asset::img('blog-post-03.jpg');?>
 						</a>
 
 						<!-- Content -->
@@ -160,64 +158,25 @@
 
 			<!-- Reviews -->
 			<section class="comments">
-			<h4 class="headline margin-bottom-35">Comments <span class="comments-amount">(5)</span></h4>
+			<h4 class="headline margin-bottom-35">Bình luận <span class="comments-amount">(<?php echo Arr::get($content,"count_comment")?>)</span></h4>
 
 				<ul>
-					<li>
-						<div class="avatar"><img src="http://www.gravatar.com/avatar/00000000000000000000000000000000?d=mm&amp;s=70" alt="" /></div>
-						<div class="comment-content"><div class="arrow-comment"></div>
-							<div class="comment-by">Kathy Brown<span class="date">12th, June 2015</span>
-								<a href="#" class="reply"><i class="fa fa-reply"></i> Reply</a>
-							</div>
-							<p>Morbi velit eros, sagittis in facilisis non, rhoncus et erat. Nam posuere tristique sem, eu ultricies tortor imperdiet vitae. Curabitur lacinia neque non metus</p>
-						</div>
 
-						<ul>
-							<li>
-								<div class="avatar"><img src="http://www.gravatar.com/avatar/00000000000000000000000000000000?d=mm&amp;s=70" alt="" /></div>
-								<div class="comment-content"><div class="arrow-comment"></div>
-									<div class="comment-by">Tom Smith<span class="date">12th, June 2015</span>
-										<a href="#" class="reply"><i class="fa fa-reply"></i> Reply</a>
-									</div>
-									<p>Rrhoncus et erat. Nam posuere tristique sem, eu ultricies tortor imperdiet vitae. Curabitur lacinia neque.</p>
-								</div>
-							</li>
-							<li>
-								<div class="avatar"><img src="http://www.gravatar.com/avatar/00000000000000000000000000000000?d=mm&amp;s=70" alt="" /></div>
-								<div class="comment-content"><div class="arrow-comment"></div>
-									<div class="comment-by">Kathy Brown<span class="date">12th, June 2015</span>
-										<a href="#" class="reply"><i class="fa fa-reply"></i> Reply</a>
-									</div>
-									<p>Nam posuere tristique sem, eu ultricies tortor.</p>
-								</div>
-
-								<ul>
-									<li>
-										<div class="avatar"><img src="http://www.gravatar.com/avatar/00000000000000000000000000000000?d=mm&amp;s=70" alt="" /></div>
-										<div class="comment-content"><div class="arrow-comment"></div>
-											<div class="comment-by">John Doe<span class="date">12th, June 2015</span>
-												<a href="#" class="reply"><i class="fa fa-reply"></i> Reply</a>
-											</div>
-											<p>Great template!</p>
-										</div>
-									</li>
-								</ul>
-
-							</li>
-						</ul>
-
-					</li>
+					<?php
+						foreach (Arr::get($content,"comments") as $key => $value):
+					?>
 
 					<li>
 						<div class="avatar"><img src="http://www.gravatar.com/avatar/00000000000000000000000000000000?d=mm&amp;s=70" alt="" /> </div>
 						<div class="comment-content"><div class="arrow-comment"></div>
-							<div class="comment-by">John Doe<span class="date">15th, May 2015</span>
-								<a href="#" class="reply"><i class="fa fa-reply"></i> Reply</a>
+							<div class="comment-by"><?php echo ucwords($value['name']); ?><span class="date"><?php echo  Date::forge($value['created_at'])->format("%d-%m, %Y"); ?></span>
+								<a href="" class="reply"><i class="fa fa-exclamation-triangle"></i> Báo cáo</a>
 							</div>
-							<p>Commodo est luctus eget. Proin in nunc laoreet justo volutpat blandit enim. Sem felis, ullamcorper vel aliquam non, varius eget justo. Duis quis nunc tellus sollicitudin mauris.</p>
+							<p><?php echo $value['content'];?></p>
 						</div>
 
 					</li>
+					<?php endforeach; ?>
 				 </ul>
 
 			</section>
@@ -226,31 +185,31 @@
 
 
 			<!-- Add Comment -->
-			<h4 class="headline">Add Comment</h4>
+			<h4 class="headline">Thêm bình luận</h4>
 			<div class="margin-top-15"></div>
 
 			<!-- Add Comment Form -->
-			<form id="add-comment" class="add-comment">
+			<form id="add_comment" class="add_comment" action="/blog/comment" method="POST">
 				<fieldset>
-
+					<input type="hidden" name="id" value="<?php echo $data['id']?>">
 					<div>
-						<label>Name:</label>
-						<input type="text" value=""/>
+						<label>Tên:</label>
+						<input type="text" value="" name="name" id="name" required/>
 					</div>
 
 					<div>
 						<label>Email: <span>*</span></label>
-						<input type="text" value=""/>
+						<input type="text" value="" name="email" id="email" required/>
 					</div>
 
 					<div>
-						<label>Comment: <span>*</span></label>
-						<textarea cols="40" rows="3"></textarea>
+						<label>Nội dung bình luận: <span>*</span></label>
+						<textarea cols="40" rows="3" required id="comment" name="comment"></textarea>
 					</div>
 
 				</fieldset>
 
-				<a href="#" class="button">Add Comment</a>
+				<a href="#" id="c_submit" class="button">Bình luận</a>
 				<div class="clearfix"></div>
 				<div class="margin-bottom-20"></div>
 
@@ -270,10 +229,13 @@
 
 			<!-- Widget -->
 			<div class="widget">
-				<h3 class="margin-top-0 margin-bottom-25">Search Blog</h3>
+				<h3 class="margin-top-0 margin-bottom-25">Tìm kiếm bài viết</h3>
+				<form action="/blog/search" method="POST">
 				<div class="search-blog-input">
-					<div class="input"><input class="search-field" type="text" placeholder="Type and hit enter" value=""/></div>
+					<div class="input"><input class="search-field" id=key name="key" type="text" placeholder="Nhập nội dung và nhấn Enter.." value=""/></div>
 				</div>
+				</form>
+				
 				<div class="clearfix"></div>
 			</div>
 			<!-- Widget / End -->
@@ -281,10 +243,10 @@
 
 			<!-- Widget -->
 			<div class="widget">
-				<h3>Got any questions?</h3>
+				<h3>Bạn có thắc mặc?</h3>
 				<div class="info-box margin-bottom-10">
-					<p>If you are having any questions, please feel free to ask.</p>
-					<a href="contact.html" class="button fullwidth margin-top-20"><i class="fa fa-envelope-o"></i> Drop Us a Line</a>
+					<p>Bạn có câu hỏi hoặc cần giải đáp thắc mắc. Hãy gửi về cho chúng tôi</p>
+					<a href="/contact" class="button fullwidth margin-top-20"><i class="fa fa-envelope-o"></i> Tới trang liên hệ</a>
 				</div>
 			</div>
 			<!-- Widget / End -->

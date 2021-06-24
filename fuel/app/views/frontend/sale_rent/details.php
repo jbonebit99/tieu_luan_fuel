@@ -155,7 +155,7 @@ $properties = \Arr::get($content, "properties");
                 <!-- Video -->
                 <h3 class="desc-headline no-border">Video</h3>
                 <div class="responsive-iframe">
-                    <iframe width="560" height="315" src="https://youtu.be/9aE-jHfyXTw" frameborder="0" allowfullscreen></iframe>
+                <iframe width="956" height="538" src="https://www.youtube.com/embed/taJxW4zsKOQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                 </div>
 
                 <!-- Location -->
@@ -257,18 +257,18 @@ $properties = \Arr::get($content, "properties");
                 <div class="widget">
                     <!-- Book Now -->
                     <div id="booking-widget-anchor" class="boxed-widget booking-widget margin-top-35">
-                        <h3><i class="fa fa-calendar-check-o "></i> Booking</h3>
+                        <h3><i class="fa fa-calendar-check-o "></i> Đặt lịch tham quan</h3>
                         <div class="row with-forms  margin-top-0">
 
                             <!-- Date Range Picker - docs: http://www.daterangepicker.com/ -->
                             <div class="col-lg-12">
-                                <input type="text" id="date-picker" placeholder="Date" readonly="readonly">
+                                <input type="text" id="date-picker" placeholder="Ngày" readonly="readonly">
                             </div>
 
                             <!-- Panel Dropdown -->
                             <div class="col-lg-12">
                                 <div class="panel-dropdown">
-                                    <a href="#">Guests <span class="qtyTotal" name="qtyTotal">1</span></a>
+                                    <a href="#">Số khách <span class="qtyTotal" name="qtyTotal">1</span></a>
                                     <div class="panel-dropdown-content">
 
                                         <!-- Quantity Buttons -->
@@ -290,7 +290,7 @@ $properties = \Arr::get($content, "properties");
                         </div>
 
                         <!-- Book Now -->
-                        <a href="#" class="button book-now fullwidth margin-top-5">Request To Book</a>
+                        <a href="#" class="button book-now fullwidth margin-top-5">Đặt lịch hẹn</a>
 
                     </div>
                     <!-- Book Now / End -->
@@ -305,10 +305,10 @@ $properties = \Arr::get($content, "properties");
                     <!-- Agent Widget -->
                     <div class="agent-widget">
                         <div class="agent-title">
-                            <div class="agent-photo"><img src="images/agent-avatar.jpg" alt="" /></div>
+                            <div class="agent-photo"><?php echo Asset::img('agent-avatar.jpg');?></div>
                             <div class="agent-details">
-                                <h4><a href="#">Jennie Wilson</a></h4>
-                                <span><i class="sl sl-icon-call-in"></i>(123) 123-456</span>
+                                <h4><a href="#"></a><?php echo $properties['name']?></h4>
+                                <span><i class="sl sl-icon-call-in"></i><?php echo $properties['phone']?></span>
                             </div>
                             <div class="clearfix"></div>
                         </div>
@@ -326,7 +326,7 @@ $properties = \Arr::get($content, "properties");
 
                 <!-- Widget -->
                 <div class="widget">
-                    <h3 class="margin-bottom-30 margin-top-30">Mortgage Calculator</h3>
+                    <h3 class="margin-bottom-30 margin-top-30">Máy tính</h3>
 
                     <!-- Mortgage Calculator -->
                     <form action="javascript:void(0);" autocomplete="off" class="mortgageCalc" data-calc-currency="USD">
@@ -364,7 +364,7 @@ $properties = \Arr::get($content, "properties");
 
                 <!-- Widget -->
                 <div class="widget">
-                    <h3 class="margin-bottom-35"><?php echo \Lang::get('featured'); ?></h3>
+                    <h3 class="margin-bottom-35">Nổi bật</h3>
 
                     <div class="listing-carousel outer">
                         <!-- Item -->

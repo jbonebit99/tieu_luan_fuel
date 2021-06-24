@@ -92,17 +92,16 @@
                             <?php
                             if ($value['status'] == 1) {
                                 ?>
-                                <a href="javascript:void(0)" onclick="return hide(this)" id="<?php echo "button_" . $value['id']; ?>"><i
-                                            class="fa  fa-eye-slash"></i> Ẩn</a>
+                                <a href="/account/my-properties/hide/<?php echo $value['id']?>"><i class="fa  fa-eye-slash"></i> Ẩn</a>
                                 <?php
                             } else {
                                 ?>
-                                <a href="#"><i class="fa  fa-eye"></i> Hiện</a>
+                                <a href="/account/my-properties/show/<?php echo $value['id']?>"><i class="fa  fa-eye"></i> Hiện</a>
                                 <?php
                             }
                             ?>
 
-                            <a href="#" class="delete"><i class="fa fa-remove"></i> Xoá</a>
+                            <a href="/account/my-properties/delete/<?php echo $value['id']?>" class="delete"><i class="fa fa-remove"></i> Xoá</a>
                         </td>
                     </tr>
                 <?php

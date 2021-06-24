@@ -4,8 +4,8 @@
 
 <!-- Banner
 ================================================== -->
-<div class="parallax" data-background=" <?php echo \Asset::get_file('home-parallax.jpg','img');?>" data-color="#36383e" data-color-opacity="0.45"
-     data-img-width="2500" data-img-height="1600">
+<div class="parallax" data-background=" <?php echo \Asset::get_file('home-parallax.jpg','img');?>" data-color="#36383e"
+    data-color-opacity="0.45" data-img-width="2500" data-img-height="1600">
     <div class="parallax-content">
 
         <div class="container">
@@ -17,14 +17,14 @@
                         <h2>Tìm Kiếm Tin Bất Động Sản</h2>
 
                         <!-- Main Search -->
-                        <form class="main-search-form" method="post" action="">
+                        <form class="main-search-form" method="post" action="/search">
 
                             <!-- Type -->
                             <div class="search-type">
-                                <label class="active"><input class="first-tab" name="tab" checked="checked"
-                                                             type="radio">Tất Cả</label>
-                                <label><input name="tab" type="radio">Mua Bán</label>
-                                <label><input name="tab" type="radio">Cho Thuê</label>
+                                <label class="active"><input class="first-tab" value='all' name="tab" checked="checked"
+                                        type="radio">Tất Cả</label>
+                                <label><input name="tab" value="sale" type="radio" id="sale">Mua Bán</label>
+                                <label><input name="tab" value="rent" type="radio" id="rent">Cho Thuê</label>
                                 <div class="search-type-arrow"></div>
                             </div>
 
@@ -34,8 +34,8 @@
 
                                 <!-- Main Search Input -->
                                 <div class="main-search-input larger-input">
-                                    <input type="text" class="ico-01" id="autocomplete-input"
-                                           placeholder="Nhập tên hoặc quận/huyện ..." value=""/>
+                                    <input type="text" name="key" class="ico-01" id="autocomplete-input"
+                                        placeholder="Nhập tên hoặc quận/huyện ..." value="" required />
                                     <button class="button">Tìm</button>
                                 </div>
 
@@ -44,13 +44,12 @@
 
                                     <!-- Property Type -->
                                     <div class="col-md-4">
-                                        <select data-placeholder="Any Type" class="chosen-select-no-single">
-                                            <option>Any Type</option>
-                                            <option>Apartments</option>
-                                            <option>Houses</option>
-                                            <option>Commercial</option>
-                                            <option>Garages</option>
-                                            <option>Lots</option>
+                                        <select data-placeholder="Loại" class="chosen-select-no-single" name="type">
+                                            <option value="all">Tất cả</option>
+                                            <option vlue="lands">Đất</option>
+                                            <option value="houses">Nhà riêng</option>
+                                            <option value="ware-housing">Kho bãi</option>
+                                            <option value="offices">Văn phòng</option>
                                         </select>
                                     </div>
 
@@ -59,9 +58,9 @@
                                     <div class="col-md-4">
 
                                         <!-- Select Input -->
-                                        <div class="select-input">
-                                            <input type="text" placeholder="Min Price" data-unit="USD">
-                                        </div>
+                                        <!-- <div class="select-input">
+                                            <input type="text" placeholder="Thấp nhất" data-unit="VND" disabled>
+                                        </div> -->
                                         <!-- Select Input / End -->
 
                                     </div>
@@ -71,9 +70,9 @@
                                     <div class="col-md-4">
 
                                         <!-- Select Input -->
-                                        <div class="select-input">
-                                            <input type="text" placeholder="Max Price" data-unit="USD">
-                                        </div>
+                                        <!-- <div class="select-input">
+                                            <input type="text" placeholder="Cao nhất" data-unit="VND" disabled>
+                                        </div> -->
                                         <!-- Select Input / End -->
 
                                     </div>
@@ -83,104 +82,10 @@
 
 
                                 <!-- More Search Options -->
-                                <a href="#" class="more-search-options-trigger" data-open-title="More Options"
-                                   data-close-title="Less Options"></a>
-
-                                <div class="more-search-options">
-                                    <div class="more-search-options-container">
-
-                                        <!-- Row -->
-                                        <div class="row with-forms">
-
-                                            <!-- Min Price -->
-                                            <div class="col-md-6">
-
-                                                <!-- Select Input -->
-                                                <div class="select-input">
-                                                    <input type="text" placeholder="Min Area" data-unit="Sq Ft">
-                                                </div>
-                                                <!-- Select Input / End -->
-
-                                            </div>
-
-                                            <!-- Max Price -->
-                                            <div class="col-md-6">
-
-                                                <!-- Select Input -->
-                                                <div class="select-input">
-                                                    <input type="text" placeholder="Max Area" data-unit="Sq Ft">
-                                                </div>
-                                                <!-- Select Input / End -->
-
-                                            </div>
-
-                                        </div>
-                                        <!-- Row / End -->
+                                <!-- <a href="#" class="more-search-options-trigger" data-open-title="More Options"
+                                   data-close-title="Less Options"></a> -->
 
 
-                                        <!-- Row -->
-                                        <div class="row with-forms">
-
-                                            <!-- Min Area -->
-                                            <div class="col-md-6">
-                                                <select data-placeholder="Beds" class="chosen-select-no-single">
-                                                    <option label="blank"></option>
-                                                    <option>Beds (Any)</option>
-                                                    <option>1</option>
-                                                    <option>2</option>
-                                                    <option>3</option>
-                                                    <option>4</option>
-                                                    <option>5</option>
-                                                </select>
-                                            </div>
-
-                                            <!-- Max Area -->
-                                            <div class="col-md-6">
-                                                <select data-placeholder="Baths" class="chosen-select-no-single">
-                                                    <option label="blank"></option>
-                                                    <option>Baths (Any)</option>
-                                                    <option>1</option>
-                                                    <option>2</option>
-                                                    <option>3</option>
-                                                    <option>4</option>
-                                                    <option>5</option>
-                                                </select>
-                                            </div>
-
-                                        </div>
-                                        <!-- Row / End -->
-
-
-                                        <!-- Checkboxes -->
-                                        <div class="checkboxes in-row">
-
-                                            <input id="check-2" type="checkbox" name="check">
-                                            <label for="check-2">Air Conditioning</label>
-
-                                            <input id="check-3" type="checkbox" name="check">
-                                            <label for="check-3">Swimming Pool</label>
-
-                                            <input id="check-4" type="checkbox" name="check">
-                                            <label for="check-4">Central Heating</label>
-
-                                            <input id="check-5" type="checkbox" name="check">
-                                            <label for="check-5">Laundry Room</label>
-
-
-                                            <input id="check-6" type="checkbox" name="check">
-                                            <label for="check-6">Gym</label>
-
-                                            <input id="check-7" type="checkbox" name="check">
-                                            <label for="check-7">Alarm</label>
-
-                                            <input id="check-8" type="checkbox" name="check">
-                                            <label for="check-8">Window Covering</label>
-
-                                        </div>
-                                        <!-- Checkboxes / End -->
-
-                                    </div>
-                                </div>
                                 <!-- More Search Options / End -->
 
 
@@ -216,70 +121,76 @@
                 <?php
                 foreach (Arr::get($content, "properties") as $value):
                     ?>
-                    <!-- Listing Item -->
-                    <div class="carousel-item">
-                        <div class="listing-item">
+                <!-- Listing Item -->
+                <div class="carousel-item">
+                    <div class="listing-item">
 
-                            <a href="/<?php echo $value['shape'];?>/details/<?php echo $value['id'];?>"
-                               class="listing-img-container">
-                                <div class="listing-badges">
+                        <a href="/<?php echo $value['shape'];?>/details/<?php echo $value['id'];?>"
+                            class="listing-img-container">
+                            <div class="listing-badges">
                                 <?php
 								if($value['featured']):
 								?>
-								<span class="featured">Featured</span>
-								<?php
+                                <span class="featured">Featured</span>
+                                <?php
 									endif;
 								?>
                                 <span><?php echo $value['shape'] == 'sale' ? \Lang::get('sale') : \Lang::get('rent'); ?></span>
-                                </div>
+                            </div>
 
-                                <div class="listing-img-content">
-                                    <span class="listing-price"><?php echo $value['price'] . " triệu"; ?> <i>$520 / sq ft</i></span>
-                                    <span class="like-icon with-tip" data-tip-content="<?php echo \Lang::get('add_to_bookmarks');?>"></span>
-                                    <span class="compare-button with-tip" data-tip-content="<?php echo \Lang::get('add_to_compare');?>"></span>
-                                </div>
+                            <div class="listing-img-content">
+                                <span class="listing-price"><?php echo $value['price'] . " triệu"; ?> <i>$520 / sq
+                                        ft</i></span>
+                                <span class="like-icon with-tip"
+                                    data-tip-content="<?php echo \Lang::get('add_to_bookmarks');?>"></span>
+                                <span class="compare-button with-tip"
+                                    data-tip-content="<?php echo \Lang::get('add_to_compare');?>"></span>
+                            </div>
 
-                                <div class="listing-carousel">
-                                    <?php
+                            <div class="listing-carousel">
+                                <?php
                                     \Asset::add_path('uploads/img', 'img');
 
                                     foreach (explode('/', $value['src']) as $file):
                                         ?>
-                                        <div><img src="<?php echo \Asset::get_file($file, 'img'); ?> " alt=""></div>
-                                    <?php
+                                <div><img src="<?php echo \Asset::get_file($file, 'img'); ?> " alt=""></div>
+                                <?php
                                     endforeach;
                                     ?>
-                                </div>
+                            </div>
 
-                            </a>
+                        </a>
 
-                            <div class="listing-content">
+                        <div class="listing-content">
 
-                                <div class="listing-title">
-                                    <h4><a href="/<?php echo $value['shape'] . '/details/' . $value['id']; ?>"><?php echo $value['title']; ?></a></h4>
-                                    <a href="https://maps.google.com/maps?q=221B+Baker+Street,+London,+United+Kingdom&hl=en&t=v&hnear=221B+Baker+St,+London+NW1+6XE,+United+Kingdom"
-                                       class="listing-address popup-gmaps">
-                                        <i class="fa fa-map-marker"></i>
-                                        <?php echo ( $value['ward'] . ", " . $value['district']) . ", " . $value['province']; ?>
-                                    </a>
-                                </div>
+                            <div class="listing-title">
+                                <h4><a
+                                        href="/<?php echo $value['shape'] . '/details/' . $value['id']; ?>"><?php echo $value['title']; ?></a>
+                                </h4>
+                                <a href="https://maps.google.com/maps?q=221B+Baker+Street,+London,+United+Kingdom&hl=en&t=v&hnear=221B+Baker+St,+London+NW1+6XE,+United+Kingdom"
+                                    class="listing-address popup-gmaps">
+                                    <i class="fa fa-map-marker"></i>
+                                    <?php echo ( $value['ward'] . ", " . $value['district']) . ", " . $value['province']; ?>
+                                </a>
+                            </div>
 
-                                <ul class="listing-details">
-								<li><?php echo $value['bedrooms']; ?> <?php echo \Lang::get('bedrooms'); ?></li>
-								<li><?php echo $value['rooms']; ?> <?php echo \Lang::get('rooms'); ?></li>
-								<li><?php echo $value['toilets']; ?> <?php echo \Lang::get('toilets'); ?></li>
-							</ul>
+                            <ul class="listing-details">
+                                <li><?php echo $value['bedrooms']; ?> <?php echo \Lang::get('bedrooms'); ?></li>
+                                <li><?php echo $value['rooms']; ?> <?php echo \Lang::get('rooms'); ?></li>
+                                <li><?php echo $value['toilets']; ?> <?php echo \Lang::get('toilets'); ?></li>
+                            </ul>
 
-                                <div class="listing-footer">
-                                    <a href="#"><i class="fa fa-user"></i> <?php echo ucwords($value['name']); ?></a>
-                                    <span><i class="fa fa-calendar-o"></i> <?php echo \Date::time_ago($value['created_at'], '', "day"); ?></span>
-                                </div>
-
+                            <div class="listing-footer">
+                                <a href="#"><i class="fa fa-user"></i> <?php echo ucwords($value['name']); ?></a>
+                                <span><i class="fa fa-calendar-o"></i>
+                                    <?php echo \Date::time_ago($value['created_at'], '', "day"); ?></span>
                             </div>
 
                         </div>
+
                     </div>
-                    <!-- Listing Item / End -->
+                </div>
+                <!-- Listing Item / End -->
 
                 <?php
                 endforeach;
@@ -381,7 +292,8 @@
     <div class="row">
 
         <div class="col-md-12">
-            <h3 class="headline centered margin-bottom-35 margin-top-10">Most Popular Places <span>Properties In Most Popular Places</span>
+            <h3 class="headline centered margin-bottom-35 margin-top-10">Most Popular Places <span>Properties In Most
+                    Popular Places</span>
             </h3>
         </div>
 
@@ -389,7 +301,7 @@
 
             <!-- Image Box -->
             <a href="listings-list-with-sidebar.html" class="img-box"
-               data-background-image=" <?php echo \Asset::get_file('can-tho.jpg','img');?>">
+                data-background-image=" <?php echo \Asset::get_file('can-tho.jpg','img');?>">
 
                 <!-- Badge -->
                 <div class="listing-badges">
@@ -408,7 +320,7 @@
 
             <!-- Image Box -->
             <a href="listings-list-with-sidebar.html" class="img-box"
-               data-background-image=" <?php echo \Asset::get_file('can-tho.jpg','img');?>">
+                data-background-image=" <?php echo \Asset::get_file('can-tho.jpg','img');?>">
                 <div class="img-box-content visible">
                     <h4>Los Angeles</h4>
                     <span>24 Properties</span>
@@ -421,7 +333,7 @@
 
             <!-- Image Box -->
             <a href="listings-list-with-sidebar.html" class="img-box"
-               data-background-image=" <?php echo \Asset::get_file('can-tho.jpg','img');?>">
+                data-background-image=" <?php echo \Asset::get_file('can-tho.jpg','img');?>">
                 <div class="img-box-content visible">
                     <h4>San Francisco </h4>
                     <span>12 Properties</span>
@@ -434,7 +346,7 @@
 
             <!-- Image Box -->
             <a href="listings-list-with-sidebar.html" class="img-box"
-               data-background-image=" <?php echo \Asset::get_file('can-tho.jpg','img');?>">
+                data-background-image=" <?php echo \Asset::get_file('can-tho.jpg','img');?>">
                 <div class="img-box-content visible">
                     <h4>Miami</h4>
                     <span>9 Properties</span>
@@ -465,7 +377,7 @@
                     <!-- Img -->
                     <a href="blog-post.html" class="post-img">
                         <?php echo \Asset::img('blog-post-01.jpg');?>
-<!--                        <img src="images/blog-post-01.jpg" alt="">-->
+                        <!--                        <img src="images/blog-post-01.jpg" alt="">-->
                     </a>
 
                     <!-- Content -->
@@ -489,7 +401,7 @@
 
                     <!-- Img -->
                     <a href="blog-post.html" class="post-img">
-<!--                        <img src="images/blog-post-02.jpg" alt="">-->
+                        <!--                        <img src="images/blog-post-02.jpg" alt="">-->
                         <?php echo \Asset::img('blog-post-02.jpg');?>
                     </a>
 
@@ -514,7 +426,7 @@
 
                     <!-- Img -->
                     <a href="blog-post.html" class="post-img">
-<!--                        <img src="assets/img/blog-post-03.jpg" alt="">-->
+                        <!--                        <img src="assets/img/blog-post-03.jpg" alt="">-->
                         <?php echo \Asset::img('blog-post-03.jpg'); ?>
                     </a>
 

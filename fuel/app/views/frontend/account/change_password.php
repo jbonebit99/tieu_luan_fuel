@@ -35,7 +35,7 @@
 					
 					<ul class="my-account-nav">
 						<li class="sub-nav-title">Quản Lý Tài Khoản </li>
-						<li><a href="/account/my-profile.html/" ><i class="sl sl-icon-user"></i> Thông Tin</a></li>
+						<li><a href="/account/my-profile/" ><i class="sl sl-icon-user"></i> Thông Tin</a></li>
 						<li><a href="/account/my-bookmarks.html"><i class="sl sl-icon-star"></i> Yêu Thích</a></li>
 					</ul>
 					

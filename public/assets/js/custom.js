@@ -1,13 +1,13 @@
 /* ----------------- Start Document ----------------- */
-(function ($) {
+(function($) {
     "use strict";
 
-    $(document).ready(function () {
+    $(document).ready(function() {
 
         /*--------------------------------------------------*/
         /*  Mobile Menu - mmenu.js
         /*--------------------------------------------------*/
-        $(function () {
+        $(function() {
             function mmenuInit() {
                 var wi = $(window).width();
                 if (wi <= '992') {
@@ -30,17 +30,17 @@
                     var mmenuAPI = $(".mmenu-init").data("mmenu");
                     var $icon = $(".hamburger");
 
-                    $(".mmenu-trigger").click(function () {
+                    $(".mmenu-trigger").click(function() {
                         mmenuAPI.open();
                     });
 
-                    mmenuAPI.bind("open:finish", function () {
-                        setTimeout(function () {
+                    mmenuAPI.bind("open:finish", function() {
+                        setTimeout(function() {
                             $icon.addClass("is-active");
                         });
                     });
-                    mmenuAPI.bind("close:finish", function () {
-                        setTimeout(function () {
+                    mmenuAPI.bind("close:finish", function() {
+                        setTimeout(function() {
                             $icon.removeClass("is-active");
                         });
                     });
@@ -51,38 +51,35 @@
             }
 
             mmenuInit();
-            $(window).resize(function () {
+            $(window).resize(function() {
                 mmenuInit();
             });
         });
 
         /*  User Menu */
-        $('.user-menu').on('click', function () {
+        $('.user-menu').on('click', function() {
             $(this).toggleClass('active');
         });
 
         function getProvince() {
 
-            $.ajax(
-                {
-                    url: "/api/address/province",
-                    method: "POST",
-                    async: false,
-                    success: function (result) {
-                        // var newOption = $.parseJSON(result);
-                        $('#province').empty();
-                        $.each(result.data, function (index, value) {
-                            $('#province').append('<option value="' + value.id + '">' + value._name + ' </option>').trigger("chosen:updated");
-                        })
-                        $('#district').empty();
-                        getDistrict();
-                        $('#ward').empty();
-                        getWard();
-                    },
-                    error: function () {
-                    }
-                }
-            )
+            $.ajax({
+                url: "/api/address/province",
+                method: "POST",
+                async: false,
+                success: function(result) {
+                    // var newOption = $.parseJSON(result);
+                    $('#province').empty();
+                    $.each(result.data, function(index, value) {
+                        $('#province').append('<option value="' + value.id + '">' + value._name + ' </option>').trigger("chosen:updated");
+                    })
+                    $('#district').empty();
+                    getDistrict();
+                    $('#ward').empty();
+                    getWard();
+                },
+                error: function() {}
+            })
         }
 
         if ($('#province').length) {
@@ -105,7 +102,7 @@
         /*----------------------------------------------------*/
         /*  Check Login register
         /*----------------------------------------------------*/
-        $('#username, #password').focusout(function () {
+        $('#username, #password').focusout(function() {
             if (!$(this).val()) {
                 $(this).addClass('err').removeClass('success');
                 $('#e_username,#e_password').html('<p><small style="color: red">Vui lòng điền vào trường này</small> </p>');
@@ -115,7 +112,7 @@
             }
             $('#error_notification').removeClass('notification error closeable').empty();
         });
-        $('#username_register').focusout(function () {
+        $('#username_register').focusout(function() {
             if (!$(this).val()) {
                 $(this).removeClass('success').addClass('err').parent().find('mark').removeClass('valid').addClass('err');
                 $('#e_register_username').html('<p><small style="color: red">Vui lòng điền vào trường này</small> </p>')
@@ -123,23 +120,22 @@
                 $('#e_register_username').removeClass('notification error closeable').empty();
                 $(this).removeClass('err success').parent().find('mark').removeClass('err').addClass('valid');
                 $.ajax({
-                        url: "/api/user/email_username",
-                        method: "POST",
-                        data: {username: $(this).val()},
-                        success: function (data) {
-                            if (data) {
-                                $('#username_register').addClass('err').parent().find('mark').removeClass('valid').addClass('err');
-                                $('#e_register_username').html('<p><small style="color: red">Tên tài khoản đã được sử dụng!</small> </p>')
-                            } else {
-                                $('#username_register').addClass('success').parent().find('mark').removeClass('valid').addClass('err');
-                            }
+                    url: "/api/user/email_username",
+                    method: "POST",
+                    data: { username: $(this).val() },
+                    success: function(data) {
+                        if (data) {
+                            $('#username_register').addClass('err').parent().find('mark').removeClass('valid').addClass('err');
+                            $('#e_register_username').html('<p><small style="color: red">Tên tài khoản đã được sử dụng!</small> </p>')
+                        } else {
+                            $('#username_register').addClass('success').parent().find('mark').removeClass('valid').addClass('err');
                         }
                     }
-                );
+                });
             }
         });
 
-        $('#email_register').focusout(function () {
+        $('#email_register').focusout(function() {
             if (!$(this).val()) {
                 $(this).removeClass('success').addClass('err').parent().find('mark').removeClass('valid').addClass('err');
                 $('#e_register_email').html('<p><small style="color: red">Vui lòng điền vào trường này</small> </p>')
@@ -147,24 +143,23 @@
                 $('#e_register_email').removeClass('notification error closeable').empty();
                 $(this).removeClass('err success').parent().find('mark').removeClass('err').addClass('valid');
                 $.ajax({
-                        url: "/api/user/email_username",
-                        method: "POST",
-                        data: {email: $(this).val()},
-                        success: function (data) {
-                            if (data) {
-                                $('#email_register').addClass('err').parent().find('mark').removeClass('valid').addClass('err');
-                                $('#e_register_email').html('<p><small style="color: red">Email này đã dược sử dụng!</small> </p>')
-                            } else {
-                                $('#email_register').addClass('success').parent().find('mark').removeClass('valid').addClass('err');
-                            }
+                    url: "/api/user/email_username",
+                    method: "POST",
+                    data: { email: $(this).val() },
+                    success: function(data) {
+                        if (data) {
+                            $('#email_register').addClass('err').parent().find('mark').removeClass('valid').addClass('err');
+                            $('#e_register_email').html('<p><small style="color: red">Email này đã dược sử dụng!</small> </p>')
+                        } else {
+                            $('#email_register').addClass('success').parent().find('mark').removeClass('valid').addClass('err');
                         }
                     }
-                );
+                });
 
             }
         });
 
-        $('#password_register').focusout(function () {
+        $('#password_register').focusout(function() {
             if ($(this).val()) {
                 $('#e_register_password').removeClass('err').empty();
                 $(this).addClass('success').parent().find('mark').removeClass('err').addClass('valid');
@@ -184,7 +179,7 @@
             }
         });
 
-        $('#password_confirm').focusout(function () {
+        $('#password_confirm').focusout(function() {
             if ($(this).val()) {
                 if ($(this).val() !== $('#password_register').val()) {
                     $(this).removeClass('success').addClass('err').parent().find('mark').removeClass('valid').addClass('err');
@@ -199,7 +194,7 @@
             }
         });
 
-        $('#submit_register').on('click', function () {
+        $('#submit_register').on('click', function() {
             // Kick in Validation
             $('#email_register, #username_register, #password_register, #password_confirm').triggerHandler("focusout");
             if ($('#form_register mark.error').size() > 0) {
@@ -227,7 +222,7 @@
         // sticky header script
         var headerOffset = $("#header-container").height() * 2; // height on which the sticky header will shows
 
-        $(window).scroll(function () {
+        $(window).scroll(function() {
             if ($(window).scrollTop() >= headerOffset) {
                 $("#header.cloned").addClass('sticky').removeClass("unsticky");
                 $("#navigation.style-2.cloned").addClass('sticky').removeClass("unsticky");
@@ -242,7 +237,7 @@
         /* Top Bar Dropdown Menu
         /*----------------------------------------------------*/
 
-        $('.top-bar-dropdown').on('click', function (event) {
+        $('.top-bar-dropdown').on('click', function(event) {
             $('.top-bar-dropdown').not(this).removeClass('active');
             if ($(event.target).parent().parent().attr('class') == 'options') {
                 hideDD();
@@ -256,7 +251,7 @@
             event.stopPropagation();
         });
 
-        $(document).on('click', function (e) {
+        $(document).on('click', function(e) {
             hideDD();
         });
 
@@ -268,13 +263,13 @@
         /*----------------------------------------------------*/
         /* Advanced Search Button
         /*----------------------------------------------------*/
-        $('#map-container .adv-search-btn').on('click', function (e) {
+        $('#map-container .adv-search-btn').on('click', function(e) {
 
             if ($(this).is(".active")) {
 
                 $(this).removeClass("active");
                 $(".main-search-container").removeClass("active");
-                setTimeout(function () {
+                setTimeout(function() {
                     $("#map-container.homepage-map").removeClass("overflow")
                 }, 0);
 
@@ -282,7 +277,7 @@
 
                 $(this).addClass("active");
                 $(".main-search-container").addClass("active");
-                setTimeout(function () {
+                setTimeout(function() {
                     $("#map-container.homepage-map").addClass("overflow")
                 }, 400);
 
@@ -299,7 +294,7 @@
         function inlineCSS() {
 
             // Common Inline CSS
-            $(".some-classes, section.fullwidth, .img-box-background, .flip-banner, .property-slider .item, .fullwidth-property-slider .item, .fullwidth-home-slider .item, .address-container").each(function () {
+            $(".some-classes, section.fullwidth, .img-box-background, .flip-banner, .property-slider .item, .fullwidth-property-slider .item, .fullwidth-home-slider .item, .address-container").each(function() {
                 var attrImageBG = $(this).attr('data-background-image');
                 var attrColorBG = $(this).attr('data-background-color');
 
@@ -321,7 +316,7 @@
 
             $('.parallax').prepend('<div class="parallax-overlay"></div>');
 
-            $(".parallax").each(function () {
+            $(".parallax").each(function() {
                 var attrImage = $(this).attr('data-background');
                 var attrColor = $(this).attr('data-color');
                 var attrOpacity = $(this).attr('data-color-opacity');
@@ -345,7 +340,7 @@
 
 
         // Slide to anchor
-        $('#titlebar .listing-address').on('click', function (e) {
+        $('#titlebar .listing-address').on('click', function(e) {
             e.preventDefault();
 
             $('html, body').animate({
@@ -374,6 +369,10 @@
             defaultPosition: "right"
         });
 
+        $('#c_submit').click(function() {
+            $('#add_comment').submit();
+
+        });
 
         /*----------------------------------------------------*/
         /*  Mortgage Calculator
@@ -382,7 +381,7 @@
         // Gets property price
         var propertyPricing = parseFloat($('.property-price').text().replace(/[^0-9\.]+/g, ""));
         if (propertyPricing > 0) {
-            $('.pick-price').on('click', function () {
+            $('.pick-price').on('click', function() {
                 $('#amount').val(parseInt(propertyPricing));
             });
         }
@@ -403,13 +402,13 @@
                 calculation = ((monInt + monInt / (Math.pow(1 + monInt, months) - 1)) * (amount - (down || 0))).toFixed(2);
 
             if (calculation > 0) {
-                $(".calc-output-container").css({'opacity': '1', 'max-height': '200px'});
+                $(".calc-output-container").css({ 'opacity': '1', 'max-height': '200px' });
                 $(".calc-output").hide().html(calculation + ' ' + $('.mortgageCalc').attr("data-calc-currency")).fadeIn(300);
             }
         }
 
         // Calculate
-        $('.calc-button').on('click', function () {
+        $('.calc-button').on('click', function() {
             mortgageCalc();
         });
 
@@ -432,7 +431,7 @@
         function fullscreenFix() {
             var h = $('body').height();
             // set .fullscreen height
-            $(".content-b").each(function (i) {
+            $(".content-b").each(function(i) {
                 if ($(this).innerHeight() > h) {
                     $(this).closest(".fullscreen").addClass("overflow");
                 }
@@ -445,7 +444,7 @@
         /* resize background images */
         function backgroundResize() {
             var windowH = $(window).height();
-            $(".parallax").each(function (i) {
+            $(".parallax").each(function(i) {
                 var path = $(this);
                 // variables
                 var contW = path.width();
@@ -488,7 +487,7 @@
             var topWindow = $(window).scrollTop();
             var bottomWindow = topWindow + heightWindow;
             var currentWindow = (topWindow + bottomWindow) / 2;
-            $(".parallax").each(function (i) {
+            $(".parallax").each(function(i) {
                 var path = $(this);
                 var height = path.height();
                 var top = path.offset().top;
@@ -533,7 +532,7 @@
 
         // Jumping background fix for IE
         if (navigator.userAgent.match(/Trident\/7\./)) { // if IE
-            $('body').on("mousewheel", function () {
+            $('body').on("mousewheel", function() {
                 event.preventDefault();
 
                 var wheelDelta = event.wheelDelta;
@@ -557,7 +556,7 @@
             var arrowDist = $('.search-type label.active').position().left;
             $('.search-type-arrow').css('left', arrowDist + (buttonWidth / 2));
 
-            $('.search-type label').on('change', function () {
+            $('.search-type label').on('change', function() {
                 $('.search-type input[type="radio"]').parent('label').removeClass('active');
                 $('.search-type input[type="radio"]:checked').parent('label').addClass('active');
 
@@ -576,7 +575,7 @@
         // Init
         if ($(".main-search-form").length) {
             searchTypeButtons();
-            $(window).on('load resize', function () {
+            $(window).on('load resize', function() {
                 searchTypeButtons();
             });
         }
@@ -587,12 +586,12 @@
         /*----------------------------------------------------*/
 
         var config = {
-            '.chosen-select': {disable_search_threshold: 10, width: "100%"},
-            '.chosen-select-deselect': {allow_single_deselect: true, width: "100%"},
-            '.chosen-select-no-single': {disable_search_threshold: 100, width: "100%"},
-            '.chosen-select-no-single.no-search': {disable_search_threshold: 10, width: "100%"},
-            '.chosen-select-no-results': {no_results_text: 'Oops, nothing found!'},
-            '.chosen-select-width': {width: "95%"}
+            '.chosen-select': { disable_search_threshold: 10, width: "100%" },
+            '.chosen-select-deselect': { allow_single_deselect: true, width: "100%" },
+            '.chosen-select-no-single': { disable_search_threshold: 100, width: "100%" },
+            '.chosen-select-no-single.no-search': { disable_search_threshold: 10, width: "100%" },
+            '.chosen-select-no-results': { no_results_text: 'Oops, nothing found!' },
+            '.chosen-select-width': { width: "95%" }
         };
 
         for (var selector in config) {
@@ -604,7 +603,7 @@
 
         /*  Custom Input With Select
         /*----------------------------------------------------*/
-        $('.select-input').each(function () {
+        $('.select-input').each(function() {
 
             var thisContainer = $(this);
             var $this = $(this).children('select'),
@@ -632,19 +631,19 @@
             $list.wrapInner('<div class="select-list-container"></div>');
 
 
-            $(this).children('input').on('click', function (e) {
+            $(this).children('input').on('click', function(e) {
                 $('.select-options').hide();
                 e.stopPropagation();
                 $styledSelect.toggleClass('active').next('ul.select-options').toggle();
             });
 
-            $(this).children('input').keypress(function () {
+            $(this).children('input').keypress(function() {
                 $styledSelect.removeClass('active');
                 $list.hide();
             });
 
 
-            $listItems.on('click', function (e) {
+            $listItems.on('click', function(e) {
                 e.stopPropagation();
                 // $styledSelect.text($(this).text()).removeClass('active');
                 $(thisContainer).children('input').val($(this).text()).removeClass('active');
@@ -653,7 +652,7 @@
                 //console.log($this.val());
             });
 
-            $(document).on('click', function (e) {
+            $(document).on('click', function(e) {
                 $styledSelect.removeClass('active');
                 $list.hide();
             });
@@ -670,27 +669,27 @@
         /*----------------------------------------------------*/
         /*  Searh Form More Options
         /*----------------------------------------------------*/
-        $('.more-search-options-trigger').on('click', function (e) {
+        $('.more-search-options-trigger').on('click', function(e) {
             e.preventDefault();
             $('.more-search-options, .more-search-options-trigger').toggleClass('active');
-            $('.more-search-options.relative').animate({height: 'toggle', opacity: 'toggle'}, 300);
+            $('.more-search-options.relative').animate({ height: 'toggle', opacity: 'toggle' }, 300);
         });
 
 
         /*----------------------------------------------------*/
         /*  Compare Menu
         /*----------------------------------------------------*/
-        $('.csm-trigger').on('click', function () {
+        $('.csm-trigger').on('click', function() {
             $('.compare-slide-menu').toggleClass('active');
         });
 
-        $('.csm-mobile-trigger').on('click', function () {
+        $('.csm-mobile-trigger').on('click', function() {
             $('.compare-slide-menu').removeClass('active');
         });
 
         // Tooltips
-        $(".compare-button.with-tip, .like-icon.with-tip, .widget-button.with-tip").each(function () {
-            $(this).on('click', function (e) {
+        $(".compare-button.with-tip, .like-icon.with-tip, .widget-button.with-tip").each(function() {
+            $(this).on('click', function(e) {
                 e.preventDefault();
             });
             var tipContent = $(this).attr('data-tip-content');
@@ -698,17 +697,17 @@
         });
 
         // Demo Purpose Trigger
-        $('.compare-button, .compare-widget-button').on('click', function () {
+        $('.compare-button, .compare-widget-button').on('click', function() {
             $('.compare-slide-menu').addClass('active');
 
         });
 
-        $(".remove-from-compare").on('click', function (e) {
+        $(".remove-from-compare").on('click', function(e) {
             e.preventDefault();
             $('#12').remove();
         });
 
-        $(".button,.reset").on('click', function () {
+        $(".button,.reset").on('click', function() {
             $(".listing-item,.compact").remove();
         })
 
@@ -716,7 +715,7 @@
         /*----------------------------------------------------*/
         /*  Like Icon Trigger
         /*----------------------------------------------------*/
-        $('.like-icon, .widget-button').on('click', function (e) {
+        $('.like-icon, .widget-button').on('click', function(e) {
             e.preventDefault();
             $(this).toggleClass('liked');
             $(this).children('.like-icon').toggleClass('liked');
@@ -726,7 +725,7 @@
         /*----------------------------------------------------*/
         /*  Show More Button
         /*----------------------------------------------------*/
-        $('.show-more-button').on('click', function (e) {
+        $('.show-more-button').on('click', function(e) {
             e.preventDefault();
             $('.show-more').toggleClass('visible');
         });
@@ -740,7 +739,7 @@
         var fadeOutTime = 300; // how slow / fast you want the button to hide
         var scrollSpeed = 500; // how slow / fast you want the button to scroll to top.
 
-        $(window).scroll(function () {
+        $(window).scroll(function() {
             if ($(window).scrollTop() >= pxShow) {
                 $("#backtotop").fadeIn(fadeInTime);
             } else {
@@ -748,8 +747,8 @@
             }
         });
 
-        $('#backtotop a').on('click', function () {
-            $('html, body').animate({scrollTop: 0}, scrollSpeed);
+        $('#backtotop a').on('click', function() {
+            $('html, body').animate({ scrollTop: 0 }, scrollSpeed);
             return false;
         });
 
@@ -790,7 +789,7 @@
             itemsMobile: [767, 1]
         });
 
-        $('.owl-next, .owl-prev').on("click", function (e) {
+        $('.owl-next, .owl-prev').on("click", function(e) {
             e.preventDefault();
         });
 
@@ -818,11 +817,11 @@
             centerMode: false,
             focusOnSelect: true,
             responsive: [{
-                breakpoint: 993,
-                settings: {
-                    slidesToShow: 4,
-                }
-            },
+                    breakpoint: 993,
+                    settings: {
+                        slidesToShow: 4,
+                    }
+                },
                 {
                     breakpoint: 767,
                     settings: {
@@ -838,11 +837,11 @@
             centerPadding: '20%',
             slidesToShow: 1,
             responsive: [{
-                breakpoint: 1367,
-                settings: {
-                    centerPadding: '15%'
-                }
-            },
+                    breakpoint: 1367,
+                    settings: {
+                        centerPadding: '15%'
+                    }
+                },
                 {
                     breakpoint: 993,
                     settings: {
@@ -860,11 +859,11 @@
             autoplay: true,
             autoplaySpeed: 1500,
             responsive: [{
-                breakpoint: 1367,
-                settings: {
-                    centerPadding: '0'
-                }
-            },
+                    breakpoint: 1367,
+                    settings: {
+                        centerPadding: '0'
+                    }
+                },
                 {
                     breakpoint: 993,
                     settings: {
@@ -893,7 +892,7 @@
             removalDelay: 0,
             mainClass: 'mfp-fade',
 
-            gallery: {enabled: true}
+            gallery: { enabled: true }
         });
 
 
@@ -949,13 +948,13 @@
         /*----------------------------------------------------*/
         /*  Image Box
         /*----------------------------------------------------*/
-        $('.img-box').each(function () {
+        $('.img-box').each(function() {
 
             // add a photo container
             $(this).append('<div class="img-box-background"></div>');
 
             // set up a background image for each tile based on data-background-image attribute
-            $(this).children('.img-box-background').css({'background-image': 'url(' + $(this).attr('data-background-image') + ')'});
+            $(this).children('.img-box-background').css({ 'background-image': 'url(' + $(this).attr('data-background-image') + ')' });
 
             // background animation on mousemove
             // $(this).on('mousemove', function(e){
@@ -1008,12 +1007,12 @@
             function listLayout() {
                 if ($('.layout-switcher a').is(".list.active")) {
 
-                    $(listingsContainer).each(function () {
+                    $(listingsContainer).each(function() {
                         $(this).removeClass("grid-layout grid-layout-three");
                         $(this).addClass("list-layout");
                     });
 
-                    $('.listing-item').each(function () {
+                    $('.listing-item').each(function() {
                         var listingContent = $(this).find('.listing-content').height();
                         $(this).find(resizeObjects).css('height', '' + listingContent + '');
                     });
@@ -1022,25 +1021,25 @@
 
             listLayout();
 
-            $(window).on('load resize', function () {
+            $(window).on('load resize', function() {
                 listLayout();
             });
 
 
             // if grid layout is active
-            $('.layout-switcher a.grid').on('click', function (e) {
+            $('.layout-switcher a.grid').on('click', function(e) {
                 gridClear(2);
             });
 
             function gridLayout() {
                 if ($('.layout-switcher a').is(".grid.active")) {
 
-                    $(listingsContainer).each(function () {
+                    $(listingsContainer).each(function() {
                         $(this).removeClass("list-layout grid-layout-three");
                         $(this).addClass("grid-layout");
                     });
 
-                    $('.listing-item').each(function () {
+                    $('.listing-item').each(function() {
                         $(this).find(resizeObjects).css('height', 'auto');
                     });
 
@@ -1051,19 +1050,19 @@
 
 
             // if grid layout is active
-            $('.layout-switcher a.grid-three').on('click', function (e) {
+            $('.layout-switcher a.grid-three').on('click', function(e) {
                 gridClear(3);
             });
 
             function gridThreeLayout() {
                 if ($('.layout-switcher a').is(".grid-three.active")) {
 
-                    $(listingsContainer).each(function () {
+                    $(listingsContainer).each(function() {
                         $(this).removeClass("list-layout grid-layout");
                         $(this).addClass("grid-layout-three");
                     });
 
-                    $('.listing-item').each(function () {
+                    $('.listing-item').each(function() {
                         $(this).find(resizeObjects).css('height', 'auto');
                     });
 
@@ -1074,14 +1073,14 @@
 
 
             // Mobile fixes
-            $(window).on('resize', function () {
+            $(window).on('resize', function() {
                 $(resizeObjects).css('height', '0');
                 listLayout();
                 gridLayout();
                 gridThreeLayout();
             });
 
-            $(window).on('load resize', function () {
+            $(window).on('load resize', function() {
                 var winWidth = $(window).width();
 
                 if (winWidth < 992) {
@@ -1102,7 +1101,7 @@
 
                 if (winWidth < 768) {
                     if ($(listingsContainer).is(".list-layout")) {
-                        $('.listing-item').each(function () {
+                        $('.listing-item').each(function() {
                             $(this).find(resizeObjects).css('height', 'auto');
                         });
                     }
@@ -1110,7 +1109,7 @@
 
                 if (winWidth < 1366) {
                     if ($(".fs-listings").is(".list-layout")) {
-                        $('.listing-item').each(function () {
+                        $('.listing-item').each(function() {
                             $(this).find(resizeObjects).css('height', 'auto');
                         });
                     }
@@ -1120,14 +1119,14 @@
 
             // owlCarousel reload
             function owlReload() {
-                $('.listing-carousel').each(function () {
+                $('.listing-carousel').each(function() {
                     $(this).data('owlCarousel').reload();
                 });
             }
 
 
             // switcher buttons
-            $('.layout-switcher a').on('click', function (e) {
+            $('.layout-switcher a').on('click', function(e) {
                 e.preventDefault();
 
                 var switcherButton = $(this);
@@ -1160,7 +1159,7 @@
         /*----------------------------------------------------*/
 
         // Area Range
-        $("#area-range").each(function () {
+        $("#area-range").each(function() {
 
             var dataMin = $(this).attr('data-min');
             var dataMax = $(this).attr('data-max');
@@ -1176,7 +1175,7 @@
                 step: 10,
                 values: [dataMin, dataMax],
 
-                slide: function (event, ui) {
+                slide: function(event, ui) {
                     event = event;
                     $(this).children(".first-slider-value").val(ui.values[0] + " " + dataUnit);
                     $(this).children(".second-slider-value").val(ui.values[1] + " " + dataUnit);
@@ -1189,7 +1188,7 @@
 
 
         // Price Range
-        $("#price-range").each(function () {
+        $("#price-range").each(function() {
 
             var dataMin = $(this).attr('data-min');
             var dataMax = $(this).attr('data-max');
@@ -1205,7 +1204,7 @@
                 max: dataMax,
                 values: [dataMin, dataMax],
 
-                slide: function (event, ui) {
+                slide: function(event, ui) {
                     event = event;
                     $(this).children(".first-slider-value").val(dataUnit + ui.values[0].toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,"));
                     $(this).children(".second-slider-value").val(dataUnit + ui.values[1].toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,"));
@@ -1223,7 +1222,7 @@
         /*----------------------------------------------------*/
 
         // Agent Profile Alignment
-        $(window).on('load resize', function () {
+        $(window).on('load resize', function() {
 
             $('.agents-grid-container').masonry({
                 itemSelector: '.grid-item', // use a separate class for itemSelector, other than .col-
@@ -1247,7 +1246,7 @@
         /*----------------------------------------------------*/
 
         // Tooltip
-        $(".tip").each(function () {
+        $(".tip").each(function() {
             var tipContent = $(this).attr('data-tip-content');
             $(this).append('<div class="tip-content">' + tipContent + '</div>');
         });
@@ -1260,7 +1259,7 @@
         var $tabsNav = $('.tabs-nav'),
             $tabsNavLis = $tabsNav.children('li');
 
-        $tabsNav.each(function () {
+        $tabsNav.each(function() {
             var $this = $(this);
 
             $this.next().children('.tab-content').stop(true, true).hide()
@@ -1269,7 +1268,7 @@
             $this.children('li').first().addClass('active').stop(true, true).show();
         });
 
-        $tabsNavLis.on('click', function (e) {
+        $tabsNavLis.on('click', function(e) {
             var $this = $(this);
 
             $this.siblings().removeClass('active').end()
@@ -1296,7 +1295,7 @@
         /*----------------------------------------------------*/
         var $accor = $('.accordion');
 
-        $accor.each(function () {
+        $accor.each(function() {
             $(this).toggleClass('ui-accordion ui-widget ui-helper-reset');
             $(this).find('h3').addClass('ui-accordion-header ui-helper-reset ui-state-default ui-accordion-icons ui-corner-all');
             $(this).find('div').addClass('ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom');
@@ -1305,7 +1304,7 @@
 
         var $trigger = $accor.find('h3');
 
-        $trigger.on('click', function (e) {
+        $trigger.on('click', function(e) {
             var location = $(this).parent();
 
             if ($(this).next().is(':hidden')) {
@@ -1329,12 +1328,12 @@
 
         $(".toggle-container").hide();
 
-        $('.trigger, .trigger.opened').on('click', function (a) {
+        $('.trigger, .trigger.opened').on('click', function(a) {
             $(this).toggleClass('active');
             a.preventDefault();
         });
 
-        $(".trigger").on('click', function () {
+        $(".trigger").on('click', function() {
             $(this).next(".toggle-container").slideToggle(300);
         });
 
@@ -1345,7 +1344,7 @@
         /*  Notifications
         /*----------------------------------------------------*/
 
-        $("a.close").removeAttr("href").on('click', function () {
+        $("a.close").removeAttr("href").on('click', function() {
             $(this).parent().fadeOut(200);
         });
 
@@ -1359,12 +1358,12 @@
         $('#message').hide();
 
         // Add validation parts
-        $('#contact input[type=text], #contact input[type=number], #contact input[type=email], #contact input[type=url], #contact input[type=tel], #contact select, #contact textarea').each(function () {
+        $('#contact input[type=text], #contact input[type=number], #contact input[type=email], #contact input[type=url], #contact input[type=tel], #contact select, #contact textarea').each(function() {
 
         });
 
         // Validate as you type
-        $('#name, #comments, #subject').focusout(function () {
+        $('#name, #comments, #subject').focusout(function() {
             if (!$(this).val()) {
                 $(this).addClass('error').parent().find('mark').removeClass('valid').addClass('error');
             } else {
@@ -1374,28 +1373,28 @@
                 .prop('disabled', false)
                 .removeClass('disabled');
         });
-        $('#email').focusout(function () {
+        $('#email').focusout(function() {
             if (!$(this).val() || !isEmail($(this).val())) {
                 $(this).addClass('error').parent().find('mark').removeClass('valid').addClass('error');
             } else {
                 $(this).removeClass('error').parent().find('mark').removeClass('error').addClass('valid');
             }
         });
-        $('#email').focusin(function () {
+        $('#email').focusin(function() {
             $('#submit_contact')
                 .prop('disabled', false)
                 .removeClass('disabled');
         });
 
-        $('#submit_contact').on('click', function () {
-            $("#contact-message").slideUp(200, function () {
+        $('#submit_contact').on('click', function() {
+            $("#contact-message").slideUp(200, function() {
                 $('#contact-message').hide();
                 // Kick in Validation
                 $('#name, #subject, #phone, #comments, #website, #email').triggerHandler("focusout");
 
                 if ($('#contact mark.error').size() > 0) {
                     if (shake == "Yes") {
-                        $('#contact').effect('shake', {times: 2}, 75, function () {
+                        $('#contact').effect('shake', { times: 2 }, 75, function() {
                             $('#contact input.error:first, #contact textarea.error:first').focus();
                         });
                     } else $('#contact input.error:first, #contact textarea.error:first').focus();
@@ -1406,11 +1405,11 @@
             });
         });
 
-        $('#contactform').submit(function () {
+        $('#contactform').submit(function() {
 
             if ($('#contact mark.error').size() > 0) {
                 if (shake == "Yes") {
-                    $('#contact').effect('shake', {times: 2}, 75);
+                    $('#contact').effect('shake', { times: 2 }, 75);
                 }
                 return false;
             }
@@ -1423,10 +1422,10 @@
                 .addClass('disabled');
 
             $.post(action, $('#contactform').serialize(),
-                function (data) {
+                function(data) {
                     $('#contact-message').html(data);
                     $('#contact-message').slideDown();
-                    $('#contactform img.loader').fadeOut('slow', function () {
+                    $('#contactform img.loader').fadeOut('slow', function() {
                         $(this).remove()
                     });
                     $('#contactform #submit_contact').removeAttr('disabled');
@@ -1461,7 +1460,7 @@
             $('.fs-inner-container.content').removeClass("faded-out");
         }
 
-        $('.panel-dropdown a').on('click', function (e) {
+        $('.panel-dropdown a').on('click', function(e) {
 
             if ($(this).parent().is(".active")) {
                 close_panel_dropdown();
@@ -1475,7 +1474,7 @@
         });
 
         // Apply / Close buttons
-        $('.panel-buttons button').on('click', function (e) {
+        $('.panel-buttons button').on('click', function(e) {
             $('.panel-dropdown').removeClass('active');
             $('.fs-inner-container.content').removeClass("faded-out");
         });
@@ -1483,19 +1482,19 @@
         // Closes dropdown on click outside the conatainer
         var mouse_is_inside = false;
 
-        $('.panel-dropdown').hover(function () {
+        $('.panel-dropdown').hover(function() {
             mouse_is_inside = true;
-        }, function () {
+        }, function() {
             mouse_is_inside = false;
         });
 
-        $("body").mouseup(function () {
+        $("body").mouseup(function() {
             if (!mouse_is_inside) close_panel_dropdown();
         });
 
 
         // Adjusting Panel Dropdown Width
-        $(window).on('load resize', function () {
+        $(window).on('load resize', function() {
             var panelTrigger = $('.booking-widget .panel-dropdown a');
             $('.booking-widget .panel-dropdown .panel-dropdown-content').css({
                 'width': panelTrigger.outerWidth()
@@ -1521,12 +1520,12 @@
 
             qtySum();
 
-            $(function () {
+            $(function() {
 
                 $(".qtyButtons input").after('<div class="qtyInc"></div>');
                 $(".qtyButtons input").before('<div class="qtyDec"></div>');
 
-                $(".qtyDec, .qtyInc").on("click", function () {
+                $(".qtyDec, .qtyInc").on("click", function() {
 
                     var $button = $(this);
                     var oldValue = $button.parent().find("input").val();
@@ -1566,9 +1565,9 @@
 })(this.jQuery);
 
 
-(function ($) {
+(function($) {
 
-    $.fn.footerReveal = function (options) {
+    $.fn.footerReveal = function(options) {
 
         $('#footer.sticky-footer').before('<div class="footer-shadow"></div>');
 
@@ -1593,7 +1592,7 @@
                 bottom: 0
             });
 
-            $win.on('load resize', function () {
+            $win.on('load resize', function() {
                 $this.css({
                     'width': $prev.outerWidth()
                 });
@@ -1613,29 +1612,26 @@
 function getDistrict() {
     var province_id = $('#province').find(':selected').val();
     if (province_id !== undefined) {
-        $.ajax(
-            {
-                url: "/api/address/district",
-                method: "POST",
-                async: false,
-                data: {province_id: province_id},
-                success: function (result) {
-                    if (result.success) {
-                        $('#district').empty();
-                        $.each(result.data, function (index, value) {
-                            $('#district').append('<option value="' + value.id + '">' + value._name + ' </option>').trigger("chosen:updated");
-                        });
-                        $('#ward').empty();
-                        getWard();
-                    } else {
-                        $('#district').empty().append().trigger("chosen:updated");
-                        $('#ward').empty().append().trigger("chosen:updated");
-                    }
-                },
-                error: function (result) {
+        $.ajax({
+            url: "/api/address/district",
+            method: "POST",
+            async: false,
+            data: { province_id: province_id },
+            success: function(result) {
+                if (result.success) {
+                    $('#district').empty();
+                    $.each(result.data, function(index, value) {
+                        $('#district').append('<option value="' + value.id + '">' + value._name + ' </option>').trigger("chosen:updated");
+                    });
+                    $('#ward').empty();
+                    getWard();
+                } else {
+                    $('#district').empty().append().trigger("chosen:updated");
+                    $('#ward').empty().append().trigger("chosen:updated");
                 }
-            }
-        );
+            },
+            error: function(result) {}
+        });
     } else {
         $('#district').empty();
     }
@@ -1644,26 +1640,23 @@ function getDistrict() {
 function getWard() {
     var district_id = $('#district').find(':selected').val();
     if (district_id !== undefined) {
-        $.ajax(
-            {
-                url: "/api/address/ward",
-                method: "POST",
-                async: false,
-                data: {district_id: district_id},
-                success: function (result) {
-                    if (result.success) {
-                        $('#ward').empty();
-                        $.each(result.data, function (index, value) {
-                            $('#ward').append('<option value="' + value.id + '">' + value._name + ' </option>').trigger("chosen:updated");
-                        });
-                    } else {
-                        $('#ward').empty().append().trigger("chosen:updated");
-                    }
-                },
-                error: function (result) {
+        $.ajax({
+            url: "/api/address/ward",
+            method: "POST",
+            async: false,
+            data: { district_id: district_id },
+            success: function(result) {
+                if (result.success) {
+                    $('#ward').empty();
+                    $.each(result.data, function(index, value) {
+                        $('#ward').append('<option value="' + value.id + '">' + value._name + ' </option>').trigger("chosen:updated");
+                    });
+                } else {
+                    $('#ward').empty().append().trigger("chosen:updated");
                 }
-            }
-        );
+            },
+            error: function(result) {}
+        });
     } else {
         $('#ward').empty();
     }
@@ -1686,13 +1679,13 @@ function hide(element) {
     $.ajax({
         url: "/api/property/hidden",
         method: "POST",
-        data: {id_properties: parent.attr('id')},
-        success: function (result) {
+        data: { id_properties: parent.attr('id') },
+        success: function(result) {
             if (result.success) {
                 $().html('<a href="#"><i class="fa  fa-eye"></i> Hiện</a>');
             }
         },
-        error: function () {
+        error: function() {
 
         }
     });
@@ -1704,17 +1697,15 @@ function hide(element) {
 function sort() {
     var sort = $("option:selected").val();
     var pathArray = window.location.pathname;
-    $.ajax(
-        {
-            url:"/api/property/sort",
-            method:"POST",
-            data:{
-                sort: sort,
-                param: pathArray,
-            },
-            success: function name(params) {
-                
-            }
+    $.ajax({
+        url: "/api/property/sort",
+        method: "POST",
+        data: {
+            sort: sort,
+            param: pathArray,
+        },
+        success: function name(params) {
+
         }
-    );
+    });
 }

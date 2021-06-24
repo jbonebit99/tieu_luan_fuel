@@ -32,7 +32,7 @@ class Model_Property extends \Orm\Model
         try {
             $_p_newly = DB::query("SELECT * FROM property LIMIT :limit");
             $_p_newly->bind('limit', $limit);
-        } catch (PhpErrorException $e) { }
+        } catch (PhpErrorException $e) {}
     }
 
     public static function insert_properties($table = null, $data = [])
@@ -46,7 +46,7 @@ class Model_Property extends \Orm\Model
                 } else {
                     return false;
                 }
-            } catch (PhpErrorException  $e) { }
+            } catch (PhpErrorException $e) {}
         }
         return false;
     }
@@ -67,7 +67,7 @@ class Model_Property extends \Orm\Model
                 } else {
                     return false;
                 }
-            } catch (PhpErrorException  $e) { }
+            } catch (PhpErrorException $e) {}
         }
         return false;
     }
@@ -84,14 +84,14 @@ class Model_Property extends \Orm\Model
                 } else {
                     return false;
                 }
-            } catch (PhpErrorException $e) { }
+            } catch (PhpErrorException $e) {}
         }
         return false;
     }
 
     public static function delete_properties($array_table = array(), $columns = array(), $condition = null)
     {
-        foreach ($array_table as $table) :
+        foreach ($array_table as $table):
             $query = DB::update($table);
             $query->set($columns);
             if ($table !== 'property') {
@@ -248,7 +248,7 @@ class Model_Property extends \Orm\Model
     public static function get_user_by_id()
     {
         $query = DB::select_array(array(
-            'users.username'
+            'users.username',
         ));
         $query->from('users');
         $query->where('status', '!=', -1);
@@ -375,10 +375,10 @@ class Model_Property extends \Orm\Model
         $query->where('property.featured', 1);
         $query->and_where('property.status', 1);
         $query->group_by('img_properties.id_properties');
-        $query->order_by('created_at','DESC');
+        $query->order_by('created_at', 'DESC');
         $query->limit($limit);
         return $query->execute();
-    } 
+    }
 
     public static function get_same_properties()
     {
@@ -416,4 +416,62 @@ class Model_Property extends \Orm\Model
         return $query->execute();
     }
 
+    public static function search_property($key, $shape = null, $type = null, $limit = null, $offset = null)
+    {
+        $query = DB::select_array(array(
+            'property.id',
+            'property.title',
+            'property.shape',
+            'property.type',
+            'property.price',
+            'property.area',
+            'property.rooms',
+            'property.created_at',
+            'property.featured',
+            'location_properties.address',
+            'location_properties.province',
+            'location_properties.district',
+            'location_properties.ward',
+            'detail_properties.description',
+            'detail_properties.bedrooms',
+            'detail_properties.toilets',
+            'detail_properties.gym',
+            'detail_properties.market',
+            'detail_properties.hospital',
+            'detail_properties.parking',
+            'contact_properties.name',
+            array(DB::expr('group_concat( img_properties.file_name SEPARATOR "/" )'), 'src'),
+        ));
+        $query->from('property');
+        $query->join('location_properties', 'LEFT');
+        $query->on('property.id', '=', 'location_properties.id_properties');
+        $query->join('detail_properties', 'LEFT');
+        $query->on('property.id', '=', 'detail_properties.id_properties');
+        $query->join('contact_properties', 'LEFT');
+        $query->on('property.id', '=', 'contact_properties.id_properties');
+        $query->join('img_properties', 'LEFT');
+        $query->on('property.id', '=', 'img_properties.id_properties');
+        $query->where('property.status', 1);
+        $query->and_where('property.title', 'LIKE', "%".$key."%");
+        $query->or_where('location_properties.district', 'LIKE',"%".$key."%");
+        if ($shape !== null) {
+            if ($shape !== 'all') {
+                $query->and_where('property.shape', $shape);
+            }
+        }
+        if ($type !== null) {
+            if ($type !== 'all') {
+                $query->and_where('property.type', $type);
+            }
+        }
+        $query->group_by('img_properties.id_properties');
+        $query->order_by('property.created_at', 'desc');
+        if ($limit !== null) {
+            $query->limit($limit);
+        }
+        if ($offset !== null) {
+            $query->offset($offset);
+        }
+        return $query->execute();
+    }
 }

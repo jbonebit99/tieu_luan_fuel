@@ -17,7 +17,6 @@ class Model_Account extends Model
 
     public static function get_Social_User()
     {
-
     }
 
     public static function get_avatar_user($param)
@@ -40,7 +39,7 @@ class Model_Account extends Model
         }
     }
 
-    public static function insert_info_user($table,$columns = array())
+    public static function insert_info_user($table, $columns = array())
     {
         $query = DB::insert($table);
         $query->set($columns);
@@ -63,6 +62,4 @@ class Model_Account extends Model
             return false;
         }
     }
-
-
 }

@@ -27,7 +27,6 @@ class Controller_Backend_Admin extends Controller_Template
         }
     }
 
-
     public function action_login()
     {
         if (Input::method() == 'POST') {
@@ -40,7 +39,7 @@ class Controller_Backend_Admin extends Controller_Template
             if (!$val->run()) {
                 $data["errors"] = array(
                     'error' => $val->error(), // Chi muc thong bao loi. Se dung o View
-                    'l_data' => $val->validated() // login_data Dung o View
+                    'l_data' => $val->validated(), // login_data Dung o View
                 );
                 $this->template->title = 'Đăng Nhập';
                 $this->template->content = View::forge('frontend\authen/login', $data);
@@ -48,7 +47,7 @@ class Controller_Backend_Admin extends Controller_Template
                 if (empty($val->validated('username'))) {
                     $data["errors"] = array(
                         'error' => $val->error(), // Chi muc thong bao loi. Se dung o View
-                        'l_data' => $val->validated() // login_data Dung o View
+                        'l_data' => $val->validated(), // login_data Dung o View
                     );
                     $data['title'] = "Đăng Nhập";
                     $data['content'] = "Don't show me in the template";
@@ -56,7 +55,7 @@ class Controller_Backend_Admin extends Controller_Template
                 } elseif (empty($val->validated('password'))) {
                     $data["errors"] = array(
                         'error' => $val->error(), // Chi muc thong bao loi. Se dung o View
-                        'l_data' => $val->validated() // login_data Dung o View
+                        'l_data' => $val->validated(), // login_data Dung o View
                     );
                     $data['title'] = "Đăng Nhập";
                     return new Response(View::forge('backend/admin/login', $data));
@@ -185,8 +184,6 @@ class Controller_Backend_Admin extends Controller_Template
         }
     }
 
-
-
     public function action_blogs()
     {
         if (Auth::check()) {
@@ -207,9 +204,87 @@ class Controller_Backend_Admin extends Controller_Template
     {
         if (Auth::check()) {
             if (Auth::member(100)) {
-                $data["subnav"] = array('index' => 'active');
-                $this->template->title = 'Trang Quản Trị';
-                $this->template->content = View::forge('backend\admin/index', $data);
+                if (Input::method() == "POST") {
+                    $config = array(
+                        'path' => DOCROOT . 'assets/' . 'img' . '/',
+                        'ext_whitelist' => array('gif', 'jpg', 'png'),
+                        'auto_rename' => false,
+                        'overwrite' => true,
+                    );
+                    Upload::register('before', function (&$file) {
+                        if ($file['error'] == Upload::UPLOAD_ERR_OK) {
+                            switch ($file['extension']) {
+                                case "jpg":
+                                case "png":
+                                case "gif":
+                                    $checkImage = getimagesize($file['tmp_name']);
+                                    $type = $checkImage[2];
+                                    if ($checkImage === false) {
+                                        return Upload::UPLOAD_ERR_EXT_BLACKLISTED;
+                                    } else if ($file['extension'] === 'gif' && $type !== IMAGETYPE_GIF) {
+                                        return Upload::UPLOAD_ERR_EXT_BLACKLISTED;
+                                    } else if ($file['extension'] === 'png' && $type !== IMAGETYPE_PNG) {
+                                        return Upload::UPLOAD_ERR_EXT_BLACKLISTED;
+                                    } else if ($file['extension'] === 'jpg' && $type !== IMAGETYPE_JPEG) {
+                                        return Upload::UPLOAD_ERR_EXT_BLACKLISTED;
+                                    }
+                                default:
+                            }
+                        }
+                    });
+                    Upload::process($config);
+                    if (Upload::is_valid()) {
+                        Upload::save();
+                        if (Upload::get_files()) {
+                            $b_data = array(
+                                'title' => Input::post('title'),
+                                'sub_description' => Input::post('sub_description'),
+                                'content' => urlencode(Input::post('content')),
+                                'category' => Input::post('category'),
+                                'image' => Upload::get_files()[0]['saved_as'],
+                                'tag' => Input::post('tag'),
+                                'created_at' => Date::forge()->get_timestamp(),
+                                'updated_at' => Date::forge()->get_timestamp(),
+                                'status' => 0,
+                            );
+                            // var_dump($b_data['image']);die;
+                            if (Model_Blog::insert_blog('blogs', $b_data)) {
+                                $data["validated"] = array(
+                                    'error' => "", // Chi muc thong bao loi. Se dung o View submit property
+                                    'data' => "",
+                                    'message' => "", // data Dung o View
+                                );
+                                $this->template->title = 'Trang Quản Trị';
+                                $this->template->content = View::forge('backend/admin/add_blog', $data);
+                            } else {
+                                if (File::exists(DOCROOT . DS . "assets/img/" . Upload::get_files()[0]['saved_as'])) {
+                                    File::delete(DOCROOT . DS . "assets/img/" . Upload::get_files()[0]['saved_as']);
+                                }
+                                $data["validated"] = array(
+                                    'error' => "", // Chi muc thong bao loi. Se dung o View submit property
+                                    'data' => "",
+                                    'message' => "", // data Dung o View
+                                );
+                                $this->template->title = 'Trang Quản Trị';
+                                $this->template->content = View::forge('backend/admin/add_blog', $data);
+                            }
+
+                        }
+                    } else {
+                        $data["validated"] = array(
+                            'error' => "", // Chi muc thong bao loi. Se dung o View submit property
+                            'data' => "",
+                            'message' => "", // data Dung o View
+                        );
+                        $this->template->title = 'Trang Quản Trị';
+                        $this->template->content = View::forge('backend/admin/add_blog', $data);
+                    }
+
+                } else {
+                    $data["subnav"] = array('index' => 'active');
+                    $this->template->title = 'Trang Quản Trị';
+                    $this->template->content = View::forge('backend/admin/add_blog', $data);
+                }
             } else {
                 Response::redirect('/');
             }
