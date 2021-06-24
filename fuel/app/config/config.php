@@ -26,7 +26,7 @@ return array(
 	 *  Set this to null to have it automatically detected.
 	 *
 	 */
-
+ 
 	// 'base_url' => null,
 
 	/**

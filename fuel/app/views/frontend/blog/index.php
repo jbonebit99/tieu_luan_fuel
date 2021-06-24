@@ -9,14 +9,14 @@
         <div class="row">
             <div class="col-md-12">
 
-                <h2>Blog</h2>
-                <span>Keep up to date with the latest news</span>
+                <h2><?php echo Arr::get($content,"title");?></h2>
+                <span><?php echo Arr::get($content,"subtitle");?></span>
 
                 <!-- Breadcrumbs -->
                 <nav id="breadcrumbs">
                     <ul>
-                        <li><a href="#">Home</a></li>
-                        <li>Blog</li>
+                        <li><a href="/">Home</a></li>
+                        <li>Tin tức</li>
                     </ul>
                 </nav>
 
@@ -36,82 +36,45 @@
             <div class="col-md-8">
 
                 <!-- Blog Post -->
-                <div class="blog-post">
-
+                <?php
+                foreach (Arr::get($content, 'blogs') as $key => $value):
+                ?>
+                ` <div class="blog-post">
                     <!-- Img -->
-                    <a href="blog-post.html" class="post-img">
+                    <a href="blog/view/<?php echo $value['id'] ?>" class="post-img">
                         <!--                        <img src="images/blog-post-01a.jpg" alt="">-->
-                        <?php echo \Asset::img('blog-post-01a.jpg', array("alt" => "")); ?>
+                        <?php echo \Asset::img($value['image'], array("alt" => "")); ?>
                     </a>
 
                     <!-- Content -->
                     <div class="post-content">
-                        <h3><a href="blog-post.html">8 Tips to Help You Finding New Home</a></h3>
+                        <h3><a href="blog/view/<?php echo $value['id'] ?>"><?php echo $value['title'] ?></a></h3>
 
                         <ul class="post-meta">
-                            <li>Novemer 12, 2016</li>
-                            <li><a href="#">5 Comments</a></li>
+                            <li><?php echo  Date::forge($value['created_at'])->format("%d-%m, %Y"); ?></li>
+                            <li><a href="#"><?php echo $value['total_comment']?> bình luận</a></li>
                         </ul>
 
-                        <p>Nam nisl lacus, dignissim ac tristique ut, scelerisque eu massa. Vestibulum ligula nunc,
-                            rutrum in malesuada vitae, tempus sed augue. Curabitur quis lectus quis augue dapibus
-                            facilisis.</p>
+                        <p><?php echo $value['sub_description']?></p>
 
-                        <a href="blog-post.html" class="read-more">Read More <i class="fa fa-angle-right"></i></a>
+                        <a href="blog/view/<?php echo $value['id'] ?>" class="read-more">Xem thêm <i class="fa fa-angle-right"></i></a>
                     </div>
 
                 </div>
+
+                <?php
+endforeach;
+?>
                 <!-- Blog Post / End -->
-
-
-                <!-- Blog Post -->
-                <div class="blog-post">
-
-                    <!-- Img -->
-                    <a href="blog-post.html" class="post-img">
-                        <!--                        <img src="images/blog-post-02a.jpg" alt="">-->
-                        <?php echo \Asset::img('blog-post-02a.jpg', array("alt" => "")); ?>
-                    </a>
-
-                    <!-- Content -->
-                    <div class="post-content">
-                        <h3><a href="blog-post.html">Bedroom Colors You'll Never Regret</a></h3>
-
-                        <ul class="post-meta">
-                            <li>November 9, 2016</li>
-                            <li><a href="#">5 Comments</a></li>
-                        </ul>
-
-                        <p>Nam nisl lacus, dignissim ac tristique ut, scelerisque eu massa. Vestibulum ligula nunc,
-                            rutrum in malesuada vitae, tempus sed augue. Curabitur quis lectus quis augue dapibus
-                            facilisis.</p>
-
-                        <a href="blog-post.html" class="read-more">Read More <i class="fa fa-angle-right"></i></a>
-                    </div>
-
-                </div>
                 <!-- Blog Post / End -->
 
 
 
                 <!-- Pagination -->
                 <div class="clearfix"></div>
-                <div class="pagination-container">
-                    <nav class="pagination">
-                        <ul>
-                            <li><a href="#" class="current-page">1</a></li>
-                            <li><a href="#">2</a></li>
-                            <li><a href="#">3</a></li>
-                        </ul>
-                    </nav>
-
-                    <nav class="pagination-next-prev">
-                        <ul>
-                            <li><a href="#" class="prev">Previous</a></li>
-                            <li><a href="#" class="next">Next</a></li>
-                        </ul>
-                    </nav>
-                </div>
+                <?php
+echo Paginationapp::instance('my_pagination')->render();
+?>
                 <div class="clearfix"></div>
 
             </div>
@@ -125,10 +88,13 @@
 
                     <!-- Widget -->
                     <div class="widget">
-                        <h3 class="margin-top-0 margin-bottom-25">Search Blog</h3>
-                        <div class="search-blog-input">
-                            <div class="input"><input class="search-field" type="text" placeholder="Type and hit enter" value="" /></div>
+                        <h3 class="margin-top-0 margin-bottom-25">Tìm kiếm bài viết</h3>
+                       <form action="/blog/search/" method="POST">
+                       <div class="search-blog-input">
+                            <div class="input"><input class="search-field" id="key" name="key" type="text" value="" placeholder="Nhập nội dung và nhấn Enter"
+                                    value="" /></div>
                         </div>
+                       </form>
                         <div class="clearfix"></div>
                     </div>
                     <!-- Widget / End -->
@@ -139,7 +105,8 @@
                         <h3>Got any questions?</h3>
                         <div class="info-box margin-bottom-10">
                             <p>If you are having any questions, please feel free to ask.</p>
-                            <a href="contact.html" class="button fullwidth margin-top-20"><i class="fa fa-envelope-o"></i> Drop Us a Line</a>
+                            <a href="contact.html" class="button fullwidth margin-top-20"><i
+                                    class="fa fa-envelope-o"></i> Drop Us a Line</a>
                         </div>
                     </div>
                     <!-- Widget / End -->
@@ -155,7 +122,7 @@
                             <li>
                                 <div class="widget-content">
                                     <div class="widget-thumb">
-                                    <?php echo \Asset::img('blog-post-02a.jpg', array("alt" => "")); ?>
+                                        <?php echo \Asset::img('blog-post-02a.jpg', array("alt" => "")); ?>
                                     </div>
 
                                     <div class="widget-text">
@@ -171,7 +138,7 @@
                             <li>
                                 <div class="widget-content">
                                     <div class="widget-thumb">
-                                    <?php echo \Asset::img('blog-post-02a.jpg', array("alt" => "")); ?>
+                                        <?php echo \Asset::img('blog-post-02a.jpg', array("alt" => "")); ?>
                                     </div>
 
                                     <div class="widget-text">
@@ -187,7 +154,7 @@
                             <li>
                                 <div class="widget-content">
                                     <div class="widget-thumb">
-                                    <?php echo \Asset::img('blog-post-02a.jpg', array("alt" => "")); ?>
+                                        <?php echo \Asset::img('blog-post-02a.jpg', array("alt" => "")); ?>
                                     </div>
 
                                     <div class="widget-text">

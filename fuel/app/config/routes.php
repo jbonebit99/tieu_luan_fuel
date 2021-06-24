@@ -47,10 +47,15 @@ return array(
 	'authen/register'=>'frontend/authen/register',
     'authen/logout'=>'frontend/authen/logout',
 	'blog'=>'frontend/blog/index',
+	'blog/comment'=>'frontend/blog/comment',
 	'blog/view/(:id)'=>'frontend/blog/view',
+	'blog/search'=>'frontend/blog/search',
 	'account'=>'frontend/account/index',
 	'account/my-profile'=>'frontend/account/index',
 	'account/my-properties'=>'frontend/account/my_properties',
+	'account/my-properties/delete/:id'=>'frontend/submit/property/delete',
+	'account/my-properties/hide/:id'=>'frontend/submit/property/hide',
+	'account/my-properties/show/:id'=>'frontend/submit/property/show',
 	'account/change-password'=>'frontend/account/change_password',
 	'account/my-bookmarks'=>'frontend/account/my_bookmarks',
 	'pricing-tables'=>'frontend/pricing/tables/index',
@@ -78,5 +83,6 @@ return array(
 	'admin/approve-properties/delete/(:id)'=>'frontend/submit/property/delete_property',
 	'admin/contacts'=>'backend/admin/contact',
 	'admin/contacts/delete/(:id)'=>'frontend/contact/delete',
+	'search'=>'frontend/search/index'
 
 );
