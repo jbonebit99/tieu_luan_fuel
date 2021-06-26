@@ -13,10 +13,12 @@ class Controller_Frontend_Blog extends Controller_Template
         );
         $pagination = Paginationapp::forge('my_pagination', $config);
         $result = Model_Blog::get_blogs($pagination->per_page, $pagination->offset);
+		$result_random = Model_Blog::get_blogs_random();
         $data['content'] = array(
             'title' => 'Bài viết',
             'blogs' => $result->as_array(),
-            'subtitle' => 'bài viết',
+            'subtitle' => 'Danh sách bài viết',
+			'random'=>$result_random->as_array()
         );
         $this->template->title = ucwords(\Lang::get('blog'));
         $this->template->subnav = 'blog';
@@ -32,12 +34,14 @@ class Controller_Frontend_Blog extends Controller_Template
                 $result_arr = $item;
             }
             $result_comment = Model_Comment::get_comments($this->param('id'));
+			$result_random = Model_Blog::get_blogs_random();
             $data['content'] = array(
                 'title' => 'Chi tiết bài viết',
                 'content' => $result_arr,
                 'subtitle' => $result->as_array()[0]['category'],
                 'comments' => $result_comment->as_array(),
                 'count_comment' => $result_comment->count(),
+				'random'=>$result_random->as_array()
             );
             $this->template->title = ucwords(\Lang::get('blog'));
             $this->template->subnav = 'blog';

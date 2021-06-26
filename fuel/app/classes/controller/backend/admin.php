@@ -13,9 +13,14 @@ class Controller_Backend_Admin extends Controller_Template
     {
         if (Auth::check()) {
             if (Auth::member(100)) {
-                $data["subnav"] = array('index' => 'active');
+                $result_count_property = Model_Property::query()->count();
+                $result_count_user = Model_Api_Users::query()->count();
+                $data["content"] = array(
+                    'count_user' => $result_count_user,
+                    'count_property'=>$result_count_property
+                );
                 $this->template->title = 'Trang Quản Trị';
-                $this->template->content = View::forge('backend\admin/dashboard', $data);
+                $this->template->content = View::forge('backend/admin/dashboard', $data);
             } else {
                 Controller_Utility::message("Không Vào Được Đâu Bạn Ơi!");
                 Response::redirect('/');
@@ -121,7 +126,7 @@ class Controller_Backend_Admin extends Controller_Template
                 $result = Model_Property::get_properties_by_status(0);
                 $data = array("results" => $result->as_array());
                 $this->template->title = 'Trang Quản Trị';
-                $this->template->content = View::forge('backend\admin/approve-properties', $data);
+                $this->template->content = View::forge('backend/admin/approve-properties', $data);
             } else {
                 Response::redirect('/');
             }
@@ -188,9 +193,27 @@ class Controller_Backend_Admin extends Controller_Template
     {
         if (Auth::check()) {
             if (Auth::member(100)) {
-                $data["subnav"] = array('index' => 'active');
-                $this->template->title = 'Trang Quản Trị';
-                $this->template->content = View::forge('backend\admin/index', $data);
+                $result=Model_Blog::get_all_blogs();
+                $data["content"] = array('blogs' => $result->as_array());
+                $this->template->title = 'Quản lý bài viết';
+                $this->template->content = View::forge('backend/admin/list_blogs', $data);
+            } else {
+                Response::redirect('/');
+            }
+        } else {
+            $data['title'] = "Đăng Nhập";
+            return new Response(View::forge('backend/admin/login', $data));
+        }
+    }
+
+    public function action_list_property()
+    {
+        if (Auth::check()) {
+            if (Auth::member(100)) {
+                $result=Model_Property::get_all_property();
+                $data["content"] = array('property' => $result->as_array());
+                $this->template->title = 'Quản lý tin bất động sản';
+                $this->template->content = View::forge('backend/admin/list_property', $data);
             } else {
                 Response::redirect('/');
             }
@@ -291,6 +314,83 @@ class Controller_Backend_Admin extends Controller_Template
         } else {
             $data['title'] = "Đăng Nhập";
             return new Response(View::forge('backend/admin/login', $data));
+        }
+    }
+    public function action_edit_blog()
+    {
+        if (Auth::check() && Auth::member(100)) {
+            if(Input::method() == "POST")
+            {
+                $b_data = array(
+                    'title' => Input::post('title'),
+                    'sub_description' => Input::post('sub_description'),
+                    'content' => urlencode(Input::post('content')),
+                    'category' => Input::post('category'),
+                    'tag' => Input::post('tag'),
+                    'updated_at' => Date::forge()->get_timestamp(),
+                    'status' => Input::post('status'),
+                );
+                if(Model_Blog::update_blog('blogs',$b_data,Input::post('id')))
+                {
+                    Response::redirect_back();
+                }
+                else {
+                    Response::redirect('admin/blogs');
+                }
+             
+            }
+           else {
+            $result = Model_Blog::get_blog($this->param('id'));
+            $result_arr = array();
+            if ($result->count() > 0) {
+                foreach ($result as $item) {
+                    $result_arr = $item;
+                }
+                $data["content"] = array(
+                    'blog' => $result_arr,
+                );
+                $this->template->title = 'Chỉnh sửa bài viết';
+                $this->template->content = View::forge('backend/admin/edit_blog', $data);
+            } else {
+                Response::redirect('404');
+            }
+           }
+        } else {
+            Response::redirect('/');
+        }
+
+    }
+    public function action_delete_blog()
+    {
+       
+        if (Auth::check() && Auth::member(100)) {
+           
+                $entry = Model_Blog::find($this->param('id'));
+                $entry->status = -1;
+               
+                if( $entry->save())
+                {
+                    Response::redirect_back();
+                }
+                else {
+                    Response::redirect('admin/blogs');
+                }
+        } else {
+            Response::redirect('/');
+        }
+    }
+
+    public function action_hide_blog()
+    {
+       
+        if (Auth::check() && Auth::member(100)) {
+                $entry = Model_Blog::find($this->param('id'));
+                $entry->status = 0;
+                $entry->save();
+                    Response::redirect_back();
+                    // Response::redirect('admin/blogs');
+        } else {
+            Response::redirect('/');
         }
     }
 

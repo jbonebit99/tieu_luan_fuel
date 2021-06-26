@@ -18,14 +18,14 @@
             <!-- small box -->
             <div class="small-box bg-aqua">
                 <div class="inner">
-                    <h3>150</h3>
+                    <h3><?php echo Arr::get($content,"count_property")?></h3>
 
-                    <p>New Orders</p>
+                    <p>Tin bất động sản</p>
                 </div>
                 <div class="icon">
                     <i class="ion ion-bag"></i>
                 </div>
-                <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                <a href="/admin/list-property" class="small-box-footer">Xem tất cả tin<i class="fa fa-arrow-circle-right"></i></a>
             </div>
         </div>
         <!-- ./col -->
@@ -48,14 +48,14 @@
             <!-- small box -->
             <div class="small-box bg-yellow">
                 <div class="inner">
-                    <h3>44</h3>
+                    <h3><?php echo Arr::get($content,"count_user"); ?></h3>
 
-                    <p>User Registrations</p>
+                    <p>Người dùng trong hệ thống</p>
                 </div>
                 <div class="icon">
                     <i class="ion ion-person-add"></i>
                 </div>
-                <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                <a href="/admin/user" class="small-box-footer">Xem thêm <i class="fa fa-arrow-circle-right"></i></a>
             </div>
         </div>
         <!-- ./col -->

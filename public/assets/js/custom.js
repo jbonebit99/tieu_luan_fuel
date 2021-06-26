@@ -203,6 +203,10 @@
 
         });
 
+        $("#price").keyup(function() {
+            $('#price').val();
+        });
+
 
         /*----------------------------------------------------*/
         /*  Check Login register
@@ -371,6 +375,11 @@
 
         $('#c_submit').click(function() {
             $('#add_comment').submit();
+
+        });
+
+        $('#s_button').click(function() {
+            $('#form_change_password').submit();
 
         });
 

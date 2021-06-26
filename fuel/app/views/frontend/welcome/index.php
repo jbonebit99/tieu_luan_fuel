@@ -364,86 +364,38 @@
 <section class="fullwidth margin-top-95 margin-bottom-0">
 
     <!-- Box Headline -->
-    <h3 class="headline-box">Articles & Tips</h3>
+    <h3 class="headline-box">Bài viết và Mẹo</h3>
 
     <div class="container">
         <div class="row">
-
+            <?php foreach (Arr::get($content,"blogs") as $key => $value):
+            ?>
             <div class="col-md-4">
 
                 <!-- Blog Post -->
                 <div class="blog-post">
 
                     <!-- Img -->
-                    <a href="blog-post.html" class="post-img">
-                        <?php echo \Asset::img('blog-post-01.jpg');?>
-                        <!--                        <img src="images/blog-post-01.jpg" alt="">-->
+                    <a href="/blog/view/<?php echo $value['id']?>" class="post-img">
+                        <?php echo \Asset::img($value['image']);?>
+                     
                     </a>
 
                     <!-- Content -->
                     <div class="post-content">
-                        <h3><a href="#">8 Tips to Help You Finding New Home</a></h3>
-                        <p>Nam nisl lacus, dignissim ac tristique ut, scelerisque eu massa. Vestibulum ligula nunc,
-                            rutrum in malesuada vitae. </p>
+                        <h3><a href="/blog/view/<?php echo $value['id']?>"><?php echo ucwords($value['title']);?></a></h3>
+                        <p><?php echo html_entity_decode( substr($value['sub_description'],0,200) ."...");?> </p>
 
-                        <a href="blog-post.html" class="read-more">Read More <i class="fa fa-angle-right"></i></a>
+                        <a href="/blog/view/<?php echo $value['id']?>" class="read-more">Xem Thêm<i class="fa fa-angle-right"></i></a>
                     </div>
 
                 </div>
                 <!-- Blog Post / End -->
 
             </div>
-
-            <div class="col-md-4">
-
-                <!-- Blog Post -->
-                <div class="blog-post">
-
-                    <!-- Img -->
-                    <a href="blog-post.html" class="post-img">
-                        <!--                        <img src="images/blog-post-02.jpg" alt="">-->
-                        <?php echo \Asset::img('blog-post-02.jpg');?>
-                    </a>
-
-                    <!-- Content -->
-                    <div class="post-content">
-                        <h3><a href="#">Bedroom Colors You'll Never Regret</a></h3>
-                        <p>Nam nisl lacus, dignissim ac tristique ut, scelerisque eu massa. Vestibulum ligula nunc,
-                            rutrum in malesuada vitae. </p>
-
-                        <a href="blog-post.html" class="read-more">Read More <i class="fa fa-angle-right"></i></a>
-                    </div>
-
-                </div>
-                <!-- Blog Post / End -->
-
-            </div>
-
-            <div class="col-md-4">
-
-                <!-- Blog Post -->
-                <div class="blog-post">
-
-                    <!-- Img -->
-                    <a href="blog-post.html" class="post-img">
-                        <!--                        <img src="assets/img/blog-post-03.jpg" alt="">-->
-                        <?php echo \Asset::img('blog-post-03.jpg'); ?>
-                    </a>
-
-                    <!-- Content -->
-                    <div class="post-content">
-                        <h3><a href="#">What to Do a Year Before Buying Apartment</a></h3>
-                        <p>Nam nisl lacus, dignissim ac tristique ut, scelerisque eu massa. Vestibulum ligula nunc,
-                            rutrum in malesuada vitae. </p>
-
-                        <a href="blog-post.html" class="read-more">Read More <i class="fa fa-angle-right"></i></a>
-                    </div>
-
-                </div>
-                <!-- Blog Post / End -->
-
-            </div>
-
+            <?php 
+                endforeach;
+            ?>
         </div>
     </div>
 </section>

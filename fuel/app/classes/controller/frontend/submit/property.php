@@ -75,7 +75,7 @@ class Controller_Frontend_Submit_Property extends Controller_Template
                 Model_Property::insert_properties('map_properties', $p_data_map);
                 //properties_data_detail
                 $p_data_detail = array(
-                    'description' => Input::post('description'),
+                    'description' => urlencode(Input::post('description')),
                     'bedrooms' => Input::post('bedrooms'),
                     'toilets' => Input::post('toilets'),
                     'gym' => (Input::post('check-gym') == 'on') ? 1 : 0,
@@ -270,6 +270,72 @@ class Controller_Frontend_Submit_Property extends Controller_Template
                 } else {
                     Controller_Utility::message("Đã xảy ra lỗi, vui lòng thử lại!");
                     Response::redirect('admin/approve-properties');
+                }
+            } else {
+                Controller_Utility::message('Xin lỗi bạn không có quyền làm việc này!');
+                Response::redirect('/');
+            }
+        }
+    }
+
+    public function action_hide_property()
+    {
+        if (Auth::check()) {
+            if (Auth::member(100)) {
+                $p_data = array(
+                    "status" => 0,
+                );
+                $result = Model_Property::update_properties('property', $p_data, 'id', $this->param('id'));
+                if ($result) {
+                    Controller_Utility::message("Thành công");
+
+                    Response::redirect_back();
+                } else {
+                    Controller_Utility::message("Đã xảy ra lỗi, vui lòng thử lại!");
+                    Response::redirect('admin/list-property');
+                }
+            } else {
+                Controller_Utility::message('Xin lỗi bạn không có quyền làm việc này!');
+                Response::redirect('/');
+            }
+        }
+    }
+    public function action_show_property()
+    {
+        if (Auth::check()) {
+            if (Auth::member(100)) {
+                $p_data = array(
+                    "status" => 1,
+                );
+                $result = Model_Property::update_properties('property', $p_data, 'id', $this->param('id'));
+                if ($result) {
+                    Controller_Utility::message("Thành công");
+
+                    Response::redirect_back();
+                } else {
+                    Controller_Utility::message("Đã xảy ra lỗi, vui lòng thử lại!");
+                    Response::redirect('admin/list-property');
+                }
+            } else {
+                Controller_Utility::message('Xin lỗi bạn không có quyền làm việc này!');
+                Response::redirect('/');
+            }
+        }
+    }
+    public function action_property_delete()
+    {
+        if (Auth::check()) {
+            if (Auth::member(100)) {
+                $p_data = array(
+                    "status" => -1,
+                );
+                $result = Model_Property::update_properties('property', $p_data, 'id', $this->param('id'));
+                if ($result) {
+                    Controller_Utility::message("Thành công");
+                    Response::redirect_back();
+                } else {
+                    Controller_Utility::message("Đã xảy ra lỗi, vui lòng thử lại!");
+                    Response::redirect('admin/list-property');
                 }
             } else {
                 Controller_Utility::message('Xin lỗi bạn không có quyền làm việc này!');

@@ -474,4 +474,21 @@ class Model_Property extends \Orm\Model
         }
         return $query->execute();
     }
+    public static function get_all_property()
+    {
+        $query = DB::select_array(array(
+            'property.id',
+            'property.shape',
+            'property.title',
+            'property.user_id',
+            'property.created_at',
+            'property.status',
+            'users.username',
+        ));
+        $query->from('property');
+        $query->join('users', 'LEFT');
+        $query->on('property.user_id', '=', 'users.id');
+        $query->order_by('created_at', 'desc');
+        return $query->execute();
+    }
 }

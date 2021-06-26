@@ -59,15 +59,15 @@ $data = \Arr::get($content, "content");
 					<div class="post-quote">
 						<span class="icon"></span>
 						<blockquote>
-						<?php echo $data['sub_description']?>
+						<b><?php echo $data['sub_description']?></b>
 						</blockquote>
 					</div>
-					<?php echo html_entity_decode( $data['content']); ?>
+					<?php echo html_entity_decode(urldecode($data['content'])); ?>
 					<!-- Share Buttons -->
 					<ul class="share-buttons margin-top-40 margin-bottom-0">
-						<li><a class="fb-share" href="#"><i class="fa fa-facebook"></i> Share</a></li>
+						<li><a class="fb-share" href="#"><i class="fa fa-facebook"></i> Chia sẻ</a></li>
 						<li><a class="twitter-share" href="#"><i class="fa fa-twitter"></i> Tweet</a></li>
-						<li><a class="gplus-share" href="#"><i class="fa fa-google-plus"></i> Share</a></li>
+						<li><a class="gplus-share" href="#"><i class="fa fa-google-plus"></i> Chia sẻ</a></li>
 						<li><a class="pinterest-share" href="#"><i class="fa fa-pinterest-p"></i> Pin</a></li>
 					</ul>
 					<div class="clearfix"></div>
@@ -243,10 +243,10 @@ $data = \Arr::get($content, "content");
 
 			<!-- Widget -->
 			<div class="widget">
-				<h3>Bạn có thắc mặc?</h3>
+				<h3>Bạn có thắc mắc?</h3>
 				<div class="info-box margin-bottom-10">
 					<p>Bạn có câu hỏi hoặc cần giải đáp thắc mắc. Hãy gửi về cho chúng tôi</p>
-					<a href="/contact" class="button fullwidth margin-top-20"><i class="fa fa-envelope-o"></i> Tới trang liên hệ</a>
+					<a href="/contact" class="button fullwidth margin-top-20"><i class="fa fa-envelope-o"></i> Đến trang liên hệ</a>
 				</div>
 			</div>
 			<!-- Widget / End -->
@@ -255,63 +255,40 @@ $data = \Arr::get($content, "content");
 			<!-- Widget -->
 			<div class="widget">
 
-				<h3>Popular Posts</h3>
-				<ul class="widget-tabs">
+                        <h3>Bài viết ngẫu nhiên</h3>
+                        <ul class="widget-tabs">
+                            <?php 
+                            
+                                foreach (Arr::get($content,'random') as $key => $ramdom):
+                            ?>
+                            <!-- Post #1 -->
+                            <li>
+                                <div class="widget-content">
+                                    <div class="widget-thumb">
+                                        <?php echo \Asset::img($ramdom['image'], array("alt" => "")); ?>
+                                    </div>
 
-					<!-- Post #1 -->
-					<li>
-						<div class="widget-content">
-								<div class="widget-thumb">
-								<a href="blog-full-width-single-post.html"><img src="images/blog-widget-03.jpg" alt=""></a>
-							</div>
+                                    <div class="widget-text">
+                                        <h5><a href="/blog/view/<?php echo $ramdom['id']?>"><?php echo ucwords($ramdom['title']);?> </a></h5>
+                                        <span><?php echo  Date::forge($ramdom['created_at'])->format("%d-%m, %Y"); ?></span>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </li>
+                                <?php 
+                                endforeach;
+                                ?>
+                        
 
-							<div class="widget-text">
-								<h5><a href="blog-full-width-single-post.html">What to Do a Year Before Buying Apartment </a></h5>
-								<span>October 26, 2016</span>
-							</div>
-							<div class="clearfix"></div>
-						</div>
-					</li>
+                        </ul>
 
-					<!-- Post #2 -->
-					<li>
-						<div class="widget-content">
-							<div class="widget-thumb">
-								<a href="blog-full-width-single-post.html"><img src="images/blog-widget-02.jpg" alt=""></a>
-							</div>
-
-							<div class="widget-text">
-								<h5><a href="blog-full-width-single-post.html">Bedroom Colors You'll Never Regret</a></h5>
-								<span>November 9, 2016</span>
-							</div>
-							<div class="clearfix"></div>
-						</div>
-					</li>
-
-					<!-- Post #3 -->
-					<li>
-						<div class="widget-content">
-							<div class="widget-thumb">
-								<a href="blog-full-width-single-post.html"><img src="images/blog-widget-01.jpg" alt=""></a>
-							</div>
-
-							<div class="widget-text">
-								<h5><a href="blog-full-width-single-post.html">8 Tips to Help You Finding New Home</a></h5>
-								<span>November 12, 2016</span>
-							</div>
-							<div class="clearfix"></div>
-						</div>
-					</li>
-
-				</ul>
-
-			</div>
+                    </div>
 			<!-- Widget / End-->
 
 
 			<!-- Widget -->
 			<div class="widget">
-				<h3 class="margin-top-0 margin-bottom-25">Social</h3>
+				<h3 class="margin-top-0 margin-bottom-25">Theo dõi chúng tôi</h3>
 				<ul class="social-icons rounded">
 					<li><a class="facebook" href="#"><i class="icon-facebook"></i></a></li>
 					<li><a class="twitter" href="#"><i class="icon-twitter"></i></a></li>

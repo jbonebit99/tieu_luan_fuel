@@ -173,7 +173,7 @@ class Controller_Frontend_Authen extends Controller_Template
             );
             $this->template->title = 'Đăng Ký';
             $this->template->subnav='';
-            $this->template->content = View::forge('frontend\authen/register', $data);
+            $this->template->content = View::forge('frontend/authen/register', $data);
         }
     }
 
@@ -182,6 +182,23 @@ class Controller_Frontend_Authen extends Controller_Template
         $data["subnav"] = array('index' => 'active');
         $this->template->title = 'Đăng Ký';
         $this->template->content = View::forge('frontend\authen/lost-password', $data);
+    }
+
+    public function action_change_password()
+    {
+        if (Auth::check() && Input::method()=='POST') {
+           if( Auth::change_password(Input::post('old_password'),Input::post('new_password')))
+           {
+            Controller_Utility::message("Thay đổi thành công");
+            Response::redirect('/account/change-password');
+           }else{
+             
+               Response::redirect('/account/change-password');
+           }
+           
+        } else {
+           Response::redirect('/');
+        }
     }
 
 

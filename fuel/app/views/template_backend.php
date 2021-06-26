@@ -366,6 +366,7 @@
                     </a>
                     <ul class="treeview-menu">
                         <li><a href="/admin/approve-properties.html"><i class="fa fa-circle-o"></i> Duyệt Tin</a></li>
+                        <li><a href="/admin/list-property"><i class="fa fa-circle-o"></i> Tất cả tin</a></li>
                         <li><a href="#"><i class="fa fa-circle-o"></i> Thêm Tin</a></li>
                     </ul>
                 </li>
